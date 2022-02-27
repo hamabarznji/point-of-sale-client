@@ -1,5 +1,5 @@
 import * as React from "react";
-import CustomerService from "../../services/customerService";
+import EmployeeService from "../../services/employeeService";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormDialog from "../formDialog";
@@ -11,10 +11,11 @@ export default function AddEmployee({ getAll }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
-        id: yup.number().required("Phone number is required"),
         name: yup.string().required("Name is required"),
         address: yup.string().required("Address is required"),
         store_id: yup.number().required("Store id is required"),
+        salary: yup.number().required("Salary id is required"),
+        phone: yup.number().required("Phone id is required"),
     });
     const {
         register,
@@ -25,16 +26,16 @@ export default function AddEmployee({ getAll }) {
         resolver: yupResolver(schema),
     });
 
-    const addCustomerHandler = async (data) => {
+    const addEmployeeHandler = async (data) => {
         try {
-            await CustomerService.addCustomer(data);
-            enqueueSnackbar("Customer added successfully.", {
+            await EmployeeService.addEmployee(data);
+            enqueueSnackbar("Employee added successfully.", {
                 variant: "success",
             });
             getAll();
             return Promise.resolve("Done");
         } catch (err) {
-            enqueueSnackbar("Could not add customer! Please try again.", {
+            enqueueSnackbar("Could not add employee! Please try again.", {
                 variant: "error",
             });
 
@@ -43,19 +44,10 @@ export default function AddEmployee({ getAll }) {
     };
     return (
         <FormDialog
-            buttonTitle="Add Customer"
-            title="Add Customer"
-            handleSubmit={handleSubmit(addCustomerHandler)}
+            buttonTitle="Add Employee"
+            title="Add Employee"
+            handleSubmit={handleSubmit(addEmployeeHandler)}
         >
-            <InputField
-                control={control}
-                errors={errors}
-                name="id"
-                defaultValue=""
-                variant="standard"
-                label="Phone Number"
-                register={register}
-            />
             <InputField
                 control={control}
                 errors={errors}
@@ -68,10 +60,28 @@ export default function AddEmployee({ getAll }) {
             <InputField
                 control={control}
                 errors={errors}
+                name="salary"
+                defaultValue=""
+                variant="standard"
+                label="Salary"
+                register={register}
+            />
+            <InputField
+                control={control}
+                errors={errors}
                 name="address"
                 defaultValue=""
                 variant="standard"
                 label="Address"
+                register={register}
+            />
+            <InputField
+                control={control}
+                errors={errors}
+                name="phone"
+                defaultValue=""
+                variant="standard"
+                label="Phone Number"
                 register={register}
             />
             <InputField

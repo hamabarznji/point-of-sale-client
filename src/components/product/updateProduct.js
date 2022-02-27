@@ -1,5 +1,5 @@
 import * as React from "react";
-import ProdcutService from "../../services/product";
+import ProdcutService from "../../services/productService";
 import FormDialog from "../formDialog";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

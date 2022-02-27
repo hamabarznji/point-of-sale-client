@@ -49,7 +49,7 @@ const DrawerItems = [
     },
     {
         name: "Employee",
-        path: "/dashboard/employee",
+        path: "/dashboard/employees",
         icon: <BadgeIcon color="primary" />,
     },
     {

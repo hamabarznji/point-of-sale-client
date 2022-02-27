@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Product from "./pages/Product";
 import Customer from "./pages/Customer";
+import Employee from "./pages/Employee";
 import "./App.css";
 import Drawer from "./layout/Drawer";
 import { SnackbarProvider } from "notistack";
@@ -40,6 +41,10 @@ function App() {
                         <Route
                             path="/dashboard/customers"
                             element={<Customer />}
+                        />
+                        <Route
+                            path="/dashboard/employees"
+                            element={<Employee />}
                         />
                     </Routes>
                 </main>

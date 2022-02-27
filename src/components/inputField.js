@@ -11,6 +11,7 @@ export default function InputField({
     label,
     register,
     type,
+    disabled,
 }) {
     return (
         <>
@@ -32,6 +33,7 @@ export default function InputField({
                             name={name}
                             label={label}
                             helperText={errors.name?.message}
+                            disabled={disabled ? true : false}
                         />
                     );
                 }}

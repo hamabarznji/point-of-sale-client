@@ -1,5 +1,5 @@
 import * as React from "react";
-import CustomerService from "../../services/Customer";
+import CustomerService from "../../services/customerService";
 import FormDialog from "../formDialog";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

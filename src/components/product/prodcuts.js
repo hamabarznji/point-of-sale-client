@@ -1,6 +1,6 @@
 import * as React from "react";
 import Table from "../reactTabel";
-import ProdcutService from "../../services/product";
+import ProdcutService from "../../services/productService";
 import AddProduct from "./addProduct";
 import UpdateProduct from "./updateProduct";
 
