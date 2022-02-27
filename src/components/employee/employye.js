@@ -1,7 +1,6 @@
 import Table from "../reactTabel";
 import EmployeeService from "../../services/employeeService";
 import React from "react";
-import { Button } from "@mui/material";
 import AddEmployee from "./addEmployee";
 import UpdateEmployee from "./updateEmployee";
 const columns = [
@@ -40,7 +39,6 @@ export default function Employee() {
             return Promise.reject(err);
         }
     };
-    console.log(employees);
 
     return (
         <>

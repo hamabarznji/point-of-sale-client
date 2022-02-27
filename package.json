@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.0",
     "formik": "^2.2.9",
+    "moment": "^2.29.1",
     "mui-rhf-library": "^0.0.9",
     "notistack": "^2.0.3",
     "react": "^17.0.2",

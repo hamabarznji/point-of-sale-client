@@ -4,9 +4,12 @@ import Dashboard from "./pages/Dashboard";
 import Product from "./pages/Product";
 import Customer from "./pages/Customer";
 import Employee from "./pages/Employee";
+import Store from "./pages/Store";
 import "./App.css";
 import Drawer from "./layout/Drawer";
 import { SnackbarProvider } from "notistack";
+import User from "./components/user/user";
+import Expense from "./pages/Expense";
 function App() {
     const location = useLocation();
 
@@ -46,6 +49,12 @@ function App() {
                             path="/dashboard/employees"
                             element={<Employee />}
                         />
+                        <Route path="/dashboard/users" element={<User />} />
+                        <Route
+                            path="/dashboard/expenses"
+                            element={<Expense />}
+                        />
+                        <Route path="/dashboard/stores" element={<Store />} />
                     </Routes>
                 </main>
             </div>

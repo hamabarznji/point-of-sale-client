@@ -54,17 +54,17 @@ const DrawerItems = [
     },
     {
         name: "User",
-        path: "/dashboard/user",
+        path: "/dashboard/users",
         icon: <AccountCircleIcon color="primary" />,
     },
     {
         name: "Expense",
-        path: "/dashboard/expense",
+        path: "/dashboard/expenses",
         icon: <MoneyOffIcon color="primary" />,
     },
     {
         name: "Store",
-        path: "/dashboard/store",
+        path: "/dashboard/stores",
         icon: <InventoryIcon color="primary" />,
     },
     {
