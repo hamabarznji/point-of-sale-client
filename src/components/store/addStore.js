@@ -1,5 +1,5 @@
 import * as React from "react";
-import ExpenseService from "../../services/expenseService";
+import StoreService from "../../services/storeService";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormDialog from "../formDialog";
@@ -7,14 +7,13 @@ import * as yup from "yup";
 import InputField from "../inputField";
 import { useSnackbar } from "notistack";
 
-export default function AddEmployee({ getAll }) {
+export default function AddStore({ getAll }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
-        store_id: yup.number().required("Store id is required"),
-        description: yup.string().required("Description is required"),
-        amount: yup.number().required("Amount id is required"),
-        date: yup.date().required("Date id is required"),
+        name: yup.string().required("Name is required"),
+        location: yup.string().required("Location id is required"),
+        phone: yup.number().required("Phone id is required"),
     });
     const {
         register,
@@ -25,64 +24,70 @@ export default function AddEmployee({ getAll }) {
         resolver: yupResolver(schema),
     });
 
-    const addExpenseHandler = async (data) => {
-        console.log(data);
+    React.useEffect(() => {
+        if (errors.location) {
+            enqueueSnackbar(errors.location.message, {
+                variant: "error",
+            });
+        }
+    }, [errors, enqueueSnackbar]);
+
+    const addStoreHandler = async (data) => {
         try {
-            await ExpenseService.addExpense(data);
-            enqueueSnackbar("Expense added successfully.", {
+            await StoreService.addStore(data);
+            enqueueSnackbar("Store added successfully.", {
                 variant: "success",
             });
             getAll();
             return Promise.resolve("Done");
         } catch (err) {
-            enqueueSnackbar("Could not add expense! Please try again.", {
+            enqueueSnackbar("Could not add store! Please try again.", {
                 variant: "error",
             });
 
             return Promise.reject("Error", err);
         }
     };
+
     return (
         <FormDialog
-            buttonTitle="Add Expense"
-            title="Add Expense"
-            handleSubmit={handleSubmit(addExpenseHandler)}
+            buttonTitle="Add Store"
+            title="Add Store"
+            handleSubmit={handleSubmit(addStoreHandler)}
         >
             <InputField
                 control={control}
                 errors={errors}
-                name="store_id"
+                name="name"
                 defaultValue=""
                 variant="standard"
-                label="Store"
+                label="Name"
                 register={register}
+                error={errors.hasOwnProperty("name")}
+                helperText={errors.name?.message}
+            />
+
+            <InputField
+                control={control}
+                errors={errors}
+                name="location"
+                defaultValue=""
+                variant="standard"
+                label="Location"
+                register={register}
+                error={errors.hasOwnProperty("location")}
+                helperText={errors.location?.message}
             />
             <InputField
                 control={control}
                 errors={errors}
-                name="description"
+                name="phone"
                 defaultValue=""
                 variant="standard"
-                label="Description"
+                label="Phone"
                 register={register}
-            />
-            <InputField
-                control={control}
-                errors={errors}
-                name="amount"
-                defaultValue=""
-                variant="standard"
-                label="Amount"
-                register={register}
-            />
-            <InputField
-                control={control}
-                errors={errors}
-                name="date"
-                defaultValue=""
-                variant="standard"
-                label="Date"
-                register={register}
+                error={errors.hasOwnProperty("phone")}
+                helperText={errors.phone?.message}
             />
         </FormDialog>
     );

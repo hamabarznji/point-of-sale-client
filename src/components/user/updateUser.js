@@ -65,6 +65,8 @@ export default function UpdateUser({ user }) {
                     register={register}
                     errors={errors}
                     defaultValue={user.username}
+                    error={errors.hasOwnProperty("username")}
+                    helperText={errors.username?.message}
                 />
                 <InputField
                     name="role"
@@ -73,6 +75,8 @@ export default function UpdateUser({ user }) {
                     register={register}
                     errors={errors}
                     defaultValue={user.role}
+                    error={errors.hasOwnProperty("role")}
+                    helperText={errors.role?.message}
                 />
                 <InputField
                     name="store_id"
@@ -81,6 +85,8 @@ export default function UpdateUser({ user }) {
                     register={register}
                     errors={errors}
                     defaultValue={user.store_id}
+                    error={errors.hasOwnProperty("store_id")}
+                    helperText={errors.store_id?.message}
                 />
             </FormDialog>
         </>

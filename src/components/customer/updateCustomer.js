@@ -56,6 +56,8 @@ export default function UpdateCustomer({ customer }) {
                     register={register}
                     errors={errors}
                     defaultValue={customer.id}
+                    error={errors.hasOwnProperty("id")}
+                    helperText={errors.id?.message}
                 />
                 <InputField
                     name="name"
@@ -64,6 +66,8 @@ export default function UpdateCustomer({ customer }) {
                     register={register}
                     errors={errors}
                     defaultValue={customer.name}
+                    error={errors.hasOwnProperty("name")}
+                    helperText={errors.name?.message}
                 />
                 <InputField
                     name="address"
@@ -72,6 +76,8 @@ export default function UpdateCustomer({ customer }) {
                     register={register}
                     errors={errors}
                     defaultValue={customer.address}
+                    error={errors.hasOwnProperty("address")}
+                    helperText={errors.address?.message}
                 />
                 <InputField
                     name="store_id"
@@ -80,6 +86,8 @@ export default function UpdateCustomer({ customer }) {
                     register={register}
                     errors={errors}
                     defaultValue={customer.store_id}
+                    error={errors.hasOwnProperty("store_id")}
+                    helperText={errors.store_id?.message}
                 />
             </FormDialog>
         </>

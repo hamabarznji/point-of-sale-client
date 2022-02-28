@@ -55,6 +55,8 @@ export default function AddEmployee({ getAll }) {
                 variant="standard"
                 label="Name"
                 register={register}
+                error={errors.hasOwnProperty("username")}
+                helperText={errors.username?.message}
             />{" "}
             <InputField
                 control={control}
@@ -64,6 +66,8 @@ export default function AddEmployee({ getAll }) {
                 variant="standard"
                 label="Password"
                 register={register}
+                error={errors.hasOwnProperty("password")}
+                helperText={errors.password?.message}
             />
             <InputField
                 control={control}
@@ -73,6 +77,8 @@ export default function AddEmployee({ getAll }) {
                 variant="standard"
                 label="Role"
                 register={register}
+                error={errors.hasOwnProperty("role")}
+                helperText={errors.role?.message}
             />
             <InputField
                 control={control}
@@ -82,6 +88,8 @@ export default function AddEmployee({ getAll }) {
                 variant="standard"
                 label="Store Id"
                 register={register}
+                error={errors.hasOwnProperty("store_id")}
+                helperText={errors.store_id?.message}
             />
         </FormDialog>
     );

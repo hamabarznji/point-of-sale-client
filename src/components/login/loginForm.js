@@ -68,6 +68,9 @@ export default function LoginForm() {
                                         {...field}
                                         name="username"
                                         label="User Name"
+                                        error={errors.hasOwnProperty(
+                                            "username"
+                                        )}
                                         helperText={errors.username?.message}
                                     />
                                 );
@@ -88,6 +91,9 @@ export default function LoginForm() {
                                         {...field}
                                         name="password"
                                         label="Password"
+                                        error={errors.hasOwnProperty(
+                                            "password"
+                                        )}
                                         helperText={errors.password?.message}
                                     />
                                 );

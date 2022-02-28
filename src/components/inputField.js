@@ -13,6 +13,8 @@ export default function InputField({
     type,
     disabled,
     select,
+    helperText,
+    error,
 }) {
     return (
         <>
@@ -33,7 +35,8 @@ export default function InputField({
                             type={type ? type : ""}
                             name={name}
                             label={label}
-                            helperText={errors.name?.message}
+                            helperText={helperText}
+                            error={error}
                             disabled={disabled ? true : false}
                             //select={select ? true : false}
                         />

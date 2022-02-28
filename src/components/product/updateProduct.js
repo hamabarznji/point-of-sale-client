@@ -62,6 +62,8 @@ export default function UpdateProduct({ product, getAll }) {
                     register={register}
                     errors={errors}
                     defaultValue={product.id}
+                    error={errors.hasOwnProperty("id")}
+                    helperText={errors.id?.message}
                 />
                 <InputField
                     name="name"
@@ -70,6 +72,8 @@ export default function UpdateProduct({ product, getAll }) {
                     register={register}
                     errors={errors}
                     defaultValue={product.name}
+                    error={errors.hasOwnProperty("name")}
+                    helperText={errors.name?.message}
                 />
                 <InputField
                     name="supplier_id"
@@ -78,6 +82,8 @@ export default function UpdateProduct({ product, getAll }) {
                     register={register}
                     errors={errors}
                     defaultValue={product.supplier_id}
+                    error={errors.hasOwnProperty("supplier_id")}
+                    helperText={errors.supplier_id?.message}
                 />
                 <InputField
                     name="category_id"
@@ -86,6 +92,8 @@ export default function UpdateProduct({ product, getAll }) {
                     register={register}
                     errors={errors}
                     defaultValue={product.category_id}
+                    error={errors.hasOwnProperty("category_id")}
+                    helperText={errors.category_id?.message}
                 />
                 <InputField
                     name="price"
@@ -94,6 +102,8 @@ export default function UpdateProduct({ product, getAll }) {
                     register={register}
                     errors={errors}
                     defaultValue={product.price}
+                    error={errors.hasOwnProperty("price")}
+                    helperText={errors.price?.message}
                 />
                 <InputField
                     name="qty"
@@ -102,6 +112,8 @@ export default function UpdateProduct({ product, getAll }) {
                     register={register}
                     errors={errors}
                     defaultValue={product.qty}
+                    error={errors.hasOwnProperty("qty")}
+                    helperText={errors.qty?.message}
                 />
                 <InputField
                     name="size"
@@ -110,6 +122,8 @@ export default function UpdateProduct({ product, getAll }) {
                     register={register}
                     errors={errors}
                     defaultValue={product.size}
+                    error={errors.hasOwnProperty("size")}
+                    helperText={errors.size?.message}
                 />
                 <InputField
                     name="color"
@@ -118,6 +132,8 @@ export default function UpdateProduct({ product, getAll }) {
                     register={register}
                     errors={errors}
                     defaultValue={product.color}
+                    error={errors.hasOwnProperty("color")}
+                    helperText={errors.color?.message}
                 />
                 <InputField
                     name="weight"
@@ -126,6 +142,8 @@ export default function UpdateProduct({ product, getAll }) {
                     register={register}
                     errors={errors}
                     defaultValue={product.weight}
+                    error={errors.hasOwnProperty("weight")}
+                    helperText={errors.weight?.message}
                 />
                 <InputField
                     name="date"
@@ -135,6 +153,8 @@ export default function UpdateProduct({ product, getAll }) {
                     errors={errors}
                     type="date"
                     defaultValue={product.date}
+                    error={errors.hasOwnProperty("date")}
+                    helperText={errors.date?.message}
                 />
             </FormDialog>
         </>

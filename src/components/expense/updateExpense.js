@@ -75,6 +75,8 @@ export default function UpdateUser({ expense }) {
                     register={register}
                     errors={errors}
                     defaultValue={expense.description}
+                    error={errors.hasOwnProperty("description")}
+                    helperText={errors.description?.message}
                 />
                 <InputField
                     name="amount"
@@ -83,6 +85,8 @@ export default function UpdateUser({ expense }) {
                     register={register}
                     errors={errors}
                     defaultValue={expense.amount}
+                    error={errors.hasOwnProperty("amount")}
+                    helperText={errors.amount?.message}
                 />
                 <InputField
                     name="date"
@@ -92,6 +96,8 @@ export default function UpdateUser({ expense }) {
                     errors={errors}
                     type="date"
                     defaultValue={moment(expense.date).format("YYYY-MM-DD")}
+                    error={errors.hasOwnProperty("date")}
+                    helperText={errors.date?.message}
                 />
             </FormDialog>
         </>

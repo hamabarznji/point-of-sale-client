@@ -59,6 +59,8 @@ export default function AddProduct({ getAll }) {
                 control={control}
                 register={register}
                 errors={errors}
+                error={errors.hasOwnProperty("id")}
+                helperText={errors.id?.message}
             />
             <InputField
                 name="name"
@@ -66,6 +68,8 @@ export default function AddProduct({ getAll }) {
                 control={control}
                 register={register}
                 errors={errors}
+                error={errors.hasOwnProperty("name")}
+                helperText={errors.name?.message}
             />
             <InputField
                 name="supplier_id"
@@ -73,6 +77,8 @@ export default function AddProduct({ getAll }) {
                 control={control}
                 register={register}
                 errors={errors}
+                error={errors.hasOwnProperty("supplier_id")}
+                helperText={errors.supplier_id?.message}
             />
             <InputField
                 name="category_id"
@@ -80,6 +86,8 @@ export default function AddProduct({ getAll }) {
                 control={control}
                 register={register}
                 errors={errors}
+                error={errors.hasOwnProperty("category_id")}
+                helperText={errors.category_id?.message}
             />
             <InputField
                 name="price"
@@ -87,6 +95,8 @@ export default function AddProduct({ getAll }) {
                 control={control}
                 register={register}
                 errors={errors}
+                error={errors.hasOwnProperty("price")}
+                helperText={errors.price?.message}
             />
             <InputField
                 name="qty"
@@ -94,6 +104,8 @@ export default function AddProduct({ getAll }) {
                 control={control}
                 register={register}
                 errors={errors}
+                error={errors.hasOwnProperty("qty")}
+                helperText={errors.qty?.message}
             />
             <InputField
                 name="size"
@@ -102,6 +114,8 @@ export default function AddProduct({ getAll }) {
                 register={register}
                 errors={errors}
                 defaultValue={0}
+                error={errors.hasOwnProperty("size")}
+                helperText={errors.size?.message}
             />
             <InputField
                 name="color"
@@ -109,6 +123,8 @@ export default function AddProduct({ getAll }) {
                 control={control}
                 register={register}
                 errors={errors}
+                error={errors.hasOwnProperty("color")}
+                helperText={errors.color?.message}
             />
             <InputField
                 name="weight"
@@ -117,6 +133,8 @@ export default function AddProduct({ getAll }) {
                 register={register}
                 errors={errors}
                 defaultValue={0}
+                error={errors.hasOwnProperty("weight")}
+                helperText={errors.weight?.message}
             />
             <InputField
                 name="date"
@@ -125,6 +143,8 @@ export default function AddProduct({ getAll }) {
                 register={register}
                 errors={errors}
                 type="date"
+                error={errors.hasOwnProperty("date")}
+                helperText={errors.date?.message}
             />
         </FormDialog>
     );
