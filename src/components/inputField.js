@@ -18,26 +18,8 @@ export default function InputField({
     items,
 }) {
     const [item, setItem] = React.useState();
-    const currencies = [
-        {
-            value: "USD",
-            label: "$",
-        },
-        {
-            value: "EUR",
-            label: "€",
-        },
-        {
-            value: "BTC",
-            label: "฿",
-        },
-        {
-            value: "JPY",
-            label: "¥",
-        },
-    ];
+
     const handleChange = (event) => {
-        console.log(event.target.value);
         setItem(event.target.value);
     };
     return (

@@ -39,7 +39,7 @@ const DrawerItems = [
     },
     {
         name: "Invoice",
-        path: "/dashboard/invoice",
+        path: "/dashboard/invoices",
         icon: <ReceiptIcon color="primary" />,
     },
     {

@@ -10,6 +10,8 @@ import Drawer from "./layout/Drawer";
 import { SnackbarProvider } from "notistack";
 import User from "./components/user/user";
 import Expense from "./pages/Expense";
+import Invoice from "./pages/Invoice";
+import CreateInvoice from "./pages/CreateInvoice";
 function App() {
     const location = useLocation();
 
@@ -55,6 +57,14 @@ function App() {
                             element={<Expense />}
                         />
                         <Route path="/dashboard/stores" element={<Store />} />
+                        <Route
+                            path="/dashboard/invoices"
+                            element={<Invoice />}
+                        />
+                        <Route
+                            path="/dashboard/invoices/createinvoice"
+                            element={<CreateInvoice />}
+                        />
                     </Routes>
                 </main>
             </div>
