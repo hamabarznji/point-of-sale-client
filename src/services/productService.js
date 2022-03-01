@@ -11,25 +11,21 @@ class ProdcutService {
     }
 
     async addProduct(data) {
-        await axios.post(
-            "http://localhost:3002/prodcuts/addproduct",
-            {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("posToken"),
-                },
+        await axios.post("http://localhost:3002/prodcuts/addproduct", data, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
-            data
-        );
+        });
     }
     async updateProduct(data) {
         await axios.put(
             `http://localhost:3002/products/updateproduct/${data.id}`,
+            data,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("posToken"),
                 },
-            },
-            data
+            }
         );
     }
 }

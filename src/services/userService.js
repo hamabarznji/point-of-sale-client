@@ -15,26 +15,22 @@ class UserService {
         return res.data;
     }
     async addUser(data) {
-        const res = await axios.post(
-            "http://localhost:3002/adduser",
-            {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("posToken"),
-                },
+        const res = await axios.post("http://localhost:3002/adduser", data, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
-            data
-        );
+        });
         return res.data;
     }
     async updateUser(data) {
         const res = await axios.post(
             `http://localhost:3002/users/updateuser/${data.id}`,
+            data,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("posToken"),
                 },
-            },
-            data
+            }
         );
         return res.data;
     }

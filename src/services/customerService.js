@@ -22,25 +22,21 @@ class CustomerService {
     }
 
     async addCustomer(data) {
-        await axios.post(
-            "http://localhost:3002/customers/addcustomer",
-            {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("posToken"),
-                },
+        await axios.post("http://localhost:3002/customers/addcustomer", data, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
-            data
-        );
+        });
     }
     async updateCustomer(data) {
         await axios.put(
             `http://localhost:3002/customers/updatecustomer/${data.id}`,
+            data,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("posToken"),
                 },
-            },
-            data
+            }
         );
     }
 }

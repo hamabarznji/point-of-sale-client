@@ -11,15 +11,11 @@ class StoreService {
     }
 
     async addStore(data) {
-        await axios.post(
-            "http://localhost:3002/stores/addstore",
-            {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("posToken"),
-                },
+        await axios.post("http://localhost:3002/stores/addstore", data, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
-            data
-        );
+        });
     }
 }
 
