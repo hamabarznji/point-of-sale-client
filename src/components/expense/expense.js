@@ -1,6 +1,8 @@
 import Table from "../reactTabel";
 import React from "react";
 import ExpenseService from "../../services/expenseService";
+import StoreService from "../../services/storeService";
+
 import AddExpense from "./addExpense";
 import UpdateExpense from "./updateExpense";
 import moment from "moment";
@@ -14,9 +16,11 @@ const columns = [
 
 export default function Expense() {
     const [expenses, setExpenses] = React.useState([]);
+    const [stores, setStores] = React.useState([]);
 
     React.useEffect(() => {
         getAll();
+        getStores();
     }, []);
 
     const getAll = async () => {
@@ -28,6 +32,15 @@ export default function Expense() {
             return Promise.reject(err);
         }
     };
+    const getStores = async () => {
+        try {
+            const data = await StoreService.getStores();
+            setStores(data);
+            return Promise.resolve(data);
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
     const rows = expenses.map((expense, index) => {
         return {
             key: { index },
@@ -35,13 +48,13 @@ export default function Expense() {
             description: expense.description,
             amount: expense.amount,
             date: moment(expense.date).format("YYYY-MM-DD"),
-            action: <UpdateExpense expense={expense} />,
+            action: <UpdateExpense expense={expense} items={stores} />,
         };
     });
 
     return (
         <>
-            <AddExpense getAll={getAll} />
+            <AddExpense getAll={getAll} items={stores} />
             <Table columns={columns} rows={rows} />
         </>
     );

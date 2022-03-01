@@ -7,7 +7,7 @@ import * as yup from "yup";
 import InputField from "../inputField";
 import { useSnackbar } from "notistack";
 import moment from "moment";
-export default function UpdateUser({ expense }) {
+export default function UpdateUser({ expense, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
@@ -51,22 +51,14 @@ export default function UpdateUser({ expense }) {
                 buttonTitle="Update"
             >
                 <InputField
-                    name="id"
-                    label="Id"
-                    control={control}
-                    register={register}
-                    errors={errors}
-                    defaultValue={expense.id}
-                    disabled
-                />
-                <InputField
                     name="store_id"
-                    label="Store id"
+                    label="Store"
                     control={control}
                     register={register}
                     errors={errors}
                     defaultValue={expense.store_id}
-                    disabled
+                    select
+                    items={items}
                 />
                 <InputField
                     name="description"

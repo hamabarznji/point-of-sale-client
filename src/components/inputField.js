@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Controller } from "react-hook-form";
-import { TextField } from "@mui/material";
+import { MenuItem, TextField } from "@mui/material";
 
 export default function InputField({
     control,
@@ -15,7 +15,31 @@ export default function InputField({
     select,
     helperText,
     error,
+    items,
 }) {
+    const [item, setItem] = React.useState();
+    const currencies = [
+        {
+            value: "USD",
+            label: "$",
+        },
+        {
+            value: "EUR",
+            label: "€",
+        },
+        {
+            value: "BTC",
+            label: "฿",
+        },
+        {
+            value: "JPY",
+            label: "¥",
+        },
+    ];
+    const handleChange = (event) => {
+        console.log(event.target.value);
+        setItem(event.target.value);
+    };
     return (
         <>
             <Controller
@@ -38,8 +62,17 @@ export default function InputField({
                             helperText={helperText}
                             error={error}
                             disabled={disabled ? true : false}
-                            //select={select ? true : false}
-                        />
+                            select={select ? true : false}
+                            onChange={handleChange}
+                            value={item}
+                        >
+                            {select &&
+                                items.map((option) => (
+                                    <MenuItem key={option.id} value={option.id}>
+                                        {option.name}
+                                    </MenuItem>
+                                ))}
+                        </TextField>
                     );
                 }}
             />

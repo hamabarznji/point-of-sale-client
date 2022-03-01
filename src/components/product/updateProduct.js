@@ -7,14 +7,14 @@ import * as yup from "yup";
 import InputField from "../inputField";
 import { useSnackbar } from "notistack";
 
-export default function UpdateProduct({ product, getAll }) {
+export default function UpdateProduct({ product, getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
         id: yup.number().required("Code is required"),
         name: yup.string().required("Name is required"),
-        supplier_id: yup.number().required("Supplier id is required"),
-        category_id: yup.number().required("Category id is required"),
+        supplier_id: yup.number().required("Supplier is required"),
+        category_id: yup.number().required("Category is required"),
         price: yup.string().required("Price is required"),
         qty: yup.number(),
         size: yup.number(),
@@ -31,7 +31,6 @@ export default function UpdateProduct({ product, getAll }) {
         resolver: yupResolver(schema),
     });
     const editProductHandler = async (data) => {
-        console.log(data);
         try {
             await ProdcutService.updateProduct(data, data.id);
 
@@ -78,23 +77,27 @@ export default function UpdateProduct({ product, getAll }) {
                 />
                 <InputField
                     name="supplier_id"
-                    label="Supplier id"
+                    label="Supplier"
                     control={control}
                     register={register}
                     errors={errors}
                     defaultValue={product.supplier_id}
                     error={errors.hasOwnProperty("supplier_id")}
                     helperText={errors.supplier_id?.message}
+                    select
+                    items={items[1]}
                 />
                 <InputField
                     name="category_id"
-                    label="Category id"
+                    label="Category"
                     control={control}
                     register={register}
                     errors={errors}
                     defaultValue={product.category_id}
                     error={errors.hasOwnProperty("category_id")}
                     helperText={errors.category_id?.message}
+                    select
+                    items={items[0]}
                 />
                 <InputField
                     name="price"

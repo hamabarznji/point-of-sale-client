@@ -4,6 +4,8 @@ import ProdcutService from "../../services/productService";
 import AddProduct from "./addProduct";
 import UpdateProduct from "./updateProduct";
 import moment from "moment";
+import CategoryService from "../../services/categoryService";
+import SuppliersService from "../../services/supplierService";
 
 const columns = [
     { id: "id", label: "Code", minWidth: 100, align: "center" },
@@ -18,12 +20,37 @@ const columns = [
 ];
 
 export default function Products() {
+    const [items, setItems] = React.useState([]);
     const [products, setProducts] = React.useState([]);
 
     React.useEffect(() => {
         getAll();
+        getCategories();
+        getSuppliers();
     }, []);
 
+    const getCategories = async () => {
+        try {
+            const data = await CategoryService.getCategories();
+            setItems((prev) => {
+                return [...prev, data];
+            });
+            return Promise.resolve("done");
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
+    const getSuppliers = async () => {
+        try {
+            const data = await SuppliersService.getSuppliers();
+            setItems((prev) => {
+                return [...prev, data];
+            });
+            return Promise.resolve("done");
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
     const getAll = async () => {
         try {
             const data = await ProdcutService.getProducts();
@@ -33,6 +60,8 @@ export default function Products() {
             return Promise.reject(err);
         }
     };
+
+    console.log({ items });
     const rows = products.map((product) => {
         return {
             id: product.id,
@@ -46,15 +75,19 @@ export default function Products() {
 
             action: (
                 <div>
-                    <UpdateProduct product={product} getAll={getAll} />
+                    <UpdateProduct
+                        product={product}
+                        getAll={getAll}
+                        items={items}
+                    />
                 </div>
             ),
         };
     });
-    console.log(products);
+
     return (
         <>
-            <AddProduct getAll={getAll} />
+            <AddProduct getAll={getAll} items={items} />
             <Table columns={columns} rows={rows} />
         </>
     );

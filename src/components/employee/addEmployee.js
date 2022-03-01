@@ -7,13 +7,13 @@ import * as yup from "yup";
 import InputField from "../inputField";
 import { useSnackbar } from "notistack";
 
-export default function AddEmployee({ getAll }) {
+export default function AddEmployee({ getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
         name: yup.string().required("Name is required"),
         address: yup.string().required("Address is required"),
-        store_id: yup.number().required("Store id is required"),
+        store_id: yup.number().required("Store is required"),
         salary: yup.number().required("Salary id is required"),
         phone: yup.number().required("Phone id is required"),
     });
@@ -98,10 +98,12 @@ export default function AddEmployee({ getAll }) {
                 name="store_id"
                 defaultValue=""
                 variant="standard"
-                label="Store Id"
+                label="Store"
                 register={register}
                 error={errors.hasOwnProperty("store_id")}
                 helperText={errors.store_id?.message}
+                select
+                items={items}
             />
         </FormDialog>
     );

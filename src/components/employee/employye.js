@@ -3,6 +3,8 @@ import EmployeeService from "../../services/employeeService";
 import React from "react";
 import AddEmployee from "./addEmployee";
 import UpdateEmployee from "./updateEmployee";
+import StoreService from "../../services/storeService";
+
 const columns = [
     { id: "name", label: "Name", minWidth: 170, align: "center" },
     { id: "salary", label: "Salary", minWidth: 170, align: "center" },
@@ -13,6 +15,7 @@ const columns = [
 
 export default function Employee() {
     const [employees, setEmployees] = React.useState([]);
+    const [stores, setStores] = React.useState([]);
 
     const rows = employees.map((employee, index) => {
         return {
@@ -22,12 +25,13 @@ export default function Employee() {
             salary: employee.salary,
             address: employee.address,
             phone: employee.phone,
-            action: <UpdateEmployee employee={employee} />,
+            action: <UpdateEmployee employee={employee} items={stores} />,
         };
     });
 
     React.useEffect(() => {
         getAll();
+        getStores();
     }, []);
 
     const getAll = async () => {
@@ -39,10 +43,18 @@ export default function Employee() {
             return Promise.reject(err);
         }
     };
-
+    const getStores = async () => {
+        try {
+            const data = await StoreService.getStores();
+            setStores(data);
+            return Promise.resolve(data);
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
     return (
         <>
-            <AddEmployee getAll={getAll} />
+            <AddEmployee getAll={getAll} items={stores} />
             <Table columns={columns} rows={rows} />
         </>
     );

@@ -7,7 +7,7 @@ import * as yup from "yup";
 import InputField from "../inputField";
 import { useSnackbar } from "notistack";
 
-export default function UpdateCustomer({ employee }) {
+export default function UpdateCustomer({ employee, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
@@ -112,10 +112,12 @@ export default function UpdateCustomer({ employee }) {
                     name="store_id"
                     defaultValue={employee.store_id}
                     variant="standard"
-                    label="Store Id"
+                    label="Store"
                     register={register}
                     error={errors.hasOwnProperty("store_id")}
                     helperText={errors.store_id?.message}
+                    select
+                    items={items}
                 />
             </FormDialog>
         </>

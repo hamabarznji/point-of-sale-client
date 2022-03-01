@@ -7,14 +7,14 @@ import * as yup from "yup";
 import InputField from "../inputField";
 import { useSnackbar } from "notistack";
 
-export default function UpdateCustomer({ customer }) {
+export default function UpdateCustomer({ customer, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
         id: yup.number().required("Phone number is required"),
         name: yup.string().required("Name is required"),
-        address: yup.string().required("Address id is required"),
-        store_id: yup.number().required("Supplier id is required"),
+        address: yup.string().required("Address is required"),
+        store_id: yup.number().required("Store is required"),
     });
     const {
         register,
@@ -81,13 +81,15 @@ export default function UpdateCustomer({ customer }) {
                 />
                 <InputField
                     name="store_id"
-                    label="Store id"
+                    label="Store"
                     control={control}
                     register={register}
                     errors={errors}
                     defaultValue={customer.store_id}
                     error={errors.hasOwnProperty("store_id")}
                     helperText={errors.store_id?.message}
+                    select
+                    items={items}
                 />
             </FormDialog>
         </>

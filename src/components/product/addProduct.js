@@ -7,14 +7,14 @@ import * as yup from "yup";
 import InputField from "../inputField";
 import { useSnackbar } from "notistack";
 
-export default function AddProduct({ getAll }) {
+export default function AddProduct({ getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
         id: yup.number().required("Code is required"),
         name: yup.string().required("Name is required"),
-        supplier_id: yup.number().required("Supplier id is required"),
-        category_id: yup.number().required("Category id is required"),
+        supplier_id: yup.number().required("Supplier is required"),
+        category_id: yup.number().required("Category is required"),
         price: yup.string().required("Price is required"),
         qty: yup.number(),
         size: yup.number(),
@@ -47,6 +47,7 @@ export default function AddProduct({ getAll }) {
             return Promise.reject("Error", err);
         }
     };
+
     return (
         <FormDialog
             buttonTitle="Add Product"
@@ -72,22 +73,26 @@ export default function AddProduct({ getAll }) {
                 helperText={errors.name?.message}
             />
             <InputField
-                name="supplier_id"
-                label="Supplier id"
+                name="supplier"
+                label="Supplier"
                 control={control}
                 register={register}
                 errors={errors}
                 error={errors.hasOwnProperty("supplier_id")}
                 helperText={errors.supplier_id?.message}
+                select
+                items={items[1]}
             />
             <InputField
-                name="category_id"
-                label="Category id"
+                name="category"
+                label="Category"
                 control={control}
                 register={register}
                 errors={errors}
                 error={errors.hasOwnProperty("category_id")}
                 helperText={errors.category_id?.message}
+                select
+                items={items[0]}
             />
             <InputField
                 name="price"

@@ -1,6 +1,7 @@
 import * as React from "react";
 import Table from "../reactTabel";
 import CustomerService from "../../services/customerService";
+import StoreService from "../../services/storeService";
 
 import AddCustomer from "./addCustomer";
 import UpdateCustomer from "./updateCustomer";
@@ -14,18 +15,19 @@ const columns = [
 
 export default function Customers() {
     const [customers, setCustomers] = React.useState([]);
-
+    const [stores, setStores] = React.useState([]);
     const rows = customers.map((customer) => {
         return {
             id: customer.id,
             name: customer.name,
             address: customer.address,
-            action: <UpdateCustomer customer={customer} />,
+            action: <UpdateCustomer customer={customer} items={stores} />,
         };
     });
 
     React.useEffect(() => {
         getAll();
+        getStores();
     }, []);
 
     const getAll = async () => {
@@ -37,10 +39,19 @@ export default function Customers() {
             return Promise.reject(err);
         }
     };
+    const getStores = async () => {
+        try {
+            const data = await StoreService.getStores();
+            setStores(data);
+            return Promise.resolve(data);
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
 
     return (
         <>
-            <AddCustomer getAll={getAll} />
+            <AddCustomer getAll={getAll} items={stores} />
             <Table columns={columns} rows={rows} />
         </>
     );

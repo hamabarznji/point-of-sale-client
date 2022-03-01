@@ -7,7 +7,13 @@ import * as yup from "yup";
 import InputField from "../inputField";
 import { useSnackbar } from "notistack";
 
-export default function AddEmployee({ getAll }) {
+const roles = [
+    { id: 1, name: "Owner" },
+    { id: 2, name: "Accountant" },
+    { id: 3, name: "Warehouse" },
+];
+
+export default function AddEmployee({ getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
@@ -79,6 +85,8 @@ export default function AddEmployee({ getAll }) {
                 register={register}
                 error={errors.hasOwnProperty("role")}
                 helperText={errors.role?.message}
+                select
+                items={roles}
             />
             <InputField
                 control={control}
@@ -86,10 +94,12 @@ export default function AddEmployee({ getAll }) {
                 name="store_id"
                 defaultValue=""
                 variant="standard"
-                label="Store Id"
+                label="Store"
                 register={register}
                 error={errors.hasOwnProperty("store_id")}
                 helperText={errors.store_id?.message}
+                select
+                items={items}
             />
         </FormDialog>
     );
