@@ -3,6 +3,7 @@ import Table from "../reactTabel";
 import ProdcutService from "../../services/productService";
 import AddProduct from "./addProduct";
 import UpdateProduct from "./updateProduct";
+import moment from "moment";
 
 const columns = [
     { id: "id", label: "Code", minWidth: 100, align: "center" },
@@ -12,6 +13,7 @@ const columns = [
     { id: "qty", label: "Quantity", minWidth: 100, align: "center" },
     { id: "size", label: "Size", minWidth: 100, align: "center" },
     { id: "weight", label: "Weight", minWidth: 100, align: "center" },
+    { id: "date", label: "Date", minWidth: 100, align: "center" },
     { id: "action", label: "Action", minWidth: 100, align: "center" },
 ];
 
@@ -35,11 +37,13 @@ export default function Products() {
         return {
             id: product.id,
             name: product.name,
-            price: product.price,
+            price: `${product.price} $`,
             color: product.color,
             qty: product.qty,
             size: product.size,
             weight: product.weight,
+            date: moment(product.date).format("DD-MM-YYYY"),
+
             action: (
                 <div>
                     <UpdateProduct product={product} getAll={getAll} />
@@ -47,6 +51,7 @@ export default function Products() {
             ),
         };
     });
+    console.log(products);
     return (
         <>
             <AddProduct getAll={getAll} />

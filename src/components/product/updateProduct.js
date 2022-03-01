@@ -31,6 +31,7 @@ export default function UpdateProduct({ product, getAll }) {
         resolver: yupResolver(schema),
     });
     const editProductHandler = async (data) => {
+        console.log(data);
         try {
             await ProdcutService.updateProduct(data, data.id);
 
@@ -64,7 +65,7 @@ export default function UpdateProduct({ product, getAll }) {
                     defaultValue={product.id}
                     error={errors.hasOwnProperty("id")}
                     helperText={errors.id?.message}
-                />
+                />{" "}
                 <InputField
                     name="name"
                     label="Name"
