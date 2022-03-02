@@ -1,6 +1,6 @@
 import { Button, TableCell, TableRow } from "@mui/material";
 
-export default function renderInvoices({ invoices, setTotalAmount }) {
+export default function renderInvoices({ ordredProducts, setTotalAmount }) {
     const calculateTotalProductPrice = (price, weight, qty, size) => {
         if (weight !== 0) {
             return weight * (price / 1000);
@@ -12,45 +12,46 @@ export default function renderInvoices({ invoices, setTotalAmount }) {
     };
     const calculateTotalAmount = (invoices) => {
         let total = 0;
-        invoices.map((invoice) => {
+        ordredProducts.map((ordredProduct) => {
             return (total += calculateTotalProductPrice(
-                invoice.price,
-                invoice.weight,
-                invoice.qty,
-                invoice.size
+                ordredProduct.price,
+                ordredProduct.weight,
+                ordredProduct.qty,
+                ordredProduct.size
             ));
         });
         setTotalAmount(total);
     };
-    calculateTotalAmount(invoices);
+    calculateTotalAmount(ordredProducts);
     const Rows = () => {
-        return invoices.map((invoice, index) => {
+        return ordredProducts.map((ordredProduct, index) => {
             return (
                 <TableRow key={index}>
                     <TableCell align="center">{index + 1}</TableCell>
-                    <TableCell align="center">{invoice.product}</TableCell>
-                    <TableCell align="center">{invoice.price}</TableCell>
-                    <TableCell align="center">{invoice.weight}</TableCell>
-                    <TableCell align="center">{invoice.qty}</TableCell>
-                    <TableCell align="center">{invoice.color}</TableCell>
+                    <TableCell align="center">
+                        {ordredProduct.product}
+                    </TableCell>
+                    <TableCell align="center">{ordredProduct.price}</TableCell>
+                    <TableCell align="center">{ordredProduct.weight}</TableCell>
+                    <TableCell align="center">{ordredProduct.qty}</TableCell>
+                    <TableCell align="center">{ordredProduct.color}</TableCell>
                     <TableCell align="center">
                         {calculateTotalProductPrice(
-                            invoice.price,
-                            invoice.weight,
-                            invoice.qty,
-                            invoice.size
+                            ordredProduct.price,
+                            ordredProduct.weight,
+                            ordredProduct.qty,
+                            ordredProduct.size
                         )}
                     </TableCell>
                     <TableCell align="center">
                         <Button
-                            variant="contained"
                             color="secondary"
                             onClick={() => {
-                                invoices.splice(index, 1);
-                                calculateTotalAmount(invoices);
+                                ordredProducts.splice(index, 1);
+                                calculateTotalAmount(ordredProducts);
                             }}
                         >
-                            Delete
+                            X
                         </Button>
                     </TableCell>
                 </TableRow>

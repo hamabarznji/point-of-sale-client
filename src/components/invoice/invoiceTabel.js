@@ -12,18 +12,21 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useSnackbar } from "notistack";
-import RenderInvoices from "./renderInvoices";
+import RenderOrderedProducts from "./renderOrderedProducts";
 import CustomeTableHead from "./tableHead";
 import ColumnName from "./columnName";
 import CustomerService from "../../services/customerService";
 import StoreService from "../../services/storeService";
 import moment from "moment";
+
 export default function SpanningTable() {
     const [customers, setCustomers] = React.useState([]);
     const [stores, setStores] = React.useState([]);
-    const [invoices, setInvoices] = React.useState([]);
+    const [ordredProducts, setOrderedProducts] = React.useState([]);
+    const invoice = [];
     const [totalAmount, setTotalAmount] = React.useState(0);
     const date = moment().format("YYYY-MM-DD");
+
     const enqueueSnackbar = useSnackbar();
     const schema = yup.object().shape({
         product: yup.string().required("Product name is required"),
@@ -62,7 +65,7 @@ export default function SpanningTable() {
 
     const onSubmit = (data, e) => {
         e.preventDefault();
-        setInvoices((prev) => {
+        setOrderedProducts((prev) => {
             return [...prev, data];
         });
         // reset({});
@@ -73,14 +76,49 @@ export default function SpanningTable() {
         getStores();
     }, []);
 
-    const isInvoice = invoices.length > 0;
+    const checkOutHandler = () => {
+        if (ordredProducts.length === 0) {
+            enqueueSnackbar("Please add some products");
+        } else {
+            invoice.push({ totalAmount, date, products: ordredProducts });
+            console.log(invoice);
+            setOrderedProducts([]);
+            setTotalAmount(0);
+        }
+    };
 
+    /* 
+    const onSubmitInvoice = async (data, e) => { 
+        e.preventDefault();
+        const invoiceData = {
+            customerId: data.customer,
+            storeId: data.store,
+            date: date,
+            products: ordredProducts,
+            totalAmount: totalAmount,
+        };
+        try {
+            const results = await CustomerService.createInvoice(invoiceData);
+            setInvoice(results);
+            enqueueSnackbar("Invoice created successfully", {
+                variant: "success",
+            });
+            reset();
+            setOrderedProducts([]);
+            setTotalAmount(0);
+        } catch (err) {
+            enqueueSnackbar("Error creating invoice", {
+                variant: "error",
+            });
+        }
+    } */
+    const isInvoice = ordredProducts.length > 0;
     const Footer = () => {
         return (
             isInvoice && (
                 <TableRow
                     style={{ background: "#EDE6D9" }}
-                    setInvoices={setInvoices}
+                    setOrderedProducts={setOrderedProducts}
                 >
                     <TableCell>
                         {" "}
@@ -90,7 +128,7 @@ export default function SpanningTable() {
                         <Typography variant="h5">${totalAmount}</Typography>
                     </TableCell>
                     <TableCell align="center">
-                        <Button>Checkout</Button>
+                        <Button onClick={checkOutHandler}>Checkout</Button>
                     </TableCell>
                 </TableRow>
             )
@@ -187,8 +225,8 @@ export default function SpanningTable() {
                         </TableHead>
                         <TableBody>
                             {isInvoice && (
-                                <RenderInvoices
-                                    invoices={invoices}
+                                <RenderOrderedProducts
+                                    ordredProducts={ordredProducts}
                                     setTotalAmount={setTotalAmount}
                                     //productDeleteHandler={productDeleteHandler}
                                 />
