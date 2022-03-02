@@ -23,39 +23,39 @@ export default function renderInvoices({ invoices, setTotalAmount }) {
         setTotalAmount(total);
     };
     calculateTotalAmount(invoices);
-    return invoices.map((invoice, index) => {
-        return (
-            <>
+    const Rows = () => {
+        return invoices.map((invoice, index) => {
+            return (
                 <TableRow key={index}>
                     <TableCell align="center">{index + 1}</TableCell>
                     <TableCell align="center">{invoice.product}</TableCell>
-                    <TableCell align="center">{`${invoice.price}$`}</TableCell>
-                    <TableCell align="center">{`${invoice.weight}kg`}</TableCell>
+                    <TableCell align="center">{invoice.price}</TableCell>
+                    <TableCell align="center">{invoice.weight}</TableCell>
                     <TableCell align="center">{invoice.qty}</TableCell>
                     <TableCell align="center">{invoice.color}</TableCell>
                     <TableCell align="center">
-                        {`${calculateTotalProductPrice(
+                        {calculateTotalProductPrice(
                             invoice.price,
                             invoice.weight,
                             invoice.qty,
                             invoice.size
-                        )}$`}
+                        )}
                     </TableCell>
                     <TableCell align="center">
-                        {
-                            <Button
-                                value={index}
-                                onClick={(e) => {
-                                    console.log(e.target);
-                                    // productDeleteHandler(e.target.value);
-                                }}
-                            >
-                                X
-                            </Button>
-                        }
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => {
+                                invoices.splice(index, 1);
+                                calculateTotalAmount(invoices);
+                            }}
+                        >
+                            Delete
+                        </Button>
                     </TableCell>
                 </TableRow>
-            </>
-        );
-    });
+            );
+        });
+    };
+    return <Rows />;
 }

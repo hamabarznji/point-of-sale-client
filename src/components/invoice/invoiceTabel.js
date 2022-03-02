@@ -15,8 +15,12 @@ import { useSnackbar } from "notistack";
 import RenderInvoices from "./renderInvoices";
 import CustomeTableHead from "./tableHead";
 import ColumnName from "./columnName";
+import CustomerService from "../../services/customerService";
+import StoreService from "../../services/storeService";
 import moment from "moment";
 export default function SpanningTable() {
+    const [customers, setCustomers] = React.useState([]);
+    const [stores, setStores] = React.useState([]);
     const [invoices, setInvoices] = React.useState([]);
     const [totalAmount, setTotalAmount] = React.useState(0);
     const date = moment().format("YYYY-MM-DD");
@@ -37,6 +41,24 @@ export default function SpanningTable() {
     } = useForm({
         resolver: yupResolver(schema),
     });
+    const getCUstomers = async () => {
+        try {
+            const results = await CustomerService.getCustomers();
+            setCustomers(results);
+            return Promise.resolve(results);
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
+    const getStores = async () => {
+        try {
+            const results = await StoreService.getStores();
+            setCustomers(results);
+            return Promise.resolve(results);
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
 
     const onSubmit = (data, e) => {
         e.preventDefault();
@@ -45,15 +67,14 @@ export default function SpanningTable() {
         });
         // reset({});
     };
+
+    React.useEffect(() => {
+        getCUstomers();
+        getStores();
+    }, []);
+
     const isInvoice = invoices.length > 0;
 
-    const productDeleteHandler = (target) => {
-        console.log(target);
-        /* const index = invoices.indexOf(2);
-        const newInvoces = invoices.splice(index, 1);
-        console.log(index);
-        //setInvoices(newInvoces); */
-    };
     const Footer = () => {
         return (
             isInvoice && (
@@ -66,7 +87,7 @@ export default function SpanningTable() {
                         <Typography variant="h5">Total:</Typography>{" "}
                     </TableCell>
                     <TableCell align="center">
-                        <Typography variant="h5">{totalAmount}</Typography>
+                        <Typography variant="h5">${totalAmount}</Typography>
                     </TableCell>
                     <TableCell align="center">
                         <Button>Checkout</Button>
@@ -147,6 +168,7 @@ export default function SpanningTable() {
             </TableCell>
         </TableRow>
     );
+
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>

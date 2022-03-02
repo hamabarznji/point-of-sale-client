@@ -1,5 +1,15 @@
 import { TableCell, TableRow } from "@mui/material";
 
+const columns = [
+    { id: "#", label: "#", minWidth: 100, align: "center" },
+    { id: "product", label: "Product", minWidth: 170, align: "center" },
+    { id: "price", label: "Price", minWidth: 170, align: "center" },
+    { id: "weight", label: "Weight", minWidth: 170, align: "center" },
+    { id: "qty", label: "Qty", minWidth: 170, align: "center" },
+    { id: "color", label: "Color", minWidth: 170, align: "center" },
+    { id: "total", label: "Total", minWidth: 170, align: "center" },
+    { id: "action", label: "", minWidth: 170, align: "center" },
+];
 export default function columnNames({ invoices, setTotalAmount }) {
     return (
         <>
@@ -9,32 +19,17 @@ export default function columnNames({ invoices, setTotalAmount }) {
                     background: "black",
                 }}
             >
-                <TableCell align="center" style={{ color: "white" }}>
-                    #
-                </TableCell>
-                <TableCell align="center" style={{ color: "white" }}>
-                    Product Name
-                </TableCell>
-                <TableCell align="center" style={{ color: "white" }}>
-                    Price
-                </TableCell>
-                <TableCell align="center" style={{ color: "white" }}>
-                    Weight
-                </TableCell>
-                <TableCell align="center" style={{ color: "white" }}>
-                    Quantity
-                </TableCell>
-                <TableCell align="center" style={{ color: "white" }}>
-                    Color
-                </TableCell>
-
-                <TableCell align="center" style={{ color: "white" }}>
-                    Total
-                </TableCell>
-                <TableCell
-                    align="center"
-                    style={{ color: "white" }}
-                ></TableCell>
+                {columns.map((column, index) => {
+                    return (
+                        <TableCell
+                            align="center"
+                            style={{ color: "white" }}
+                            key={index}
+                        >
+                            {column.label}
+                        </TableCell>
+                    );
+                })}
             </TableRow>
         </>
     );
