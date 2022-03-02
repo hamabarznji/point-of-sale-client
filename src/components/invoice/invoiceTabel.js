@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import InputField from "../inputField";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,9 +14,11 @@ import * as yup from "yup";
 import { useSnackbar } from "notistack";
 import RenderInvoices from "./renderInvoices";
 import CustomeTableHead from "./tableHead";
+import ColumnName from "./columnName";
 import moment from "moment";
 export default function SpanningTable() {
     const [invoices, setInvoices] = React.useState([]);
+    const [totalAmount, setTotalAmount] = React.useState(0);
     const date = moment().format("YYYY-MM-DD");
     const enqueueSnackbar = useSnackbar();
     const schema = yup.object().shape({
@@ -25,28 +27,54 @@ export default function SpanningTable() {
         price: yup.number().required("Price is required"),
         weight: yup.number().required("Weight is required"),
         qty: yup.number().required("Quantity id is required"),
-        size: yup.number().required("Size id is required"),
     });
     const {
         register,
         handleSubmit,
         control,
+        reset,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema),
     });
-
-    // React.useEffect(() => {}, [invoices.length]);
 
     const onSubmit = (data, e) => {
         e.preventDefault();
         setInvoices((prev) => {
             return [...prev, data];
         });
+        // reset({});
     };
     const isInvoice = invoices.length > 0;
-    console.log(invoices);
 
+    const productDeleteHandler = (target) => {
+        console.log(target);
+        /* const index = invoices.indexOf(2);
+        const newInvoces = invoices.splice(index, 1);
+        console.log(index);
+        //setInvoices(newInvoces); */
+    };
+    const Footer = () => {
+        return (
+            isInvoice && (
+                <TableRow
+                    style={{ background: "#EDE6D9" }}
+                    setInvoices={setInvoices}
+                >
+                    <TableCell>
+                        {" "}
+                        <Typography variant="h5">Total:</Typography>{" "}
+                    </TableCell>
+                    <TableCell align="center">
+                        <Typography variant="h5">{totalAmount}</Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                        <Button>Checkout</Button>
+                    </TableCell>
+                </TableRow>
+            )
+        );
+    };
     const Inputs = () => (
         <TableRow>
             <TableCell align="center">
@@ -115,19 +143,6 @@ export default function SpanningTable() {
                 />
             </TableCell>{" "}
             <TableCell align="center">
-                <InputField
-                    control={control}
-                    errors={errors}
-                    name="size"
-                    defaultValue=""
-                    variant="outlined"
-                    label="Size"
-                    register={register}
-                    error={errors.hasOwnProperty("size")}
-                    helperText={errors.size?.message}
-                />
-            </TableCell>
-            <TableCell align="center">
                 {<Button type="submit">Add</Button>}
             </TableCell>
         </TableRow>
@@ -146,74 +161,18 @@ export default function SpanningTable() {
                     >
                         <TableHead>
                             <CustomeTableHead date={date} />
-                            <TableRow
-                                style={{
-                                    background: "black",
-                                }}
-                            >
-                                <TableCell
-                                    align="center"
-                                    style={{ color: "white" }}
-                                >
-                                    #
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{ color: "white" }}
-                                >
-                                    Product Name
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{ color: "white" }}
-                                >
-                                    Price
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{ color: "white" }}
-                                >
-                                    Weight
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{ color: "white" }}
-                                >
-                                    Quantity
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{ color: "white" }}
-                                >
-                                    Color
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{ color: "white" }}
-                                >
-                                    Size
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{ color: "white" }}
-                                >
-                                    Total
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    style={{ color: "white" }}
-                                ></TableCell>
-                            </TableRow>
+                            <ColumnName />
                         </TableHead>
                         <TableBody>
                             {isInvoice && (
-                                <RenderInvoices invoices={invoices} />
+                                <RenderInvoices
+                                    invoices={invoices}
+                                    setTotalAmount={setTotalAmount}
+                                    //productDeleteHandler={productDeleteHandler}
+                                />
                             )}
 
-                            <TableRow style={{ background: "#EDE6D9" }}>
-                                <TableCell>Total</TableCell>
-                                <TableCell align="center">12344$</TableCell>
-                            </TableRow>
+                            <Footer />
                         </TableBody>
                         <Inputs />
                     </Table>
