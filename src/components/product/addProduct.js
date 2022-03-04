@@ -30,8 +30,9 @@ export default function AddProduct({ getAll, items }) {
     } = useForm({
         resolver: yupResolver(schema),
     });
-
+    console.log(errors);
     const addProductHandler = async (data) => {
+        console.log(data);
         try {
             await ProdcutService.addProduct(data);
             getAll();
@@ -73,7 +74,7 @@ export default function AddProduct({ getAll, items }) {
                 helperText={errors.name?.message}
             />
             <InputField
-                name="supplier"
+                name="supplier_id"
                 label="Supplier"
                 control={control}
                 register={register}
@@ -84,7 +85,7 @@ export default function AddProduct({ getAll, items }) {
                 items={items[1]}
             />
             <InputField
-                name="category"
+                name="category_id"
                 label="Category"
                 control={control}
                 register={register}

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-class ProdcutService {
-    async getProducts() {
-        const res = await axios.get("http://localhost:3002/products", {
+class TransactionService {
+    async getTransactions() {
+        const res = await axios.get("http://localhost:3002/transactions", {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
@@ -10,15 +10,15 @@ class ProdcutService {
         return res.data;
     }
 
-    async addProduct(data) {
-        await axios.post("http://localhost:3002/prodcuts", data, {
+    async addTransaction(data) {
+        await axios.post("http://localhost:3002/transactions", data, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
         });
     }
-    async updateProduct(data) {
-        await axios.put(`http://localhost:3002/products/${data.id}`, data, {
+    async updateTransaction(data) {
+        await axios.put(`http://localhost:3002/transactions/${data.id}`, data, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
@@ -26,4 +26,4 @@ class ProdcutService {
     }
 }
 
-export default new ProdcutService();
+export default new TransactionService();

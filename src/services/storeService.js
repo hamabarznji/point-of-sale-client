@@ -11,7 +11,14 @@ class StoreService {
     }
 
     async addStore(data) {
-        await axios.post("http://localhost:3002/stores/addstore", data, {
+        await axios.post("http://localhost:3002/stores", data, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
+            },
+        });
+    }
+    async updateStore(data) {
+        await axios.put(`http://localhost:3002/stores/${data.id}`, data, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
             },

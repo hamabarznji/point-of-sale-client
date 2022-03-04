@@ -2,7 +2,7 @@ import axios from "axios";
 
 class UserService {
     async login(data) {
-        const res = await axios.post("http://localhost:3002/user/login", data);
+        const res = await axios.post("http://localhost:3002/login", data);
         return res.data;
     }
 
@@ -15,7 +15,7 @@ class UserService {
         return res.data;
     }
     async addUser(data) {
-        const res = await axios.post("http://localhost:3002/adduser", data, {
+        const res = await axios.post("http://localhost:3002/users", data, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
@@ -24,7 +24,7 @@ class UserService {
     }
     async updateUser(data) {
         const res = await axios.post(
-            `http://localhost:3002/users/updateuser/${data.id}`,
+            `http://localhost:3002/users/${data.id}`,
             data,
             {
                 headers: {

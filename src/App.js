@@ -12,6 +12,7 @@ import User from "./components/user/user";
 import Expense from "./pages/Expense";
 import Invoice from "./pages/Invoice";
 import CreateInvoice from "./pages/CreateInvoice";
+import Transaction from "./pages/Transaction";
 function App() {
     const location = useLocation();
 
@@ -64,6 +65,10 @@ function App() {
                         <Route
                             path="/dashboard/invoices/createinvoice"
                             element={<CreateInvoice />}
+                        />
+                        <Route
+                            path="/dashboard/transactions"
+                            element={<Transaction />}
                         />
                     </Routes>
                 </main>

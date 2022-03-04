@@ -6,9 +6,7 @@ export default function renderInvoices({ ordredProducts, setTotalAmount }) {
             return weight * (price / 1000);
         } else if (qty !== 0) {
             return qty * price;
-        } else if (size !== 0) {
-            return size * price;
-        }
+        } 
     };
     const calculateTotalAmount = (invoices) => {
         let total = 0;

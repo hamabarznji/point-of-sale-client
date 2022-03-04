@@ -19,22 +19,18 @@ class EmployeeService {
     }
 
     async addEmployee(data) {
-        await axios.post("http://localhost:3002/employees/addemployee", data, {
+        await axios.post("http://localhost:3002/employees", data, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
         });
     }
     async updateEmployee(data) {
-        await axios.put(
-            `http://localhost:3002/employees/updateemployee/${data.id}`,
-            data,
-            {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("posToken"),
-                },
-            }
-        );
+        await axios.put(`http://localhost:3002/employees/${data.id}`, data, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
+            },
+        });
     }
 }
 

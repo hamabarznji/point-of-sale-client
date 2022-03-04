@@ -7,7 +7,7 @@ import * as yup from "yup";
 import InputField from "../inputField";
 import { useSnackbar } from "notistack";
 
-export default function UpdateCustomer({ employee, items }) {
+export default function UpdateCustomer({ employee, items, getAll }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
@@ -34,7 +34,6 @@ export default function UpdateCustomer({ employee, items }) {
             enqueueSnackbar("Employee updated successfully", {
                 variant: "success",
             });
-
             return Promise.resolve("Done");
         } catch (err) {
             enqueueSnackbar("Employee is not updated! something went wrong.", {

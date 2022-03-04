@@ -19,7 +19,7 @@ import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-
+import TransformIcon from "@mui/icons-material/Transform";
 import { Link } from "react-router-dom";
 
 import Appbar from "./AppBar";
@@ -36,6 +36,11 @@ const DrawerItems = [
         name: "Product",
         path: "/dashboard/products",
         icon: <Inventory2Icon color="primary" />,
+    },
+    {
+        name: "Transaction",
+        path: "/dashboard/transactions",
+        icon: <TransformIcon color="primary" />,
     },
     {
         name: "Invoice",
