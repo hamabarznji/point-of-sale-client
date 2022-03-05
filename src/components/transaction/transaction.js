@@ -62,8 +62,8 @@ export default function Products() {
     const rows = transactions.map((transaction) => {
         return {
             id: transaction.id,
-            store: transaction.store_id,
-            product: transaction.product_id,
+            store: transaction.storeName,
+            product: transaction.productName,
             qty: transaction.qty,
             weight: transaction.weight,
             date: moment(transaction.date).format("YYYY-MM-DD"),

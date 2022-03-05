@@ -46,7 +46,7 @@ export default function User() {
             id: user.id,
             name: user.username,
             role: user.role,
-            store: user.store_id,
+            store: user.storeName,
             action: <UpdateUser user={user} />,
         };
     });

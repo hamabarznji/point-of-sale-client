@@ -7,7 +7,7 @@ import AddExpense from "./addExpense";
 import UpdateExpense from "./updateExpense";
 import moment from "moment";
 const columns = [
-    { id: "store_id", label: "Store", minWidth: 170, align: "center" },
+    { id: "storeName", label: "Store", minWidth: 170, align: "center" },
     { id: "description", label: "Description", minWidth: 170, align: "center" },
     { id: "amount", label: "Amount", minWidth: 170, align: "center" },
     { id: "date", label: "Date", minWidth: 170, align: "center" },
@@ -45,6 +45,7 @@ export default function Expense() {
         return {
             key: { index },
             store_id: expense.store_id,
+            storeName: expense.storeName,
             description: expense.description,
             amount: expense.amount,
             date: moment(expense.date).format("YYYY-MM-DD"),
