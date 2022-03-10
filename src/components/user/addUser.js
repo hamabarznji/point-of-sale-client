@@ -1,10 +1,10 @@
 import * as React from "react";
-import UserService from "../../services/userService";
+import UserService from "../../services/UserService";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormDialog from "../formDialog";
+import FormDialog from "../FormDialog";
 import * as yup from "yup";
-import InputField from "../inputField";
+import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
 const roles = [
@@ -13,7 +13,7 @@ const roles = [
     { id: 3, name: "Warehouse" },
 ];
 
-export default function AddEmployee({ getAll, items }) {
+export default function AddUser({ getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({

@@ -1,9 +1,9 @@
-import Table from "../reactTabel";
-import EmployeeService from "../../services/employeeService";
+import Table from "../ReactTabel";
+import EmployeeService from "../../services/EmployeeService";
 import React from "react";
-import AddEmployee from "./addEmployee";
-import UpdateEmployee from "./updateEmployee";
-import StoreService from "../../services/storeService";
+import AddEmployee from "./AddEmployee";
+import UpdateEmployee from "./UpdateEmployee";
+import StoreService from "../../services/StoreService";
 
 const columns = [
     { id: "name", label: "Name", minWidth: 170, align: "center" },

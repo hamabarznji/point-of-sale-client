@@ -1,7 +1,7 @@
 import axios from "axios";
 
-class TransactionService {
-    async getTransactions() {
+class TransfareedProductService {
+    async getTransfareedProduct() {
         const res = await axios.get("http://localhost:3002/transactions", {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
@@ -10,14 +10,14 @@ class TransactionService {
         return res.data;
     }
 
-    async addTransaction(data) {
+    async addTransfareedProduct(data) {
         await axios.post("http://localhost:3002/transactions", data, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
         });
     }
-    async updateTransaction(data) {
+    async updateTransfareedProduct(data) {
         await axios.put(`http://localhost:3002/transactions/${data.id}`, data, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
@@ -26,4 +26,4 @@ class TransactionService {
     }
 }
 
-export default new TransactionService();
+export default new TransfareedProductService();

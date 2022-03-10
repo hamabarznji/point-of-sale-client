@@ -1,8 +1,8 @@
-import Table from "../reactTabel";
+import Table from "../ReactTabel";
 import React from "react";
-import StoreService from "../../services/storeService";
-import AddStore from "./addStore";
-import UpdateStore from "./updateStore";
+import StoreService from "../../services/StoreService";
+import AddStore from "./AddStore";
+import UpdateStore from "./UpdateStore";
 const columns = [
     { id: "name", label: "Name", minWidth: 170, align: "center" },
     { id: "location", label: "Locaton", minWidth: 170, align: "center" },
@@ -10,7 +10,7 @@ const columns = [
     { id: "action", label: "Action", minWidth: 170, align: "center" },
 ];
 
-export default function Expense() {
+export default function Store() {
     const [stores, setStores] = React.useState([]);
 
     React.useEffect(() => {

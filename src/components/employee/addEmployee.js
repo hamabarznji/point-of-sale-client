@@ -1,10 +1,10 @@
 import * as React from "react";
-import EmployeeService from "../../services/employeeService";
+import EmployeeService from "../../services/EmployeeService";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormDialog from "../formDialog";
+import FormDialog from "../FormDialog";
 import * as yup from "yup";
-import InputField from "../inputField";
+import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
 export default function AddEmployee({ getAll, items }) {

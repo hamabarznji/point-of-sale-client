@@ -1,17 +1,23 @@
 import * as React from "react";
-import TransactionService from "../../services/transactionService";
-import FormDialog from "../formDialog";
+import TransfareedProductService from "../../services/TransfareedProductService";
+import FormDialog from "../FormDialog";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import InputField from "../inputField";
+import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 import moment from "moment";
 
-export default function AddProduct({ getAll, items }) {
+export default function UpdateTransfareedProduct({
+    getAll,
+    items,
+    transfareedProduct,
+}) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
+        id: yup.number().required("Id is required"),
+
         store_id: yup.number().required("Store name is required"),
         product_id: yup.number().required("Product name is required"),
         qty: yup.string().required("Quantity is required"),
@@ -27,18 +33,21 @@ export default function AddProduct({ getAll, items }) {
         resolver: yupResolver(schema),
     });
 
-    const transfareProductHandler = async (data) => {
+    const updateTransfareedProductnHandler = async (data) => {
         try {
-            await TransactionService.addTransaction(data);
-            //getAll();
-            enqueueSnackbar("Product added successfully", {
+            await TransfareedProductService.updateTransaction(data);
+            getAll();
+            enqueueSnackbar("Transaction updated successfully", {
                 variant: "success",
             });
             return Promise.resolve("Done");
         } catch (err) {
-            enqueueSnackbar("Product is not added! something went wrong.", {
-                variant: "error",
-            });
+            enqueueSnackbar(
+                "Transaction is not updated! something went wrong.",
+                {
+                    variant: "error",
+                }
+            );
 
             return Promise.reject("Error", err);
         }
@@ -46,13 +55,25 @@ export default function AddProduct({ getAll, items }) {
 
     return (
         <FormDialog
-            buttonTitle="Product Transaction"
-            title="Product Transaction"
-            handleSubmit={handleSubmit(transfareProductHandler)}
+            buttonTitle="Update"
+            title="Update Transaction"
+            handleSubmit={handleSubmit(updateTransfareedProductnHandler)}
         >
+            <InputField
+                name="id"
+                label="Id"
+                defaultValue={transfareedProduct.id}
+                control={control}
+                register={register}
+                errors={errors}
+                error={errors.hasOwnProperty("id")}
+                helperText={errors.id?.message}
+                disabled
+            />{" "}
             <InputField
                 name="store_id"
                 label="Store Name"
+                defaultValue={transfareedProduct.store_id}
                 control={control}
                 register={register}
                 errors={errors}
@@ -64,6 +85,7 @@ export default function AddProduct({ getAll, items }) {
             <InputField
                 name="product_id"
                 label="Product Name"
+                defaultValue={transfareedProduct.product_id}
                 control={control}
                 register={register}
                 errors={errors}
@@ -75,17 +97,18 @@ export default function AddProduct({ getAll, items }) {
             <InputField
                 name="weight"
                 label="Weight"
+                defaultValue={transfareedProduct.weight}
                 control={control}
                 register={register}
                 errors={errors}
                 error={errors.hasOwnProperty("weight")}
                 helperText={errors.weight?.message}
             />
-
             <InputField
                 name="qty"
                 label="Quantity"
                 control={control}
+                defaultValue={transfareedProduct.qty}
                 register={register}
                 errors={errors}
                 error={errors.hasOwnProperty("qty")}
@@ -94,12 +117,14 @@ export default function AddProduct({ getAll, items }) {
             <InputField
                 name="date"
                 label="Date"
+                defaultValue={moment(transfareedProduct.date).format(
+                    "YYYY-MM-DD"
+                )}
                 control={control}
                 register={register}
                 errors={errors}
                 error={errors.hasOwnProperty("date")}
                 helperText={errors.date?.message}
-                //defaultValue={moment()}
             />
         </FormDialog>
     );

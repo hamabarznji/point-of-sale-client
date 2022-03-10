@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 
 import loginImage from "../../assets/login.svg";
-import LoginForm from "./loginForm";
+import LoginForm from "./LoginForm";
 
 export default function Loin() {
     return (

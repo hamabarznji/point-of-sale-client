@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { Button, Grid, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import UserService from "../../services/userService";
+import UserService from "../../services/UserService";
 
 const useStyles = makeStyles({
     textField: {

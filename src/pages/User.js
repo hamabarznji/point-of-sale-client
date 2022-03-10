@@ -1,4 +1,4 @@
-import UserComponent from "../components/user/user";
+import UserComponent from "../components/user/User";
 
 export default function User() {
     return (

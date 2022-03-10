@@ -7,16 +7,16 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, Typography } from "@mui/material";
-import InputField from "../inputField";
+import InputField from "../../InputField";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useSnackbar } from "notistack";
-import RenderOrderedProducts from "./renderOrderedProducts";
-import CustomeTableHead from "./tableHead";
-import ColumnName from "./columnName";
-import CustomerService from "../../services/customerService";
-import StoreService from "../../services/storeService";
+import RenderOrderedProducts from "./RenderOrderedProducts";
+import CustomeTableHead from "./TableHead";
+import ColumnName from "./ColumnName";
+import CustomerService from "../../../services/CustomerService";
+import StoreService from "../../../services/StoreService";
 import moment from "moment";
 
 export default function SpanningTable() {

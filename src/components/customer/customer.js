@@ -1,10 +1,10 @@
 import * as React from "react";
-import Table from "../reactTabel";
-import CustomerService from "../../services/customerService";
-import StoreService from "../../services/storeService";
+import Table from "../ReactTabel";
+import CustomerService from "../../services/CustomerService";
+import StoreService from "../../services/StoreService";
 
-import AddCustomer from "./addCustomer";
-import UpdateCustomer from "./updateCustomer";
+import AddCustomer from "./AddCustomer";
+import UpdateCustomer from "./UpdateCustomer";
 
 const columns = [
     { id: "id", label: "Phone", minWidth: 170, align: "center" },

@@ -1,10 +1,10 @@
-import Table from "../reactTabel";
+import Table from "../ReactTabel";
 import React from "react";
-import ExpenseService from "../../services/expenseService";
-import StoreService from "../../services/storeService";
+import ExpenseService from "../../services/ExpenseService";
+import StoreService from "../../services/StoreService";
 
-import AddExpense from "./addExpense";
-import UpdateExpense from "./updateExpense";
+import AddExpense from "./AddExpense";
+import UpdateExpense from "./UpdateExpense";
 import moment from "moment";
 const columns = [
     { id: "storeName", label: "Store", minWidth: 170, align: "center" },

@@ -1,13 +1,13 @@
 import * as React from "react";
-import CustomerService from "../../services/customerService";
+import CustomerService from "../../services/CustomerService";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormDialog from "../formDialog";
+import FormDialog from "../FormDialog";
 import * as yup from "yup";
-import InputField from "../inputField";
+import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
-export default function AddEmployee({ getAll, items }) {
+export default function AddCustomer({ getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({

@@ -1,10 +1,10 @@
 import * as React from "react";
-import ProdcutService from "../../services/productService";
-import FormDialog from "../formDialog";
+import ProdcutService from "../../services/ProductService";
+import FormDialog from "../FormDialog";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import InputField from "../inputField";
+import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
 export default function AddProduct({ getAll, items }) {

@@ -1,10 +1,10 @@
 import * as React from "react";
-import UserService from "../../services/userService";
-import FormDialog from "../formDialog";
+import UserService from "../../services/UserService";
+import FormDialog from "../FormDialog";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import InputField from "../inputField";
+import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
 export default function UpdateUser({ user }) {
