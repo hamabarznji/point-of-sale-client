@@ -7,14 +7,13 @@ import * as yup from "yup";
 import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
-export default function UpdateCustomer({ customer, items }) {
+export default function UpdateCustomer({ customer }) {
     const { enqueueSnackbar } = useSnackbar();
-
+    const [temptId, setTempId] = React.useState(customer.id);
     const schema = yup.object().shape({
         id: yup.number().required("Phone number is required"),
         name: yup.string().required("Name is required"),
         address: yup.string().required("Address is required"),
-        store_id: yup.number().required("Store is required"),
     });
     const {
         register,
@@ -26,7 +25,13 @@ export default function UpdateCustomer({ customer, items }) {
     });
     const editCustomerHandler = async (data) => {
         try {
-            await CustomerService.updateCustomer(data, data.id);
+            await CustomerService.updateCustomer({
+                id: temptId,
+                newId: data.id,
+                name: data.name,
+                address: data.address,
+                store_id: localStorage.getItem("storeId"),
+            });
 
             enqueueSnackbar("Customer updated successfully", {
                 variant: "success",
@@ -78,18 +83,6 @@ export default function UpdateCustomer({ customer, items }) {
                     defaultValue={customer.address}
                     error={errors.hasOwnProperty("address")}
                     helperText={errors.address?.message}
-                />
-                <InputField
-                    name="store_id"
-                    label="Store"
-                    control={control}
-                    register={register}
-                    errors={errors}
-                    defaultValue={customer.store_id}
-                    error={errors.hasOwnProperty("store_id")}
-                    helperText={errors.store_id?.message}
-                    select
-                    items={items}
                 />
             </FormDialog>
         </>

@@ -13,7 +13,6 @@ export default function AddEmployee({ getAll, items }) {
     const schema = yup.object().shape({
         name: yup.string().required("Name is required"),
         address: yup.string().required("Address is required"),
-        store_id: yup.number().required("Store is required"),
         salary: yup.number().required("Salary id is required"),
         phone: yup.number().required("Phone id is required"),
     });
@@ -28,7 +27,13 @@ export default function AddEmployee({ getAll, items }) {
 
     const addEmployeeHandler = async (data) => {
         try {
-            await EmployeeService.addEmployee(data);
+            await EmployeeService.addEmployee({
+                name: data.name,
+                address: data.address,
+                salary: data.salary,
+                phone: data.phone,
+                store_id: localStorage.getItem("storeId"),
+            });
             enqueueSnackbar("Employee added successfully.", {
                 variant: "success",
             });
@@ -91,19 +96,6 @@ export default function AddEmployee({ getAll, items }) {
                 register={register}
                 error={errors.hasOwnProperty("phone")}
                 helperText={errors.phone?.message}
-            />
-            <InputField
-                control={control}
-                errors={errors}
-                name="store_id"
-                defaultValue=""
-                variant="standard"
-                label="Store"
-                register={register}
-                error={errors.hasOwnProperty("store_id")}
-                helperText={errors.store_id?.message}
-                select
-                items={items}
             />
         </FormDialog>
     );

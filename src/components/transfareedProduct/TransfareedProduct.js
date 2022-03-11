@@ -23,14 +23,12 @@ export default function TransfareedProduct() {
 
     React.useEffect(() => {
         getAll();
-        getStores();
         getProducts();
     }, []);
-
     const getAll = async () => {
         try {
             const data =
-                await TransfareedProductService.getTransfareedProduct();
+                await TransfareedProductService.getTransfareedProducts();
             setTransfareedProducts(data);
             return Promise.resolve("done");
         } catch (err) {
@@ -40,15 +38,13 @@ export default function TransfareedProduct() {
     const getProducts = async () => {
         try {
             const data = await ProductService.getProducts();
-            setItems((prev) => {
-                return [...prev, data];
-            });
+            setItems(data);
             return Promise.resolve("done");
         } catch (err) {
             return Promise.reject(err);
         }
     };
-    const getStores = async () => {
+    /*    const getStores = async () => {
         try {
             const data = await StoreService.getStores();
             setItems((prev) => {
@@ -58,7 +54,7 @@ export default function TransfareedProduct() {
         } catch (err) {
             return Promise.reject(err);
         }
-    };
+    }; */
 
     const rows = transfareedProducts.map((transfareedProduct) => {
         return {

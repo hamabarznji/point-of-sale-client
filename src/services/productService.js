@@ -9,6 +9,14 @@ class ProdcutService {
         });
         return res.data;
     }
+    async getProduct(id) {
+        const res = await axios.get(`http://localhost:3002/products/${id}`, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
+            },
+        });
+        return res.data;
+    }
 
     async addProduct(data) {
         await axios.post("http://localhost:3002/prodcuts", data, {

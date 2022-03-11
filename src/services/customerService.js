@@ -9,6 +9,17 @@ class CustomerService {
         });
         return res.data;
     }
+    async getCustomersForSpecificStore(storeid) {
+        const res = await axios.get(
+            `http://localhost:3002/customers/store/${storeid}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("posToken"),
+                },
+            }
+        );
+        return res.data;
+    }
     async getCustomer(id) {
         const res = await axios.get(`http://localhost:3002/customers/${id}`, {
             headers: {

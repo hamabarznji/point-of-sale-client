@@ -11,7 +11,6 @@ export default function AddEmployee({ getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
-        store_id: yup.number().required("Store id is required"),
         description: yup.string().required("Description is required"),
         amount: yup.number().required("Amount id is required"),
         date: yup.date().required("Date id is required"),
@@ -26,9 +25,13 @@ export default function AddEmployee({ getAll, items }) {
     });
 
     const addExpenseHandler = async (data) => {
-        console.log(data);
         try {
-            await ExpenseService.addExpense(data);
+            await ExpenseService.addExpense({
+                store_id: localStorage.getItem("storeId"),
+                description: data.description,
+                amount: data.amount,
+                date: data.date,
+            });
             enqueueSnackbar("Expense added successfully.", {
                 variant: "success",
             });
@@ -48,19 +51,6 @@ export default function AddEmployee({ getAll, items }) {
             title="Add Expense"
             handleSubmit={handleSubmit(addExpenseHandler)}
         >
-            <InputField
-                control={control}
-                errors={errors}
-                name="store_id"
-                defaultValue=""
-                variant="standard"
-                label="Store"
-                register={register}
-                error={errors.hasOwnProperty("store_id")}
-                helperText={errors.store_id?.message}
-                select
-                items={items}
-            />
             <InputField
                 control={control}
                 errors={errors}

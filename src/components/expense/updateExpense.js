@@ -11,8 +11,6 @@ export default function UpdateUser({ expense, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
-        id: yup.number().required("Id is required"),
-        store_id: yup.number().required("Store id is required"),
         description: yup.string().required("Description is required"),
         amount: yup.string().required("Amount id is required"),
         date: yup.date().required("Date  id is required"),
@@ -27,7 +25,13 @@ export default function UpdateUser({ expense, items }) {
     });
     const updateExpenseHandler = async (data) => {
         try {
-            await ExpenseService.updateExpense(data);
+            await ExpenseService.updateExpense({
+                id: data.id,
+                store_id: localStorage.getItem("storeId"),
+                description: data.description,
+                amount: data.amount,
+                date: moment(data.date).format("YYYY-MM-DD"),
+            });
 
             enqueueSnackbar("Expense updated successfully", {
                 variant: "success",
@@ -42,7 +46,7 @@ export default function UpdateUser({ expense, items }) {
             return Promise.reject("Error", err);
         }
     };
-
+    console.log(errors);
     return (
         <>
             <FormDialog
@@ -51,15 +55,16 @@ export default function UpdateUser({ expense, items }) {
                 buttonTitle="Update"
             >
                 <InputField
-                    name="store_id"
-                    label="Store"
+                    name="id"
+                    label="Id"
                     control={control}
                     register={register}
                     errors={errors}
-                    defaultValue={expense.store_id}
-                    select
-                    items={items}
-                />
+                    defaultValue={expense.id}
+                    error={errors.hasOwnProperty("id")}
+                    helperText={errors.id?.message}
+                    disabled
+                />{" "}
                 <InputField
                     name="description"
                     label="Description"
