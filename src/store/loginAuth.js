@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isLoading: false,
     isAuth: false,
     error: false,
 };
@@ -9,22 +8,31 @@ const loginSlice = createSlice({
     name: "login",
     initialState,
     reducers: {
-        loginPending: (state, action) => {
-            state.initialState.isLoading = true;
-        },
-        loginSuccess: (state, action) => {
+        login: (state, { payload }) => {
             state.initialState.isAuth = true;
             state.initialState.error = "";
         },
-    },
-    loginFail: (state, { payload }) => {
-        state.initialState.isLoading = false;
-
-        state.initialState.error = payload;
+        // a function to logout user
+        logout: (state, { payload }) => {
+            localStorage.removeItem("posToken");
+            state.initialState.isAuth = false;
+            state.initialState.error = "";
+        },
     },
 });
+
+// if jwt is valid, set isAuth to true
+// if jwt is invalid, set isAuth to false
+// if jwt is not present, set isAuth to false
+// if jwt is expired, set isAuth to false
+// if jwt is present but expired, set isAuth to false
+// if jwt is present but invalid, set isAuth to false
+// if jwt is present but not expired, set isAuth to true
 
 const { reducer, actions } = loginSlice;
 
 export default reducer;
-export const { loginPending, loginSuccess, loginFail } = actions;
+export const { login, logout } = actions;
+
+export const getIsAuth = (state) => state.login.isAuth;
+export const getError = (state) => state.error;

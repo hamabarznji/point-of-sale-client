@@ -9,9 +9,9 @@ class CustomerService {
         });
         return res.data;
     }
-    async getCustomer(id) {
+    async getCustomersForSpecificStore(storeid) {
         const res = await axios.get(
-            `http://localhost:3002/customers/customer/${id}`,
+            `http://localhost:3002/customers/store/${storeid}`,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("posToken"),
@@ -20,24 +20,28 @@ class CustomerService {
         );
         return res.data;
     }
+    async getCustomer(id) {
+        const res = await axios.get(`http://localhost:3002/customers/${id}`, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
+            },
+        });
+        return res.data;
+    }
 
     async addCustomer(data) {
-        await axios.post("http://localhost:3002/customers/addcustomer", data, {
+        await axios.post("http://localhost:3002/customers", data, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
         });
     }
     async updateCustomer(data) {
-        await axios.put(
-            `http://localhost:3002/customers/updatecustomer/${data.id}`,
-            data,
-            {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("posToken"),
-                },
-            }
-        );
+        await axios.put(`http://localhost:3002/customers/${data.id}`, data, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
+            },
+        });
     }
 }
 

@@ -1,11 +1,11 @@
 import * as React from "react";
-import Table from "../reactTabel";
-import ProdcutService from "../../services/productService";
-import AddProduct from "./addProduct";
-import UpdateProduct from "./updateProduct";
+import Table from "../ReactTabel";
+import ProdcutService from "../../services/ProductService";
+import AddProduct from "./AddProduct";
+import UpdateProduct from "./UpdateProduct";
 import moment from "moment";
-import CategoryService from "../../services/categoryService";
-import SuppliersService from "../../services/supplierService";
+import CategoryService from "../../services/CategoryService";
+import SuppliersService from "../../services/SupplierService";
 
 const columns = [
     { id: "id", label: "Code", minWidth: 100, align: "center" },

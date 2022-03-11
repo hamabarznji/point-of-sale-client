@@ -2,15 +2,13 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 //icons
-import Inventory2Icon from "@mui/icons-material/Inventory2";
+import StoreIcon from "@mui/icons-material/Store";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -19,7 +17,8 @@ import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-
+import TransformIcon from "@mui/icons-material/Transform";
+import WarehouseIcon from "@mui/icons-material/Warehouse";
 import { Link } from "react-router-dom";
 
 import Appbar from "./AppBar";
@@ -33,9 +32,19 @@ const DrawerItems = [
         icon: <DashboardIcon color="primary" />,
     },
     {
-        name: "Product",
+        name: "Warehouse",
         path: "/dashboard/products",
-        icon: <Inventory2Icon color="primary" />,
+        icon: <WarehouseIcon color="primary" />,
+    },
+    {
+        name: "Transfarred Product",
+        path: "/dashboard/transfareedproducts",
+        icon: <TransformIcon color="primary" />,
+    },
+    {
+        name: "Store",
+        path: "/dashboard/stores",
+        icon: <StoreIcon color="primary" />,
     },
     {
         name: "Invoice",
@@ -62,11 +71,7 @@ const DrawerItems = [
         path: "/dashboard/expenses",
         icon: <MoneyOffIcon color="primary" />,
     },
-    {
-        name: "Store",
-        path: "/dashboard/stores",
-        icon: <InventoryIcon color="primary" />,
-    },
+
     {
         name: "Report",
         path: "/dashboard/report",

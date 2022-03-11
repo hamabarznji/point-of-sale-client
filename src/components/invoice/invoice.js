@@ -1,6 +1,6 @@
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import InvoiceTable from "../reactTabel";
+import InvoiceTable from "../ReactTabel";
 
 const columns = [
     { id: "order_id", label: "Order Id", minWidth: 100, align: "center" },

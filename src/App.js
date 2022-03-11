@@ -8,10 +8,12 @@ import Store from "./pages/Store";
 import "./App.css";
 import Drawer from "./layout/Drawer";
 import { SnackbarProvider } from "notistack";
-import User from "./components/user/user";
+import User from "./pages/User";
 import Expense from "./pages/Expense";
 import Invoice from "./pages/Invoice";
 import CreateInvoice from "./pages/CreateInvoice";
+import TransfareedProduct from "./pages/TransfareedProduct";
+import CheckOut from "./components/invoice/CheckOut";
 function App() {
     const location = useLocation();
 
@@ -64,6 +66,14 @@ function App() {
                         <Route
                             path="/dashboard/invoices/createinvoice"
                             element={<CreateInvoice />}
+                        />
+                        <Route
+                            path="/dashboard/transfareedproducts"
+                            element={<TransfareedProduct />}
+                        />
+                        <Route
+                            path="/dashboard/invoices/checkout"
+                            element={<CheckOut />}
                         />
                     </Routes>
                 </main>

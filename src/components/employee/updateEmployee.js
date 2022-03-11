@@ -1,20 +1,20 @@
 import * as React from "react";
-import EmployeeService from "../../services/employeeService";
-import FormDialog from "../formDialog";
+import EmployeeService from "../../services/EmployeeService";
+import FormDialog from "../FormDialog";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import InputField from "../inputField";
+import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
-export default function UpdateCustomer({ employee, items }) {
+export default function UpdateCustomer({ employee, items, getAll }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
         id: yup.number().required("Id is required"),
         name: yup.string().required("Name is required"),
         address: yup.string().required("Address is required"),
-        store_id: yup.number().required("Store id is required"),
+
         salary: yup.number().required("Salary id is required"),
         phone: yup.number().required("Phone id is required"),
     });
@@ -29,12 +29,18 @@ export default function UpdateCustomer({ employee, items }) {
     const updateCustomerHandler = async (data) => {
         console.log(data);
         try {
-            await EmployeeService.updateEmployee(data);
+            await EmployeeService.updateEmployee({
+                id: data.id,
+                name: data.name,
+                address: data.address,
+                salary: data.salary,
+                phone: data.phone,
+                store_id: localStorage.getItem("storeId"),
+            });
 
             enqueueSnackbar("Employee updated successfully", {
                 variant: "success",
             });
-
             return Promise.resolve("Done");
         } catch (err) {
             enqueueSnackbar("Employee is not updated! something went wrong.", {
@@ -105,19 +111,6 @@ export default function UpdateCustomer({ employee, items }) {
                     register={register}
                     error={errors.hasOwnProperty("phone")}
                     helperText={errors.phone?.message}
-                />
-                <InputField
-                    control={control}
-                    errors={errors}
-                    name="store_id"
-                    defaultValue={employee.store_id}
-                    variant="standard"
-                    label="Store"
-                    register={register}
-                    error={errors.hasOwnProperty("store_id")}
-                    helperText={errors.store_id?.message}
-                    select
-                    items={items}
                 />
             </FormDialog>
         </>

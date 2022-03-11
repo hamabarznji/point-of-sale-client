@@ -9,24 +9,28 @@ class ProdcutService {
         });
         return res.data;
     }
+    async getProduct(id) {
+        const res = await axios.get(`http://localhost:3002/products/${id}`, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
+            },
+        });
+        return res.data;
+    }
 
     async addProduct(data) {
-        await axios.post("http://localhost:3002/prodcuts/addproduct", data, {
+        await axios.post("http://localhost:3002/prodcuts", data, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
         });
     }
     async updateProduct(data) {
-        await axios.put(
-            `http://localhost:3002/products/updateproduct/${data.id}`,
-            data,
-            {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("posToken"),
-                },
-            }
-        );
+        await axios.put(`http://localhost:3002/products/${data.id}`, data, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
+            },
+        });
     }
 }
 

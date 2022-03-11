@@ -3,32 +3,39 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, Typography } from "@mui/material";
-import InputField from "../inputField";
+import InputField from "../../InputField";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useSnackbar } from "notistack";
-import RenderOrderedProducts from "./renderOrderedProducts";
-import CustomeTableHead from "./tableHead";
-import ColumnName from "./columnName";
-import CustomerService from "../../services/customerService";
-import StoreService from "../../services/storeService";
+import RenderOrderedProducts from "./RenderOrderedProducts";
+import CustomeTableHead from "./TableHead";
+import ColumnName from "./ColumnName";
+import CustomerService from "../../../services/CustomerService";
+import StoreService from "../../../services/StoreService";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 export default function SpanningTable() {
     const [customers, setCustomers] = React.useState([]);
-    const [stores, setStores] = React.useState([]);
+    const [store, setStore] = React.useState();
     const [ordredProducts, setOrderedProducts] = React.useState([]);
     const invoice = [];
     const [totalAmount, setTotalAmount] = React.useState(0);
+    React.useEffect(() => {
+        getCUstomers();
+        getStore();
+    }, []);
+    console.log(store);
     const date = moment().format("YYYY-MM-DD");
+    const history = useNavigate();
 
     const enqueueSnackbar = useSnackbar();
     const schema = yup.object().shape({
+        customer: yup.string().required("Customer name is required"),
         product: yup.string().required("Product name is required"),
         color: yup.string().required("Color  is required"),
         price: yup.number().required("Price is required"),
@@ -46,17 +53,22 @@ export default function SpanningTable() {
     });
     const getCUstomers = async () => {
         try {
-            const results = await CustomerService.getCustomers();
+            const results = await CustomerService.getCustomersForSpecificStore(
+                localStorage.getItem("storeId")
+            );
+            console.log(results);
             setCustomers(results);
             return Promise.resolve(results);
         } catch (err) {
             return Promise.reject(err);
         }
     };
-    const getStores = async () => {
+    const getStore = async () => {
         try {
-            const results = await StoreService.getStores();
-            setCustomers(results);
+            const results = await StoreService.getStore(
+                localStorage.getItem("storeId")
+            );
+            setStore(results);
             return Promise.resolve(results);
         } catch (err) {
             return Promise.reject(err);
@@ -71,11 +83,6 @@ export default function SpanningTable() {
         // reset({});
     };
 
-    React.useEffect(() => {
-        getCUstomers();
-        getStores();
-    }, []);
-
     const checkOutHandler = () => {
         if (ordredProducts.length === 0) {
             enqueueSnackbar("Please add some products");
@@ -84,9 +91,13 @@ export default function SpanningTable() {
             console.log(invoice);
             setOrderedProducts([]);
             setTotalAmount(0);
+
+            history("/dashboard/invoices/checkout", {
+                state: { invoice },
+            });
         }
     };
-
+    console.log(store, "ccc");
     /* 
     const onSubmitInvoice = async (data, e) => { 
         e.preventDefault();
@@ -112,6 +123,7 @@ export default function SpanningTable() {
             });
         }
     } */
+
     const isInvoice = ordredProducts.length > 0;
     const Footer = () => {
         return (
@@ -206,7 +218,75 @@ export default function SpanningTable() {
             </TableCell>
         </TableRow>
     );
-
+    const TableH = () => {
+        return (
+            <>
+                {" "}
+                <TableRow>
+                    <TableCell
+                        align="left"
+                        colSpan={2}
+                        style={{ border: "none" }}
+                    >
+                        <Typography variant="h5">
+                            {" "}
+                            Chalishkan Company
+                        </Typography>
+                    </TableCell>
+                    <TableCell
+                        align="right"
+                        colSpan={4}
+                        style={{ border: "none" }}
+                    >
+                        <Typography variant="h5"> Invoice :</Typography>
+                    </TableCell>
+                </TableRow>{" "}
+                <TableRow>
+                    <TableCell
+                        align="left"
+                        colSpan={3}
+                        style={{ border: "none" }}
+                    >
+                        <Typography variant="h5">Address: </Typography>
+                    </TableCell>
+                    <TableCell
+                        align="right"
+                        colSpan={4}
+                        style={{ border: "none" }}
+                    >
+                        <Typography variant="h5"> Date: {date}</Typography>
+                    </TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell
+                        align="left"
+                        colSpan={4}
+                        style={{ border: "none" }}
+                    >
+                        <Typography variant="h5">Phone:</Typography>
+                    </TableCell>
+                    <TableCell
+                        align="right"
+                        colSpan={3}
+                        style={{ border: "none" }}
+                    >
+                        <InputField
+                            control={control}
+                            errors={errors}
+                            name="customer"
+                            defaultValue=""
+                            label="Customer Name"
+                            register={register}
+                            error={errors.hasOwnProperty("customer")}
+                            helperText={errors.customer?.message}
+                            select
+                            items={customers}
+                        />{" "}
+                    </TableCell>
+                </TableRow>
+            </>
+        );
+    };
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -219,10 +299,14 @@ export default function SpanningTable() {
                         }}
                         aria-label="spanning table"
                     >
-                        <TableHead>
+                        <TableH
+                            customer={schema.customer}
+                            control={control}
+                            errors={errors}
+                        >
                             <CustomeTableHead date={date} />
                             <ColumnName />
-                        </TableHead>
+                        </TableH>
                         <TableBody>
                             {isInvoice && (
                                 <RenderOrderedProducts

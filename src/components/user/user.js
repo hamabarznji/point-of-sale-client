@@ -1,9 +1,9 @@
-import Table from "../reactTabel";
-import UserService from "../../services/userService";
+import Table from "../ReactTabel";
+import UserService from "../../services/UserService";
 import React from "react";
-import AddUser from "./addUser";
-import UpdateUser from "./updateUser";
-import StoreService from "../../services/storeService";
+import AddUser from "./AddUser";
+import UpdateUser from "./UpdateUser";
+import StoreService from "../../services/StoreService";
 
 const columns = [
     { id: "name", label: "Name", minWidth: 170, align: "center" },
@@ -46,7 +46,7 @@ export default function User() {
             id: user.id,
             name: user.username,
             role: user.role,
-            store: user.store_id,
+            store: user.storeName,
             action: <UpdateUser user={user} />,
         };
     });

@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { Button, Grid, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import UserService from "../../services/userService";
+import UserService from "../../services/UserService";
 
 const useStyles = makeStyles({
     textField: {
@@ -37,7 +37,10 @@ export default function LoginForm() {
     const onSubmit = async (data) => {
         try {
             const user = await UserService.login(data);
+            console.log(user);
             localStorage.setItem("posToken", user.token);
+            localStorage.setItem("userRole", user.role);
+            localStorage.setItem("storeId", user.store_id);
             history("/dashboard");
             return Promise.resolve("done");
         } catch (err) {

@@ -1,20 +1,19 @@
 import * as React from "react";
-import CustomerService from "../../services/customerService";
+import CustomerService from "../../services/CustomerService";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormDialog from "../formDialog";
+import FormDialog from "../FormDialog";
 import * as yup from "yup";
-import InputField from "../inputField";
+import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
-export default function AddEmployee({ getAll, items }) {
+export default function AddCustomer({ getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
         id: yup.number().required("Phone number is required"),
         name: yup.string().required("Name is required"),
         address: yup.string().required("Address is required"),
-        store_id: yup.number().required("Store id is required"),
     });
     const {
         register,
@@ -24,10 +23,16 @@ export default function AddEmployee({ getAll, items }) {
     } = useForm({
         resolver: yupResolver(schema),
     });
-
+    console.log(errors);
     const addCustomerHandler = async (data) => {
         try {
-            await CustomerService.addCustomer(data);
+            console.log(data);
+            await CustomerService.addCustomer({
+                id: data.id,
+                name: data.name,
+                address: data.address,
+                store_id: localStorage.getItem("storeId"),
+            });
             enqueueSnackbar("Customer added successfully.", {
                 variant: "success",
             });
@@ -79,20 +84,6 @@ export default function AddEmployee({ getAll, items }) {
                 register={register}
                 error={errors.hasOwnProperty("address")}
                 helperText={errors.address?.message}
-            />
-
-            <InputField
-                control={control}
-                errors={errors}
-                name="store_id"
-                defaultValue=""
-                variant="standard"
-                label="Store"
-                register={register}
-                error={errors.hasOwnProperty("store_id")}
-                helperText={errors.store_id?.message}
-                select
-                items={items}
             />
         </FormDialog>
     );
