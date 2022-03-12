@@ -17,18 +17,6 @@ export default function Employee() {
     const [employees, setEmployees] = React.useState([]);
     const [stores, setStores] = React.useState([]);
 
-    const rows = employees.map((employee, index) => {
-        return {
-            key: { index },
-            id: employee.id,
-            name: employee.name,
-            salary: employee.salary,
-            address: employee.address,
-            phone: employee.phone,
-            action: <UpdateEmployee employee={employee} items={stores} />,
-        };
-    });
-
     React.useEffect(() => {
         getAll();
         getStores();
@@ -52,6 +40,23 @@ export default function Employee() {
             return Promise.reject(err);
         }
     };
+    const rows = employees.map((employee, index) => {
+        return {
+            key: { index },
+            id: employee.id,
+            name: employee.name,
+            salary: employee.salary,
+            address: employee.address,
+            phone: employee.phone,
+            action: (
+                <UpdateEmployee
+                    employee={employee}
+                    items={stores}
+                    getAll={getAll}
+                />
+            ),
+        };
+    });
     return (
         <>
             <AddEmployee getAll={getAll} items={stores} />
