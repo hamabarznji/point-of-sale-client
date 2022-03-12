@@ -16,14 +16,6 @@ const columns = [
 export default function Customers() {
     const [customers, setCustomers] = React.useState([]);
     const [stores, setStores] = React.useState([]);
-    const rows = customers.map((customer) => {
-        return {
-            id: customer.id,
-            name: customer.name,
-            address: customer.address,
-            action: <UpdateCustomer customer={customer} items={stores} />,
-        };
-    });
 
     React.useEffect(() => {
         getAll();
@@ -48,6 +40,20 @@ export default function Customers() {
             return Promise.reject(err);
         }
     };
+    const rows = customers.map((customer) => {
+        return {
+            id: customer.id,
+            name: customer.name,
+            address: customer.address,
+            action: (
+                <UpdateCustomer
+                    customer={customer}
+                    items={stores}
+                    getAll={getAll}
+                />
+            ),
+        };
+    });
 
     return (
         <>

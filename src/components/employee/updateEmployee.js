@@ -37,6 +37,7 @@ export default function UpdateCustomer({ employee, items, getAll }) {
                 phone: data.phone,
                 store_id: localStorage.getItem("storeId"),
             });
+            getAll();
 
             enqueueSnackbar("Employee updated successfully", {
                 variant: "success",

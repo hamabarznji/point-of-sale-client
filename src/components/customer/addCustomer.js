@@ -26,7 +26,6 @@ export default function AddCustomer({ getAll, items }) {
     console.log(errors);
     const addCustomerHandler = async (data) => {
         try {
-            console.log(data);
             await CustomerService.addCustomer({
                 id: data.id,
                 name: data.name,
