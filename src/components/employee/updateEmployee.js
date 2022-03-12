@@ -7,7 +7,7 @@ import * as yup from "yup";
 import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
-export default function UpdateCustomer({ employee, items, getAll }) {
+export default function UpdateCustomer({ employee, getAll }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
