@@ -1,22 +1,28 @@
 import * as React from "react";
 import Table from "../ReactTabel";
 import ProdcutService from "../../services/ProductService";
-import AddProduct from "./AddProduct";
+import AddNewProduct from "./AddNewProduct";
 import UpdateProduct from "./UpdateProduct";
+import AddProduct from "./AddProduct";
 import moment from "moment";
 import CategoryService from "../../services/CategoryService";
 import SuppliersService from "../../services/SupplierService";
-
+import { Button, Grid } from "@mui/material";
 const columns = [
     { id: "id", label: "Code", minWidth: 100, align: "center" },
     { id: "name", label: "Name", minWidth: 170, align: "center" },
     { id: "price", label: "Price", minWidth: 100, align: "center" },
     { id: "color", label: "Color", minWidth: 110, align: "center" },
     { id: "qty", label: "Quantity", minWidth: 100, align: "center" },
-    { id: "size", label: "Size", minWidth: 100, align: "center" },
     { id: "weight", label: "Weight", minWidth: 100, align: "center" },
     { id: "date", label: "Date", minWidth: 100, align: "center" },
-    { id: "action", label: "Action", minWidth: 100, align: "center" },
+    {
+        id: "action",
+        direction: "row",
+        label: "Action",
+        maxWidth: 100,
+        align: "center",
+    },
 ];
 
 export default function Products() {
@@ -61,7 +67,6 @@ export default function Products() {
         }
     };
 
-    console.log({ items });
     const rows = products.map((product) => {
         return {
             id: product.id,
@@ -69,25 +74,30 @@ export default function Products() {
             price: `${product.price} $`,
             color: product.color,
             qty: product.qty,
-            size: product.size,
             weight: product.weight,
             date: moment(product.date).format("DD-MM-YYYY"),
 
             action: (
-                <div>
-                    <UpdateProduct
-                        product={product}
-                        getAll={getAll}
-                        items={items}
-                    />
-                </div>
+                <>
+                    <Grid container spacing={0}>
+                        <AddProduct
+                            product={product}
+                            getAll={getAll}
+                            items={items}
+                        />
+                        <UpdateProduct
+                            product={product}
+                            getAll={getAll}
+                            items={items}
+                        />
+                    </Grid>
+                </>
             ),
         };
     });
-
     return (
         <>
-            <AddProduct getAll={getAll} items={items} />
+            <AddNewProduct getAll={getAll} items={items} />
             <Table columns={columns} rows={rows} />
         </>
     );

@@ -38,7 +38,7 @@ const rows = [
     },
     {},
 ];
-export default function Invoice({}) {
+export default function Invoice() {
     const history = useNavigate();
     return (
         <>

@@ -50,6 +50,7 @@ export default function AddEmployee({ getAll, items }) {
             buttonTitle="Add Expense"
             title="Add Expense"
             handleSubmit={handleSubmit(addExpenseHandler)}
+            variant="contained"
         >
             <InputField
                 control={control}

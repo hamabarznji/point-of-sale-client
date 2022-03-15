@@ -46,13 +46,13 @@ export default function UpdateUser({ expense, items }) {
             return Promise.reject("Error", err);
         }
     };
-    console.log(errors);
     return (
         <>
             <FormDialog
                 title="Update User"
                 handleSubmit={handleSubmit(updateExpenseHandler)}
                 buttonTitle="Update"
+                variant="contained"
             >
                 <InputField
                     name="id"

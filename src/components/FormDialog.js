@@ -10,6 +10,8 @@ export default function FormDialog({
     children,
     title,
     handleSubmit,
+    variant,
+    color,
 }) {
     const [open, setOpen] = React.useState(false);
 
@@ -23,7 +25,11 @@ export default function FormDialog({
 
     return (
         <div style={{ marginLeft: "5rem" }}>
-            <Button variant="outlined" onClick={handleClickOpen}>
+            <Button
+                variant={variant ? variant : "contained"}
+                color={color ? color : "primary"}
+                onClick={handleClickOpen}
+            >
                 {buttonTitle}
             </Button>
             <Dialog open={open} onClose={handleClose}>

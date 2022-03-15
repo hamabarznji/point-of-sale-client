@@ -58,6 +58,7 @@ export default function UpdateCustomer({ employee, items, getAll }) {
                 buttonTitle="Update"
                 title="Update Employee"
                 handleSubmit={handleSubmit(updateCustomerHandler)}
+                variant="contained"
             >
                 <InputField
                     control={control}

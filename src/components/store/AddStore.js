@@ -54,6 +54,7 @@ export default function AddStore({ getAll }) {
             buttonTitle="Add Store"
             title="Add Store"
             handleSubmit={handleSubmit(addStoreHandler)}
+            variant="contained"
         >
             <InputField
                 control={control}

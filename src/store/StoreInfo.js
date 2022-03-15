@@ -4,8 +4,8 @@ const initialState = {
     role: "",
     store: "",
 };
-const StoreInfoSlice = createSlice({
-    name: "login",
+const UserAuth = createSlice({
+    name: "UserAuth",
     initialState,
     reducers: {
         setRole: (state, { payload }) => {
@@ -17,7 +17,7 @@ const StoreInfoSlice = createSlice({
     },
 });
 
-const { reducer, actions } = StoreInfoSlice;
+const { reducer, actions } = UserAuth;
 
 export default reducer;
 export const { setStore, setRole } = actions;

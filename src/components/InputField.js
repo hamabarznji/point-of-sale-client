@@ -20,7 +20,8 @@ export default function InputField({
     const [item, setItem] = React.useState();
 
     const handleChange = (event) => {
-        setItem(event.target.value);
+        const value = event.target.value ? event.target.value : "";
+        setItem(value);
     };
     return (
         <>
@@ -46,7 +47,7 @@ export default function InputField({
                             disabled={disabled ? true : false}
                             select={select ? true : false}
                             onChange={handleChange}
-                            value={item}
+                            value={item?.value}
                         >
                             {select &&
                                 items.map((option) => (

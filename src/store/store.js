@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import loginSlicer from "./loginAuth";
-import StoreInfo from "./StoreInfo";
+import UserAuth from "./UserAuth";
 
 const store = configureStore({
     reducer: {
-        login: loginSlicer.reducer,
-        StoreInfo: StoreInfo.reducer,
+        UserAuth: UserAuth.reducer,
     },
 });
 export default store;

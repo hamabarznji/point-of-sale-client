@@ -303,10 +303,8 @@ export default function SpanningTable() {
                             customer={schema.customer}
                             control={control}
                             errors={errors}
-                        >
-                            <CustomeTableHead date={date} />
-                            <ColumnName />
-                        </TableH>
+                        ></TableH>
+                        <ColumnName />
                         <TableBody>
                             {isInvoice && (
                                 <RenderOrderedProducts
@@ -316,9 +314,9 @@ export default function SpanningTable() {
                                 />
                             )}
 
+                            <Inputs />
                             <Footer />
                         </TableBody>
-                        <Inputs />
                     </Table>
                 </TableContainer>
             </form>

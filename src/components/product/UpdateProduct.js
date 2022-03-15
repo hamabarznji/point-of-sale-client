@@ -6,7 +6,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import InputField from "../InputField";
 import { useSnackbar } from "notistack";
-
+import moment from "moment";
+const colors = [
+    { id: "White", name: "White" },
+    { id: "Black", name: "Black" },
+    { id: "Cremy", name: "Cremy" },
+];
 export default function UpdateProduct({ product, getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
@@ -17,7 +22,6 @@ export default function UpdateProduct({ product, getAll, items }) {
         category_id: yup.number().required("Category is required"),
         price: yup.string().required("Price is required"),
         qty: yup.number(),
-        size: yup.number(),
         color: yup.string(),
         weight: yup.number(),
         date: yup.date().required("Date is required"),
@@ -30,9 +34,20 @@ export default function UpdateProduct({ product, getAll, items }) {
     } = useForm({
         resolver: yupResolver(schema),
     });
-    const editProductHandler = async (data) => {
+    const updateProductHandler = async (data) => {
         try {
-            await ProdcutService.updateProduct(data, data.id);
+            await ProdcutService.updateProduct({
+                id: data.id,
+                name: data.name,
+                supplier_id: data.supplier_id,
+                category_id: data.category_id,
+                price: data.price,
+                qty: data.qty,
+                color: data.color,
+                weight: data.weight,
+                date: data.date,
+                isNew: false,
+            });
 
             enqueueSnackbar("Product updated successfully", {
                 variant: "success",
@@ -52,8 +67,9 @@ export default function UpdateProduct({ product, getAll, items }) {
         <>
             <FormDialog
                 title="Update Product"
-                handleSubmit={handleSubmit(editProductHandler)}
+                handleSubmit={handleSubmit(updateProductHandler)}
                 buttonTitle="Update"
+                variant="contained"
             >
                 <InputField
                     name="id"
@@ -120,16 +136,6 @@ export default function UpdateProduct({ product, getAll, items }) {
                     helperText={errors.qty?.message}
                 />
                 <InputField
-                    name="size"
-                    label="Size"
-                    control={control}
-                    register={register}
-                    errors={errors}
-                    defaultValue={product.size}
-                    error={errors.hasOwnProperty("size")}
-                    helperText={errors.size?.message}
-                />
-                <InputField
                     name="color"
                     label="Color"
                     control={control}
@@ -138,6 +144,8 @@ export default function UpdateProduct({ product, getAll, items }) {
                     defaultValue={product.color}
                     error={errors.hasOwnProperty("color")}
                     helperText={errors.color?.message}
+                    select
+                    items={colors}
                 />
                 <InputField
                     name="weight"
@@ -156,7 +164,7 @@ export default function UpdateProduct({ product, getAll, items }) {
                     register={register}
                     errors={errors}
                     type="date"
-                    defaultValue={product.date}
+                    defaultValue={moment(product.date).format("YYYY-MM-DD")}
                     error={errors.hasOwnProperty("date")}
                     helperText={errors.date?.message}
                 />

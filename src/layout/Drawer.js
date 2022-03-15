@@ -14,7 +14,7 @@ import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import BadgeIcon from "@mui/icons-material/Badge";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
-import InventoryIcon from "@mui/icons-material/Inventory";
+// import InventoryIcon from "@mui/icons-material/Inventory";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TransformIcon from "@mui/icons-material/Transform";

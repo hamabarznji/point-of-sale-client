@@ -56,6 +56,7 @@ export default function UpdateStore({ getAll, store }) {
             buttonTitle="Update"
             title="Update Store"
             handleSubmit={handleSubmit(UpdateStoreHandler)}
+            variant="contained"
         >
             <InputField
                 control={control}

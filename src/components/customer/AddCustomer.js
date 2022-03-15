@@ -23,7 +23,6 @@ export default function AddCustomer({ getAll, items }) {
     } = useForm({
         resolver: yupResolver(schema),
     });
-    console.log(errors);
     const addCustomerHandler = async (data) => {
         try {
             await CustomerService.addCustomer({
@@ -50,6 +49,7 @@ export default function AddCustomer({ getAll, items }) {
             buttonTitle="Add Customer"
             title="Add Customer"
             handleSubmit={handleSubmit(addCustomerHandler)}
+            variant="contained"
         >
             <InputField
                 control={control}

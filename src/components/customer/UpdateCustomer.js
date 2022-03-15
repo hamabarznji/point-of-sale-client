@@ -53,6 +53,7 @@ export default function UpdateCustomer({ customer, getAll }) {
                 title="Update Customer"
                 handleSubmit={handleSubmit(editCustomerHandler)}
                 buttonTitle="Update"
+                variant="contained"
             >
                 <InputField
                     name="id"

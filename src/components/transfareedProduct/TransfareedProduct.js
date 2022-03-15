@@ -44,17 +44,6 @@ export default function TransfareedProduct() {
             return Promise.reject(err);
         }
     };
-    /*    const getStores = async () => {
-        try {
-            const data = await StoreService.getStores();
-            setItems((prev) => {
-                return [...prev, data];
-            });
-            return Promise.resolve("done");
-        } catch (err) {
-            return Promise.reject(err);
-        }
-    }; */
 
     const rows = transfareedProducts.map((transfareedProduct) => {
         return {
@@ -79,7 +68,7 @@ export default function TransfareedProduct() {
     });
     return (
         <>
-            <AddTransaction items={items} />
+            <AddTransaction items={items} getAll={getAll} />
 
             <Table columns={columns} rows={rows} />
         </>

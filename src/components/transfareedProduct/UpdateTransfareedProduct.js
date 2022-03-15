@@ -18,7 +18,6 @@ export default function UpdateTransfareedProduct({
     const schema = yup.object().shape({
         id: yup.number().required("Id is required"),
 
-        store_id: yup.number().required("Store name is required"),
         product_id: yup.number().required("Product name is required"),
         qty: yup.string().required("Quantity is required"),
         weight: yup.number().required("Weight is required"),
@@ -35,7 +34,14 @@ export default function UpdateTransfareedProduct({
 
     const updateTransfareedProductnHandler = async (data) => {
         try {
-            await TransfareedProductService.updateTransaction(data);
+            await TransfareedProductService.updateTransaction({
+                id: data.id,
+                store_id: localStorage.getItem("storeId"),
+                product_id: data.product_id,
+                qty: data.qty,
+                weight: data.weight,
+                date: moment(data.date).format("YYYY-MM-DD"),
+            });
             getAll();
             enqueueSnackbar("Transaction updated successfully", {
                 variant: "success",
@@ -71,18 +77,6 @@ export default function UpdateTransfareedProduct({
                 disabled
             />{" "}
             <InputField
-                name="store_id"
-                label="Store Name"
-                defaultValue={transfareedProduct.store_id}
-                control={control}
-                register={register}
-                errors={errors}
-                error={errors.hasOwnProperty("store_id")}
-                helperText={errors.store_id?.message}
-                select
-                items={items[0]}
-            />
-            <InputField
                 name="product_id"
                 label="Product Name"
                 defaultValue={transfareedProduct.product_id}
@@ -92,7 +86,7 @@ export default function UpdateTransfareedProduct({
                 error={errors.hasOwnProperty("product_id")}
                 helperText={errors.product_id?.message}
                 select
-                items={items[1]}
+                items={items}
             />
             <InputField
                 name="weight"

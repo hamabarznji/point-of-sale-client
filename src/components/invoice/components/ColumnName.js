@@ -13,7 +13,6 @@ const columns = [
 export default function columnNames({ invoices, setTotalAmount }) {
     return (
         <>
-            {" "}
             <TableRow
                 style={{
                     background: "black",
