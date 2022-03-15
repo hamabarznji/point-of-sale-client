@@ -22,6 +22,7 @@ export default function AddTransfareedProduct({ getAll, items }) {
         register,
         handleSubmit,
         control,
+        reset,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema),
@@ -36,17 +37,9 @@ export default function AddTransfareedProduct({ getAll, items }) {
                 weight: data.weight,
                 date: moment(data.date).format("YYYY-MM-DD"),
             });
-            //getAll();
-            const foundedProduct = await ProductService.getProduct(
-                data.product_id
-            );
-            const newWeight = foundedProduct.weight - data.weight;
-            const newQty = foundedProduct.qty - data.qty;
-            await ProductService.updateProduct({
-                weight: newWeight,
-                qty: newQty,
-                id: data.product_id,
-            });
+            getAll();
+            reset();
+
             enqueueSnackbar("Product added successfully", {
                 variant: "success",
             });
@@ -104,7 +97,7 @@ export default function AddTransfareedProduct({ getAll, items }) {
                 errors={errors}
                 error={errors.hasOwnProperty("date")}
                 helperText={errors.date?.message}
-                //defaultValue={moment()}
+                defaultValue={moment().format("YYYY-MM-DD")}
             />
         </FormDialog>
     );
