@@ -14,8 +14,7 @@ export default function renderInvoices({ ordredProducts, setTotalAmount }) {
             return (total += calculateTotalProductPrice(
                 ordredProduct.price,
                 ordredProduct.weight,
-                ordredProduct.qty,
-                ordredProduct.size
+                ordredProduct.qty
             ));
         });
         setTotalAmount(total);
@@ -37,8 +36,7 @@ export default function renderInvoices({ ordredProducts, setTotalAmount }) {
                         {calculateTotalProductPrice(
                             ordredProduct.price,
                             ordredProduct.weight,
-                            ordredProduct.qty,
-                            ordredProduct.size
+                            ordredProduct.qty
                         )}
                     </TableCell>
                     <TableCell align="center">

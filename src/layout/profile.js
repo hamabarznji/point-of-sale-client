@@ -9,11 +9,14 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "notistack";
 
 export default function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const history = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -23,6 +26,9 @@ export default function AccountMenu() {
 
     const logoutHandler = () => {
         localStorage.removeItem("posToken");
+        enqueueSnackbar("Loged out successfully.", {
+            variant: "success",
+        });
         history("/");
     };
     const tokenRemoveHandler = () => {

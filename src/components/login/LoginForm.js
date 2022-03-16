@@ -6,6 +6,7 @@ import { Button, Grid, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import UserService from "../../services/UserService";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles({
     textField: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles({
 export default function LoginForm() {
     const history = useNavigate();
     const classes = useStyles();
+    const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
         username: yup.string().required("Username is required"),
@@ -37,15 +39,20 @@ export default function LoginForm() {
     const onSubmit = async (data) => {
         try {
             const user = await UserService.login(data);
-            console.log(user);
+
             localStorage.setItem("posToken", user.token);
             localStorage.setItem("userRole", user.role);
             localStorage.setItem("storeId", user.store_id);
             history("/dashboard");
+            enqueueSnackbar("Loged in successfully.", {
+                variant: "success",
+            });
             return Promise.resolve("done");
         } catch (err) {
-            console.log(err);
             history("/");
+            enqueueSnackbar("User name or password is incorrect!", {
+                variant: "error",
+            });
             return Promise.reject(err);
         }
     };

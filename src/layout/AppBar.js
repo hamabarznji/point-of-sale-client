@@ -9,12 +9,12 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Profile from "./profile";
 
 export default function AppBarComponent() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    /*   const [anchorEl, setAnchorEl] = React.useState(null);
     const [showMenu, setShowMenu] = React.useState(false);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
-    };
+    }; */
 
     const menuId = "primary-search-account-menu";
 
@@ -55,7 +55,7 @@ export default function AppBarComponent() {
                             aria-label="account of current user"
                             aria-controls={menuId}
                             aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
+                            //onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
                             <Profile />

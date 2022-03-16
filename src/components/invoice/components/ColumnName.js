@@ -10,7 +10,7 @@ const columns = [
     { id: "total", label: "Total", minWidth: 170, align: "center" },
     { id: "action", label: "", minWidth: 170, align: "center" },
 ];
-export default function columnNames({ invoices, setTotalAmount }) {
+export default function columnNames() {
     return (
         <>
             <TableRow

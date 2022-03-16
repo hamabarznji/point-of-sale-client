@@ -3,6 +3,7 @@ import axios from "axios";
 class UserService {
     async login(data) {
         const res = await axios.post("http://localhost:3002/login", data);
+        console.log(res, "res");
         return res.data;
     }
 

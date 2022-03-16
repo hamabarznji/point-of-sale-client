@@ -1,24 +1,22 @@
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button, Typography } from "@mui/material";
-import InputField from "../../InputField";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useSnackbar } from "notistack";
 import RenderOrderedProducts from "./RenderOrderedProducts";
-import CustomeTableHead from "./TableHead";
 import ColumnName from "./ColumnName";
 import CustomerService from "../../../services/CustomerService";
 import StoreService from "../../../services/StoreService";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-
+import InvoiceInputes from "./InvoiceInputes";
+import Footer from "./Footer";
+import TableHead from "./TableHead";
 export default function SpanningTable() {
     const [customers, setCustomers] = React.useState([]);
     const [store, setStore] = React.useState();
@@ -29,7 +27,6 @@ export default function SpanningTable() {
         getCUstomers();
         getStore();
     }, []);
-    console.log(store);
     const date = moment().format("YYYY-MM-DD");
     const history = useNavigate();
 
@@ -97,7 +94,6 @@ export default function SpanningTable() {
             });
         }
     };
-    console.log(store, "ccc");
     /* 
     const onSubmitInvoice = async (data, e) => { 
         e.preventDefault();
@@ -125,168 +121,7 @@ export default function SpanningTable() {
     } */
 
     const isInvoice = ordredProducts.length > 0;
-    const Footer = () => {
-        return (
-            isInvoice && (
-                <TableRow
-                    style={{ background: "#EDE6D9" }}
-                    setOrderedProducts={setOrderedProducts}
-                >
-                    <TableCell>
-                        {" "}
-                        <Typography variant="h5">Total:</Typography>{" "}
-                    </TableCell>
-                    <TableCell align="center">
-                        <Typography variant="h5">${totalAmount}</Typography>
-                    </TableCell>
-                    <TableCell align="center">
-                        <Button onClick={checkOutHandler}>Checkout</Button>
-                    </TableCell>
-                </TableRow>
-            )
-        );
-    };
-    const Inputs = () => (
-        <TableRow>
-            <TableCell align="center">
-                <InputField
-                    control={control}
-                    errors={errors}
-                    name="product"
-                    defaultValue=""
-                    variant="outlined"
-                    label="Product Name"
-                    register={register}
-                    error={errors.hasOwnProperty("product")}
-                    helperText={errors.product?.message}
-                />
-            </TableCell>{" "}
-            <TableCell align="center">
-                <InputField
-                    control={control}
-                    errors={errors}
-                    name="price"
-                    defaultValue=""
-                    variant="outlined"
-                    label="Price"
-                    register={register}
-                    error={errors.hasOwnProperty("price")}
-                    helperText={errors.price?.message}
-                />
-            </TableCell>{" "}
-            <TableCell align="center">
-                <InputField
-                    control={control}
-                    errors={errors}
-                    name="weight"
-                    defaultValue=""
-                    variant="outlined"
-                    label="Weight"
-                    register={register}
-                    error={errors.hasOwnProperty("weight")}
-                    helperText={errors.weight?.message}
-                />
-            </TableCell>{" "}
-            <TableCell align="center">
-                <InputField
-                    control={control}
-                    errors={errors}
-                    name="qty"
-                    defaultValue=""
-                    variant="outlined"
-                    label="Quantity"
-                    register={register}
-                    error={errors.hasOwnProperty("qty")}
-                    helperText={errors.qty?.message}
-                />
-            </TableCell>{" "}
-            <TableCell align="center">
-                <InputField
-                    control={control}
-                    errors={errors}
-                    name="color"
-                    defaultValue=""
-                    variant="outlined"
-                    label="Color"
-                    register={register}
-                    error={errors.hasOwnProperty("color")}
-                    helperText={errors.color?.message}
-                />
-            </TableCell>{" "}
-            <TableCell align="center">
-                {<Button type="submit">Add</Button>}
-            </TableCell>
-        </TableRow>
-    );
-    const TableH = () => {
-        return (
-            <>
-                {" "}
-                <TableRow>
-                    <TableCell
-                        align="left"
-                        colSpan={2}
-                        style={{ border: "none" }}
-                    >
-                        <Typography variant="h5">
-                            {" "}
-                            Chalishkan Company
-                        </Typography>
-                    </TableCell>
-                    <TableCell
-                        align="right"
-                        colSpan={4}
-                        style={{ border: "none" }}
-                    >
-                        <Typography variant="h5"> Invoice :</Typography>
-                    </TableCell>
-                </TableRow>{" "}
-                <TableRow>
-                    <TableCell
-                        align="left"
-                        colSpan={3}
-                        style={{ border: "none" }}
-                    >
-                        <Typography variant="h5">Address: </Typography>
-                    </TableCell>
-                    <TableCell
-                        align="right"
-                        colSpan={4}
-                        style={{ border: "none" }}
-                    >
-                        <Typography variant="h5"> Date: {date}</Typography>
-                    </TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell
-                        align="left"
-                        colSpan={4}
-                        style={{ border: "none" }}
-                    >
-                        <Typography variant="h5">Phone:</Typography>
-                    </TableCell>
-                    <TableCell
-                        align="right"
-                        colSpan={3}
-                        style={{ border: "none" }}
-                    >
-                        <InputField
-                            control={control}
-                            errors={errors}
-                            name="customer"
-                            defaultValue=""
-                            label="Customer Name"
-                            register={register}
-                            error={errors.hasOwnProperty("customer")}
-                            helperText={errors.customer?.message}
-                            select
-                            items={customers}
-                        />{" "}
-                    </TableCell>
-                </TableRow>
-            </>
-        );
-    };
+
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -299,11 +134,14 @@ export default function SpanningTable() {
                         }}
                         aria-label="spanning table"
                     >
-                        <TableH
-                            customer={schema.customer}
+                        <TableHead
                             control={control}
                             errors={errors}
-                        ></TableH>
+                            register={register}
+                            customer={schema.cutomer}
+                            customers={customers}
+                            date={date}
+                        ></TableHead>
                         <ColumnName />
                         <TableBody>
                             {isInvoice && (
@@ -314,8 +152,22 @@ export default function SpanningTable() {
                                 />
                             )}
 
-                            <Inputs />
-                            <Footer />
+                            <InvoiceInputes
+                                register={register}
+                                control={control}
+                                errors={errors}
+                                color={schema.color}
+                                product={schema.product}
+                                price={schema.price}
+                                weight={schema.weight}
+                                qty={schema.qty}
+                            />
+                            <Footer
+                                setOrderedProducts={setOrderedProducts}
+                                totalAmount={totalAmount}
+                                checkOutHandler={checkOutHandler}
+                                isInvoice={isInvoice}
+                            />
                         </TableBody>
                     </Table>
                 </TableContainer>
