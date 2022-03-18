@@ -7,6 +7,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import CheckoutTableFooter from "./CheckoutTableFooter";
+import CheckoutTableHeader from "./CheckoutTableHeader";
 const columns = [
     {
         id: "product_id",
@@ -40,45 +42,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-export default function CustomizedTables({ rows, totalAmount, paidAmount }) {
-    const Footer = () => (
-        <>
-            {" "}
-            <TableRow style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-                <TableCell rowSpan={3} />
-                <TableCell
-                    colSpan={2}
-                    style={{ fontSize: "1.5rem", fontWeight: "bold" }}
-                >
-                    Total Amount
-                </TableCell>
-                <TableCell
-                    align="right"
-                    style={{ fontSize: "1.5rem", fontWeight: "bold" }}
-                >
-                    {totalAmount}
-                </TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell
-                    colSpan={2}
-                    style={{ fontSize: "1.5rem", fontWeight: "bold" }}
-                >
-                    Paid Amount
-                </TableCell>
-                <TableCell
-                    align="right"
-                    style={{ fontSize: "1.5rem", fontWeight: "bold" }}
-                >
-                    {paidAmount}
-                </TableCell>
-            </TableRow>
-        </>
-    );
+export default function CheckoutTable({
+    rows,
+    totalAmount,
+    paidAmount,
+    name,
+    customer,
+    date,
+    phone,
+    address,
+}) {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
+                    <CheckoutTableHeader customer={customer} />
                     <TableRow>
                         {columns.map((column) => {
                             return (
@@ -121,7 +99,10 @@ export default function CustomizedTables({ rows, totalAmount, paidAmount }) {
                         </StyledTableRow>
                     ))}
                 </TableBody>
-                <Footer />
+                <CheckoutTableFooter
+                    paidAmount={paidAmount}
+                    totalAmount={totalAmount}
+                />
             </Table>
         </TableContainer>
     );

@@ -1,48 +1,55 @@
 import { Button, Grid, Typography } from "@mui/material";
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import OrderService from "../../../services/OrderService";
+import { useLocation } from "react-router-dom";
 import OrderedProductService from "../../../services/OrderedProductService";
-import ReactTabel from "../../ReactTabel";
 import CheckoutTable from "./CheckoutTable";
-import PaymentService from "../../../services/PaymentService";
+import CustomerService from "../../../services/CustomerService";
 export default function CheckOout() {
+    const [customerName, setCustomerName] = React.useState("");
     const location = useLocation();
     const orderedproducts = location.state.invoice[0].ordredProducts;
     const orderInformation = location.state.invoice[0].orderInformation;
-    const addOrder = async () => {
-        try {
-            const res = await OrderService.addOrder({
-                store_id: orderInformation.store_id,
-                customer_phone: orderInformation.customer_id,
-                user_id: orderInformation.user_id,
-                date: orderInformation.date,
-            });
 
-            return Promise.resolve(res);
+    const getCustomer = async () => {
+        try {
+            const customer = await CustomerService.getCustomer(
+                orderInformation.customer_id
+            );
+            console.log(customer);
+            setCustomerName(customer.name);
+            return Promise.resolve(customer);
         } catch (err) {
             return Promise.reject(err);
         }
     };
 
+    React.useEffect(() => {
+        getCustomer();
+    }, []);
     const addOrderedProduct = async () => {
         try {
-            const order = await addOrder();
-
-            const op = orderedproducts.map((item) => {
+            const orderInfo = {
+                store_id: orderInformation.store_id,
+                customer_phone: orderInformation.customer_id,
+                user_id: orderInformation.user_id,
+                date: orderInformation.date,
+            };
+            const paymentInfo = {
+                amount: orderInformation.paidAmount,
+                paid_date: orderInformation.date,
+            };
+            const ops = orderedproducts.map((item) => {
                 return {
-                    order_id: order.id,
                     transfareedProduct_id: 1,
                     qty: item.qty,
                     weight: item.weight,
                     price: item.price,
                 };
             });
-            const res = await OrderedProductService.addOrder(op);
-            await PaymentService.addPayment({
-                order_id: 1,
-                amount: orderInformation.paidAmount,
-                paid_date: orderInformation.date,
+            const res = await OrderedProductService.addOrder({
+                orderInfo,
+                paymentInfo,
+                ops,
             });
 
             return Promise.resolve(res);
@@ -50,7 +57,6 @@ export default function CheckOout() {
             return Promise.reject(err);
         }
     };
-
     return (
         <Grid
             container
@@ -61,6 +67,7 @@ export default function CheckOout() {
                     rows={orderedproducts}
                     totalAmount={orderInformation?.totalAmount}
                     paidAmount={orderInformation?.paidAmount}
+                    customer={customerName ? customerName : "Unknown"}
                 />
             </Grid>
             <Button onClick={addOrderedProduct} variant="contained">
@@ -69,22 +76,3 @@ export default function CheckOout() {
         </Grid>
     );
 }
-
-/*     <Grid
-                item
-                container
-                style={{ width: "90%", height: "100%", marginLeft: "5rem" }}
-                direction="column"
-                spacing={0}
-            >
-                <Grid>
-                    <Typography variant="h4">Chalishkan</Typography>
-                </Grid>
-                <Grid>
-                    <Typography variant="h4">0750xxxxxx</Typography>
-                </Grid>
-                <Grid>
-                    <Typography variant="h4">Koya Road</Typography>
-                </Grid>
-            </Grid>
- */

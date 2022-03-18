@@ -2,10 +2,6 @@ import { Button, TableCell, TableRow } from "@mui/material";
 import InputField from "../../InputField";
 import * as React from "react";
 
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-
 export default function Inputs({
     register,
     control,
