@@ -15,6 +15,7 @@ export default function Inputs({
     price,
     weight,
     qty,
+    transfareedProducts,
 }) {
     return (
         <>
@@ -22,6 +23,7 @@ export default function Inputs({
             <TableRow>
                 <TableCell align="center">
                     <InputField
+                        fullWidth
                         control={control}
                         errors={errors}
                         name="product"
@@ -83,6 +85,13 @@ export default function Inputs({
                         register={register}
                         error={errors.hasOwnProperty("color")}
                         helperText={errors.color?.message}
+                        select
+                        items={[
+                            { id: "Black", name: "Black" },
+                            { id: "White", name: "White" },
+                            { id: "Creamy", name: "Cremy" },
+                        ]}
+                        fullWidth
                     />
                 </TableCell>{" "}
                 <TableCell align="center">

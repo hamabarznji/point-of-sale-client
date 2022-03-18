@@ -13,7 +13,7 @@ import Expense from "./pages/Expense";
 import Invoice from "./pages/Invoice";
 import CreateInvoice from "./pages/CreateInvoice";
 import TransfareedProduct from "./pages/TransfareedProduct";
-import CheckOut from "./components/invoice/CheckOut";
+import CheckOut from "./components/invoice/checkOut/Checkout";
 function App() {
     const location = useLocation();
 

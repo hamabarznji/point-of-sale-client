@@ -39,7 +39,8 @@ export default function LoginForm() {
     const onSubmit = async (data) => {
         try {
             const user = await UserService.login(data);
-
+            console.log(user);
+            localStorage.setItem("userId", user.id);
             localStorage.setItem("posToken", user.token);
             localStorage.setItem("userRole", user.role);
             localStorage.setItem("storeId", user.store_id);

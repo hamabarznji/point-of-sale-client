@@ -12,20 +12,25 @@ import RenderOrderedProducts from "./RenderOrderedProducts";
 import ColumnName from "./ColumnName";
 import CustomerService from "../../../services/CustomerService";
 import StoreService from "../../../services/StoreService";
+import TransfareedProductService from "../../../services/TransfareedProductService";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import InvoiceInputes from "./InvoiceInputes";
 import Footer from "./Footer";
 import TableHead from "./TableHead";
+import totalPriceCalculator from "../../helper/totalPriceCalculator";
 export default function SpanningTable() {
     const [customers, setCustomers] = React.useState([]);
     const [store, setStore] = React.useState();
+    const [selectedCustomer, setSelectedCustomer] = React.useState();
     const [ordredProducts, setOrderedProducts] = React.useState([]);
+    const [transfareedProducts, setTransfareedProducts] = React.useState([]);
     const invoice = [];
     const [totalAmount, setTotalAmount] = React.useState(0);
     React.useEffect(() => {
         getCUstomers();
         getStore();
+        getTransfareedProducts();
     }, []);
     const date = moment().format("YYYY-MM-DD");
     const history = useNavigate();
@@ -38,6 +43,7 @@ export default function SpanningTable() {
         price: yup.number().required("Price is required"),
         weight: yup.number().required("Weight is required"),
         qty: yup.number().required("Quantity id is required"),
+        paidAmount: yup.number(),
     });
     const {
         register,
@@ -48,13 +54,35 @@ export default function SpanningTable() {
     } = useForm({
         resolver: yupResolver(schema),
     });
+
     const getCUstomers = async () => {
         try {
             const results = await CustomerService.getCustomersForSpecificStore(
                 localStorage.getItem("storeId")
             );
-            console.log(results);
             setCustomers(results);
+            return Promise.resolve(results);
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
+    const getTransfareedProducts = async () => {
+        try {
+            const results =
+                await TransfareedProductService.getTransfareedProducts(
+                    localStorage.getItem("storeId")
+                );
+            results.map((item) => {
+                return setTransfareedProducts((prev) => [
+                    ...prev,
+                    {
+                        value: item.id,
+                        product_id: item.product_id,
+                        name: item.productName,
+                        color: item.color,
+                    },
+                ]);
+            });
             return Promise.resolve(results);
         } catch (err) {
             return Promise.reject(err);
@@ -71,21 +99,50 @@ export default function SpanningTable() {
             return Promise.reject(err);
         }
     };
-
     const onSubmit = (data, e) => {
         e.preventDefault();
+        if (ordredProducts.length === 0) {
+            setSelectedCustomer(data.customer);
+        }
+
         setOrderedProducts((prev) => {
             return [...prev, data];
         });
         // reset({});
     };
-
-    const checkOutHandler = () => {
+    const checkOutHandler = (data) => {
         if (ordredProducts.length === 0) {
             enqueueSnackbar("Please add some products");
         } else {
-            invoice.push({ totalAmount, date, products: ordredProducts });
-            console.log(invoice);
+            invoice.push({
+                orderInformation: {
+                    store_id: localStorage.getItem("storeId"),
+                    address: store.location,
+                    phone: store.phone,
+                    user_id: localStorage.getItem("userId"),
+                    customer_id: selectedCustomer,
+                    paidAmount: data.paidAmount,
+                    date,
+                    totalAmount,
+                },
+
+                ordredProducts: ordredProducts.map((item) => {
+                    return {
+                        product_id: item.product,
+                        customer: item.customer,
+                        color: item.color,
+                        qty: item.qty,
+                        price: item.price,
+                        weight: item.weight,
+                        totalAmount: totalPriceCalculator(
+                            item.price,
+                            item.weight,
+                            item.qty
+                        ),
+                    };
+                }),
+            });
+
             setOrderedProducts([]);
             setTotalAmount(0);
 
@@ -94,31 +151,6 @@ export default function SpanningTable() {
             });
         }
     };
-    /* 
-    const onSubmitInvoice = async (data, e) => { 
-        e.preventDefault();
-        const invoiceData = {
-            customerId: data.customer,
-            storeId: data.store,
-            date: date,
-            products: ordredProducts,
-            totalAmount: totalAmount,
-        };
-        try {
-            const results = await CustomerService.createInvoice(invoiceData);
-            setInvoice(results);
-            enqueueSnackbar("Invoice created successfully", {
-                variant: "success",
-            });
-            reset();
-            setOrderedProducts([]);
-            setTotalAmount(0);
-        } catch (err) {
-            enqueueSnackbar("Error creating invoice", {
-                variant: "error",
-            });
-        }
-    } */
 
     const isInvoice = ordredProducts.length > 0;
 
@@ -141,6 +173,8 @@ export default function SpanningTable() {
                             customer={schema.cutomer}
                             customers={customers}
                             date={date}
+                            phone={store?.phone}
+                            address={store?.location}
                         ></TableHead>
                         <ColumnName />
                         <TableBody>
@@ -161,17 +195,22 @@ export default function SpanningTable() {
                                 price={schema.price}
                                 weight={schema.weight}
                                 qty={schema.qty}
-                            />
-                            <Footer
-                                setOrderedProducts={setOrderedProducts}
-                                totalAmount={totalAmount}
-                                checkOutHandler={checkOutHandler}
-                                isInvoice={isInvoice}
+                                transfareedProducts={transfareedProducts}
                             />
                         </TableBody>
                     </Table>
                 </TableContainer>
             </form>
+            <Footer
+                setOrderedProducts={setOrderedProducts}
+                totalAmount={totalAmount}
+                checkOutHandler={checkOutHandler}
+                isInvoice={isInvoice}
+                register={register}
+                control={control}
+                errors={errors}
+                paidAmount={schema.paidAmount}
+            />
         </>
     );
 }

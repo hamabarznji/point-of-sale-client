@@ -1,17 +1,10 @@
 import { Button, TableCell, TableRow } from "@mui/material";
-
+import totalPriceCalculator from "../../helper/totalPriceCalculator";
 export default function renderInvoices({ ordredProducts, setTotalAmount }) {
-    const calculateTotalProductPrice = (price, weight, qty) => {
-        if (weight !== 0) {
-            return weight * price;
-        } else if (qty !== 0) {
-            return qty * price;
-        }
-    };
     const calculateTotalAmount = (invoices) => {
         let total = 0;
         ordredProducts.map((ordredProduct) => {
-            return (total += calculateTotalProductPrice(
+            return (total += totalPriceCalculator(
                 ordredProduct.price,
                 ordredProduct.weight,
                 ordredProduct.qty
@@ -33,7 +26,7 @@ export default function renderInvoices({ ordredProducts, setTotalAmount }) {
                     <TableCell align="center">{ordredProduct.qty}</TableCell>
                     <TableCell align="center">{ordredProduct.color}</TableCell>
                     <TableCell align="center">
-                        {calculateTotalProductPrice(
+                        {totalPriceCalculator(
                             ordredProduct.price,
                             ordredProduct.weight,
                             ordredProduct.qty

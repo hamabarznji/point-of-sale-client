@@ -8,6 +8,8 @@ export default function TableHead({
     customer,
     customers,
     date,
+    address,
+    phone,
 }) {
     return (
         <>
@@ -17,22 +19,14 @@ export default function TableHead({
                     <Typography variant="h5"> Chalishkan Company</Typography>
                 </TableCell>
                 <TableCell align="right" colSpan={4} style={{ border: "none" }}>
-                    <Typography variant="h5"> Invoice :</Typography>
+                    <Typography variant="h5"> Date: {date}</Typography>{" "}
                 </TableCell>
             </TableRow>{" "}
             <TableRow>
                 <TableCell align="left" colSpan={3} style={{ border: "none" }}>
-                    <Typography variant="h5">Address: </Typography>
+                    <Typography variant="h5">Address: {address} </Typography>
                 </TableCell>
-                <TableCell align="right" colSpan={4} style={{ border: "none" }}>
-                    <Typography variant="h5"> Date: {date}</Typography>
-                </TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell align="left" colSpan={4} style={{ border: "none" }}>
-                    <Typography variant="h5">Phone:</Typography>
-                </TableCell>
-                <TableCell align="right" colSpan={3} style={{ border: "none" }}>
+                <TableCell align="left" colSpan={3} style={{ border: "none" }}>
                     <InputField
                         control={control}
                         errors={errors}
@@ -44,7 +38,12 @@ export default function TableHead({
                         helperText={errors.customer?.message}
                         select
                         items={customers}
-                    />{" "}
+                    />
+                </TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell align="left" colSpan={4} style={{ border: "none" }}>
+                    <Typography variant="h5">Phone: {phone}</Typography>
                 </TableCell>
             </TableRow>
         </>
