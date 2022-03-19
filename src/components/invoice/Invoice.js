@@ -4,6 +4,7 @@ import InvoiceTable from "../ReactTabel";
 import OrderService from "../../services/OrderService";
 import React from "react";
 import moment from "moment";
+import AddPayment from "./AddPayment";
 const columns = [
     { id: "orderId", label: "Order Id", minWidth: 100, align: "center" },
     {
@@ -21,6 +22,7 @@ const columns = [
     { id: "paidAmount", label: "Paid Amount", minWidth: 170, align: "center" },
     { id: "dueAmount", label: "Due Amount", minWidth: 170, align: "center" },
     { id: "date", label: "Date", minWidth: 120, align: "center" },
+    { id: "action", label: "Action", minWidth: 120, align: "center" },
 ];
 
 export default function Invoice() {
@@ -28,21 +30,9 @@ export default function Invoice() {
 
     const [orders, setOrders] = React.useState([]);
 
-    const rows = orders.map((order) => {
-        return {
-            orderId: order.id,
-            customerName: order.customerName,
-            totalAmount: 20000,
-            paidAmount: 20000,
-            dueAmount: 0,
-            date: moment(order.date).format("DD-MM-YYYY"),
-        };
-    });
-
     const getOrders = async () => {
         try {
             const res = await OrderService.gerOrders();
-            console.log(res);
             setOrders(res);
             return Promise.resolve(res);
         } catch (err) {
@@ -50,10 +40,22 @@ export default function Invoice() {
             return Promise.reject("Error", err);
         }
     };
+    const rows = orders.map((order) => {
+        return {
+            orderId: order.orderId,
+            customerName: order.customerName,
+            totalAmount: order.totalAmount,
+            paidAmount: order.totalPaidAmount,
+            dueAmount: order.totalAmount - order.totalPaidAmount,
+            date: moment(order.date).format("DD-MM-YYYY"),
+            action: <AddPayment orderId={order.orderId} getAll={getOrders} />,
+        };
+    });
+
     React.useEffect(() => {
         getOrders();
     }, []);
-    console.log(orders);
+    console.log(orders, "orders");
     return (
         <>
             <Button

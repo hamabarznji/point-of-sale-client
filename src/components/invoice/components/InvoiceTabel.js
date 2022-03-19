@@ -108,14 +108,14 @@ export default function SpanningTable() {
         setOrderedProducts((prev) => {
             return [...prev, data];
         });
-        reset({
+        /*   reset({
             product: "",
             color: "",
             price: "",
             weight: "",
             qty: "",
             paidAmount: "",
-        });
+        }); */
     };
     const checkOutHandler = (data) => {
         if (ordredProducts.length === 0) {
