@@ -103,7 +103,7 @@ export default function AccountMenu() {
                         />
                     </ListItemIcon>
                     Remove Token
-                </MenuItem>{" "}
+                </MenuItem>
                 <MenuItem onClick={logoutHandler}>
                     <ListItemIcon>
                         <Logout

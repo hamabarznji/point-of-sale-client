@@ -22,6 +22,7 @@ export default function InputField({
     const handleChange = (event) => {
         const value = event.target.value ? event.target.value : "";
         setItem(value);
+        console.log(value);
     };
     return (
         <>

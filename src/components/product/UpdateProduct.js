@@ -80,7 +80,7 @@ export default function UpdateProduct({ product, getAll, items }) {
                     defaultValue={product.id}
                     error={errors.hasOwnProperty("id")}
                     helperText={errors.id?.message}
-                />{" "}
+                />
                 <InputField
                     name="name"
                     label="Name"

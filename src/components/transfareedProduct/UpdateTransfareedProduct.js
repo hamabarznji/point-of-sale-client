@@ -75,7 +75,7 @@ export default function UpdateTransfareedProduct({
                 error={errors.hasOwnProperty("id")}
                 helperText={errors.id?.message}
                 disabled
-            />{" "}
+            />
             <InputField
                 name="product_id"
                 label="Product Name"

@@ -43,7 +43,6 @@ export default function Invoice() {
             setOrders(res);
             return Promise.resolve(res);
         } catch (err) {
-            console.log(err);
             return Promise.reject("Error", err);
         }
     };

@@ -3,7 +3,6 @@ import { TableCell, TableRow } from "@mui/material";
 export default function CheckoutTableFooter({ totalAmount, paidAmount }) {
     return (
         <>
-            {" "}
             <TableRow style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
                 <TableCell rowSpan={3} />
                 <TableCell

@@ -13,15 +13,14 @@ export default function TableHead({
 }) {
     return (
         <>
-            {" "}
             <TableRow>
                 <TableCell align="left" colSpan={2} style={{ border: "none" }}>
                     <Typography variant="h5"> Chalishkan Company</Typography>
                 </TableCell>
                 <TableCell align="right" colSpan={4} style={{ border: "none" }}>
-                    <Typography variant="h5"> Date: {date}</Typography>{" "}
+                    <Typography variant="h5"> Date: {date}</Typography>
                 </TableCell>
-            </TableRow>{" "}
+            </TableRow>
             <TableRow>
                 <TableCell align="left" colSpan={3} style={{ border: "none" }}>
                     <Typography variant="h5">Address: {address} </Typography>

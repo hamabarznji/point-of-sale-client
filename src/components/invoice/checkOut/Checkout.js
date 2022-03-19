@@ -9,13 +9,11 @@ export default function CheckOout() {
     const location = useLocation();
     const orderedproducts = location.state.invoice[0].ordredProducts;
     const orderInformation = location.state.invoice[0].orderInformation;
-
     const getCustomer = async () => {
         try {
             const customer = await CustomerService.getCustomer(
                 orderInformation.customer_id
             );
-            console.log(customer);
             setCustomerName(customer.name);
             return Promise.resolve(customer);
         } catch (err) {

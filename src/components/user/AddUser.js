@@ -63,7 +63,7 @@ export default function AddUser({ getAll, items }) {
                 register={register}
                 error={errors.hasOwnProperty("username")}
                 helperText={errors.username?.message}
-            />{" "}
+            />
             <InputField
                 control={control}
                 errors={errors}

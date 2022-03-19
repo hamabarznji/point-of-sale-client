@@ -12,25 +12,27 @@ export default function Inputs({
     weight,
     qty,
     transfareedProducts,
+    items,
 }) {
     return (
         <>
-            {" "}
             <TableRow>
                 <TableCell align="center">
                     <InputField
                         fullWidth
                         control={control}
                         errors={errors}
-                        name="product"
+                        name="transfareedProductId"
                         defaultValue=""
                         variant="outlined"
                         label="Product Name"
                         register={register}
-                        error={errors.hasOwnProperty("product")}
+                        error={errors.hasOwnProperty("transfareedProductId")}
                         helperText={errors.product?.message}
+                        select
+                        items={items}
                     />
-                </TableCell>{" "}
+                </TableCell>
                 <TableCell align="center">
                     <InputField
                         control={control}
@@ -43,7 +45,7 @@ export default function Inputs({
                         error={errors.hasOwnProperty("price")}
                         helperText={errors.price?.message}
                     />
-                </TableCell>{" "}
+                </TableCell>
                 <TableCell align="center">
                     <InputField
                         control={control}
@@ -56,7 +58,7 @@ export default function Inputs({
                         error={errors.hasOwnProperty("weight")}
                         helperText={errors.weight?.message}
                     />
-                </TableCell>{" "}
+                </TableCell>
                 <TableCell align="center">
                     <InputField
                         control={control}
@@ -69,7 +71,7 @@ export default function Inputs({
                         error={errors.hasOwnProperty("qty")}
                         helperText={errors.qty?.message}
                     />
-                </TableCell>{" "}
+                </TableCell>
                 <TableCell align="center">
                     <InputField
                         control={control}
@@ -89,7 +91,7 @@ export default function Inputs({
                         ]}
                         fullWidth
                     />
-                </TableCell>{" "}
+                </TableCell>
                 <TableCell align="center">
                     {<Button type="submit">Add</Button>}
                 </TableCell>

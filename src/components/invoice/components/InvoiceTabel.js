@@ -25,6 +25,12 @@ export default function SpanningTable() {
     const [selectedCustomer, setSelectedCustomer] = React.useState();
     const [ordredProducts, setOrderedProducts] = React.useState([]);
     const [transfareedProducts, setTransfareedProducts] = React.useState([]);
+    let tempProduct = [];
+    // const [tempProduct, setTempProduct] = React.useState([]);
+    const [tempQW, setTempQW] = React.useState({
+        qty: 0,
+        weight: 0,
+    });
     const invoice = [];
     const [totalAmount, setTotalAmount] = React.useState(0);
     React.useEffect(() => {
@@ -35,10 +41,10 @@ export default function SpanningTable() {
     const date = moment().format("YYYY-MM-DD");
     const history = useNavigate();
 
-    const enqueueSnackbar = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const schema = yup.object().shape({
         customer: yup.string().required("Customer name is required"),
-        product: yup.string().required("Product name is required"),
+        transfareedProductId: yup.string().required("Product name is required"),
         color: yup.string().required("Color  is required"),
         price: yup.number().required("Price is required"),
         weight: yup.number().required("Weight is required"),
@@ -72,14 +78,15 @@ export default function SpanningTable() {
                 await TransfareedProductService.getTransfareedProducts(
                     localStorage.getItem("storeId")
                 );
+
             results.map((item) => {
                 return setTransfareedProducts((prev) => [
                     ...prev,
                     {
-                        value: item.id,
-                        product_id: item.product_id,
+                        id: item.id,
                         name: item.productName,
-                        color: item.color,
+                        weight: item.weight,
+                        qty: item.qty,
                     },
                 ]);
             });
@@ -101,22 +108,48 @@ export default function SpanningTable() {
     };
     const onSubmit = (data, e) => {
         e.preventDefault();
-        if (ordredProducts.length === 0) {
-            setSelectedCustomer(data.customer);
-        }
+        try {
+            if (data.weight > 0 && data.qty > 0) {
+                enqueueSnackbar(
+                    "A prduct cannot have weight and quantity at a time! !",
+                    {
+                        variant: "error",
+                    }
+                );
+                throw new Error(
+                    "A prduct cannot have weight and quantity at a time! ! "
+                );
+            }
+            if (ordredProducts.length === 0) {
+                setSelectedCustomer(data.customer);
+            }
 
-        setOrderedProducts((prev) => {
-            return [...prev, data];
-        });
-        /*   reset({
-            product: "",
-            color: "",
-            price: "",
-            weight: "",
-            qty: "",
-            paidAmount: "",
-        }); */
+            tempProduct = transfareedProducts.filter((item) => {
+                return item.id == data.transfareedProductId;
+            });
+
+            if (tempProduct[0].weight < data.weight) {
+                enqueueSnackbar("No enough weight available!", {
+                    variant: "error",
+                });
+                return;
+            } else if (tempProduct[0].qty < data.qty) {
+                enqueueSnackbar("No enough qunatity available!", {
+                    variant: "error",
+                });
+                throw new Error("No enough qunatity available!");
+            }
+
+            setOrderedProducts((prev) => {
+                return [...prev, data];
+            });
+        } catch (err) {
+            console.log(err);
+        } finally {
+            tempProduct = [];
+        }
     };
+
     const checkOutHandler = (data) => {
         if (ordredProducts.length === 0) {
             enqueueSnackbar("Please add some products");
@@ -135,7 +168,7 @@ export default function SpanningTable() {
 
                 ordredProducts: ordredProducts.map((item) => {
                     return {
-                        product_id: item.product,
+                        transfareedProductId: item.transfareedProductId,
                         customer: item.customer,
                         color: item.color,
                         qty: item.qty,
@@ -160,7 +193,6 @@ export default function SpanningTable() {
     };
 
     const isInvoice = ordredProducts.length > 0;
-
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -203,6 +235,7 @@ export default function SpanningTable() {
                                 weight={schema.weight}
                                 qty={schema.qty}
                                 transfareedProducts={transfareedProducts}
+                                items={transfareedProducts}
                             />
                         </TableBody>
                     </Table>

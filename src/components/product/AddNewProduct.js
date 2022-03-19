@@ -108,7 +108,7 @@ export default function AddProduct({ getAll, items }) {
                 errors={errors}
                 error={errors.hasOwnProperty("price")}
                 helperText={errors.price?.message}
-            />{" "}
+            />
             <InputField
                 name="weight"
                 label="Weight"

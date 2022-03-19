@@ -29,19 +29,18 @@ export default function CheckoutTableHeader({ customer }) {
                 </TableCell>
                 <TableCell align="right" colSpan={4} style={{ border: "none" }}>
                     <Typography variant="h5">
-                        {" "}
                         {moment().format("YYYY-MM-DD")}
-                    </Typography>{" "}
+                    </Typography>
                 </TableCell>
-            </TableRow>{" "}
+            </TableRow>
             <TableRow>
                 <TableCell align="left" colSpan={2} style={{ border: "none" }}>
                     <Typography variant="h5"> {store?.location}</Typography>
                 </TableCell>
                 <TableCell align="right" colSpan={4} style={{ border: "none" }}>
-                    <Typography variant="h5"> {customer}</Typography>{" "}
+                    <Typography variant="h5"> {customer}</Typography>
                 </TableCell>
-            </TableRow>{" "}
+            </TableRow>
             <TableRow>
                 <TableCell align="left" colSpan={2} style={{ border: "none" }}>
                     <Typography variant="h5"> {store?.phone}</Typography>
