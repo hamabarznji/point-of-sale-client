@@ -7,10 +7,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { useNavigate } from "react-router-dom";
 
-export default function ReactTable({ columns, rows }) {
+export default function ReactTable({ columns, rows, isPath }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const history = useNavigate();
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -57,6 +59,15 @@ export default function ReactTable({ columns, rows }) {
                                         role="checkbox"
                                         tabIndex={-1}
                                         key={index}
+                                        onClick={() => {
+                                            console.log(row);
+                                            if (isPath) {
+                                                history(
+                                                    `/dashboard/${row.path}`
+                                                );
+                                            }
+                                        }}
+                                        style={{ cursor: "pointer " }}
                                     >
                                         {columns.map((column) => {
                                             const value = row[column.id];

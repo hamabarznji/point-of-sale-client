@@ -1,6 +1,6 @@
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import InvoiceTable from "../ReactTabel";
+import ReactTabel from "../ReactTabel";
 import OrderService from "../../services/OrderService";
 import React from "react";
 import moment from "moment";
@@ -24,7 +24,14 @@ const columns = [
     { id: "date", label: "Date", minWidth: 120, align: "center" },
     { id: "action", label: "Action", minWidth: 120, align: "center" },
 ];
-
+/*     Header: "model.attributes.project.name",
+                accessor: (value) => value,
+                minWidth: 50,
+                width: 200,
+                disableSortBy: true,
+                disableFilters: true,
+                isLink: true,
+                path: (id) => `/dashboard/projects/${id}`, */
 export default function Invoice() {
     const history = useNavigate();
 
@@ -49,13 +56,13 @@ export default function Invoice() {
             dueAmount: order.totalAmount - order.totalPaidAmount,
             date: moment(order.date).format("DD-MM-YYYY"),
             action: <AddPayment orderId={order.orderId} getAll={getOrders} />,
+            path: `orders/${order.orderId}`,
         };
     });
 
     React.useEffect(() => {
         getOrders();
     }, []);
-    console.log(orders, "orders");
     return (
         <>
             <Button
@@ -65,7 +72,7 @@ export default function Invoice() {
             >
                 Add Invoice
             </Button>
-            <InvoiceTable columns={columns} rows={rows} />
+            <ReactTabel columns={columns} rows={rows} isPath={true} />
         </>
     );
 }
