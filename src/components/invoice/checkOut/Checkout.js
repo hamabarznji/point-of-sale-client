@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import OrderedProductService from "../../../services/OrderedProductService";
@@ -9,6 +9,8 @@ export default function CheckOout() {
     const location = useLocation();
     const orderedproducts = location.state.invoice[0].ordredProducts;
     const orderInformation = location.state.invoice[0].orderInformation;
+    console.log(orderInformation, "orderInformation");
+    console.log(orderedproducts, "orderedproducts");
     const getCustomer = async () => {
         try {
             const customer = await CustomerService.getCustomer(
@@ -38,12 +40,13 @@ export default function CheckOout() {
             };
             const ops = orderedproducts.map((item) => {
                 return {
-                    transfareedProduct_id: 1,
+                    transfareedProduct_id: item.transfareedProductId,
                     qty: item.qty,
                     weight: item.weight,
                     price: item.price,
                 };
             });
+
             const res = await OrderedProductService.addOrder({
                 orderInfo,
                 paymentInfo,

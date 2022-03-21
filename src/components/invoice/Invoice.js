@@ -2,7 +2,7 @@ import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ReactTabel from "../ReactTabel";
 import OrderService from "../../services/OrderService";
-import React from "react";
+import React, { useRef } from "react";
 import moment from "moment";
 import AddPayment from "./AddPayment";
 const columns = [
@@ -24,17 +24,10 @@ const columns = [
     { id: "date", label: "Date", minWidth: 120, align: "center" },
     { id: "action", label: "Action", minWidth: 120, align: "center" },
 ];
-/*     Header: "model.attributes.project.name",
-                accessor: (value) => value,
-                minWidth: 50,
-                width: 200,
-                disableSortBy: true,
-                disableFilters: true,
-                isLink: true,
-                path: (id) => `/dashboard/projects/${id}`, */
+
 export default function Invoice() {
     const history = useNavigate();
-
+    const pnameRef = useRef();
     const [orders, setOrders] = React.useState([]);
 
     const getOrders = async () => {

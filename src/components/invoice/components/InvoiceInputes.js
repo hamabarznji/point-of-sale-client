@@ -44,6 +44,7 @@ export default function Inputs({
                         register={register}
                         error={errors.hasOwnProperty("price")}
                         helperText={errors.price?.message}
+                        width={90}
                     />
                 </TableCell>
                 <TableCell align="center">
@@ -57,6 +58,7 @@ export default function Inputs({
                         register={register}
                         error={errors.hasOwnProperty("weight")}
                         helperText={errors.weight?.message}
+                        width={95}
                     />
                 </TableCell>
                 <TableCell align="center">
@@ -70,6 +72,7 @@ export default function Inputs({
                         register={register}
                         error={errors.hasOwnProperty("qty")}
                         helperText={errors.qty?.message}
+                        width={95}
                     />
                 </TableCell>
                 <TableCell align="center">

@@ -7,10 +7,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { useNavigate } from "react-router-dom";
 
-export default function ReactTable({ columns, rows }) {
+export default function ReactTable({ columns, rows, isPath }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const history = useNavigate();
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -57,6 +59,7 @@ export default function ReactTable({ columns, rows }) {
                                         role="checkbox"
                                         tabIndex={-1}
                                         key={index}
+                                        style={{ cursor: "pointer " }}
                                     >
                                         {columns.map((column) => {
                                             const value = row[column.id];
@@ -64,6 +67,18 @@ export default function ReactTable({ columns, rows }) {
                                                 <TableCell
                                                     key={column.id}
                                                     align={column.align}
+                                                    onClick={() => {
+                                                        if (
+                                                            column.id ===
+                                                            "action"
+                                                        ) {
+                                                            return;
+                                                        } else if (isPath) {
+                                                            history(
+                                                                `/dashboard/${row.path}`
+                                                            );
+                                                        }
+                                                    }}
                                                 >
                                                     {column.format &&
                                                     typeof value === "number"

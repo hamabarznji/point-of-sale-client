@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Controller } from "react-hook-form";
 import { MenuItem, TextField } from "@mui/material";
+import { useRef } from "react";
 
 export default function InputField({
     control,
@@ -16,13 +17,16 @@ export default function InputField({
     helperText,
     error,
     items,
+    width,
 }) {
     const [item, setItem] = React.useState();
+    const ref = useRef();
 
     const handleChange = (event) => {
         const value = event.target.value ? event.target.value : "";
         setItem(value);
     };
+    console.log(ref.current);
     return (
         <>
             <Controller
@@ -30,6 +34,7 @@ export default function InputField({
                 errors={errors}
                 name={name}
                 defaultValue={defaultValue}
+                ref={ref}
                 render={(field) => {
                     return (
                         <TextField
@@ -48,10 +53,15 @@ export default function InputField({
                             select={select ? true : false}
                             onChange={handleChange}
                             value={item?.value}
+                            style={{ width: width ? width : "100%" }}
+                            inputRef={ref}
                         >
                             {select &&
                                 items.map((option) => (
-                                    <MenuItem key={option.id} value={option.id}>
+                                    <MenuItem
+                                        key={option.name}
+                                        value={option.id}
+                                    >
                                         {option.name}
                                     </MenuItem>
                                 ))}

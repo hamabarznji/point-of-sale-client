@@ -71,7 +71,7 @@ export default function EditProduct({ product, getAll, items }) {
                     error={errors.hasOwnProperty("id")}
                     helperText={errors.id?.message}
                     disabled
-                />{" "}
+                />
                 <InputField
                     name="name"
                     label="Name"

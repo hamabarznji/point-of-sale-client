@@ -6,7 +6,7 @@ import FormDialog from "../FormDialog";
 import * as yup from "yup";
 import InputField from "../InputField";
 import { useSnackbar } from "notistack";
-
+import moment from "moment";
 export default function AddEmployee({ getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
@@ -78,12 +78,13 @@ export default function AddEmployee({ getAll, items }) {
                 control={control}
                 errors={errors}
                 name="date"
-                defaultValue=""
+                defaultValue={moment().format("YYYY-MM-DD")}
                 variant="standard"
                 label="Date"
                 register={register}
                 error={errors.hasOwnProperty("date")}
                 helperText={errors.date?.message}
+                type="date"
             />
         </FormDialog>
     );

@@ -58,7 +58,7 @@ export default function Customers() {
     return (
         <>
             <AddCustomer getAll={getAll} items={stores} />
-            <Table columns={columns} rows={rows} />
+            <Table columns={columns} rows={rows} isPath={false} />
         </>
     );
 }

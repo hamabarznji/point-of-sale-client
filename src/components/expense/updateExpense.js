@@ -64,7 +64,7 @@ export default function UpdateUser({ expense, items }) {
                     error={errors.hasOwnProperty("id")}
                     helperText={errors.id?.message}
                     disabled
-                />{" "}
+                />
                 <InputField
                     name="description"
                     label="Description"

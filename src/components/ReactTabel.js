@@ -59,14 +59,6 @@ export default function ReactTable({ columns, rows, isPath }) {
                                         role="checkbox"
                                         tabIndex={-1}
                                         key={index}
-                                        onClick={() => {
-                                            console.log(row);
-                                            if (isPath) {
-                                                history(
-                                                    `/dashboard/${row.path}`
-                                                );
-                                            }
-                                        }}
                                         style={{ cursor: "pointer " }}
                                     >
                                         {columns.map((column) => {
@@ -75,6 +67,18 @@ export default function ReactTable({ columns, rows, isPath }) {
                                                 <TableCell
                                                     key={column.id}
                                                     align={column.align}
+                                                    onClick={() => {
+                                                        if (
+                                                            column.id ===
+                                                            "action"
+                                                        ) {
+                                                            return;
+                                                        } else if (isPath) {
+                                                            history(
+                                                                `/dashboard/${row.path}`
+                                                            );
+                                                        }
+                                                    }}
                                                 >
                                                     {column.format &&
                                                     typeof value === "number"

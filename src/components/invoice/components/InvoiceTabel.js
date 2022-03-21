@@ -19,12 +19,16 @@ import InvoiceInputes from "./InvoiceInputes";
 import Footer from "./Footer";
 import TableHead from "./TableHead";
 import totalPriceCalculator from "../../helper/totalPriceCalculator";
+import { useRef } from "react";
+
 export default function SpanningTable() {
     const [customers, setCustomers] = React.useState([]);
     const [store, setStore] = React.useState();
     const [selectedCustomer, setSelectedCustomer] = React.useState();
     const [ordredProducts, setOrderedProducts] = React.useState([]);
     const [transfareedProducts, setTransfareedProducts] = React.useState([]);
+    const pnameRef = useRef();
+
     let tempProduct = [];
     // const [tempProduct, setTempProduct] = React.useState([]);
     const [tempQW, setTempQW] = React.useState({
@@ -60,7 +64,7 @@ export default function SpanningTable() {
     } = useForm({
         resolver: yupResolver(schema),
     });
-
+    console.log(pnameRef);
     const getCUstomers = async () => {
         try {
             const results = await CustomerService.getCustomersForSpecificStore(
@@ -106,7 +110,7 @@ export default function SpanningTable() {
             return Promise.reject(err);
         }
     };
-    const onSubmit = (data, e) => {
+    const addOrederedProductToInvoiceHandler = (data, e) => {
         e.preventDefault();
         try {
             if (data.weight > 0 && data.qty > 0) {
@@ -195,7 +199,7 @@ export default function SpanningTable() {
     const isInvoice = ordredProducts.length > 0;
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(addOrederedProductToInvoiceHandler)}>
                 <TableContainer component={Paper}>
                     <Table
                         style={{
@@ -236,6 +240,7 @@ export default function SpanningTable() {
                                 qty={schema.qty}
                                 transfareedProducts={transfareedProducts}
                                 items={transfareedProducts}
+                                ref={pnameRef}
                             />
                         </TableBody>
                     </Table>
