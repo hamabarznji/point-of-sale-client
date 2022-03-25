@@ -2,14 +2,28 @@ import { Button, Grid } from "@mui/material";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import OrderedProductService from "../../../services/OrderedProductService";
+import TransfareedProductService from "../../../services/TransfareedProductService";
 import CheckoutTable from "./CheckoutTable";
 import CustomerService from "../../../services/CustomerService";
 export default function CheckOout() {
     const [customerName, setCustomerName] = React.useState("");
+    const [transfareedProducts, setTransfareedProducts] = React.useState([]);
     const location = useLocation();
-    const orderedproducts = location.state.invoice[0].ordredProducts;
+    const orderedproducts = location.state.invoice[0].ordredProducts.map(
+        (product) => {
+            return {
+                productName: transfareedProducts.find((item) => {
+                    return (
+                        product.transfareedProductId ==
+                        item.transfareedProductId
+                    );
+                })?.productName,
+                ...product,
+            };
+        }
+    );
     const orderInformation = location.state.invoice[0].orderInformation;
-    console.log(orderInformation, "orderInformation");
+    //  console.log(orderInformation, "orderInformation");
     console.log(orderedproducts, "orderedproducts");
     const getCustomer = async () => {
         try {
@@ -23,9 +37,29 @@ export default function CheckOout() {
         }
     };
 
+    const getOrderedProducts = async () => {
+        try {
+            const data =
+                await TransfareedProductService.getTransfareedProducts();
+            const productsInfo = data.map((product) => {
+                return {
+                    transfareedProductId: product.id,
+                    productName: product.productName,
+                };
+            });
+            setTransfareedProducts(productsInfo);
+
+            return Promise.resolve(data);
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
+
     React.useEffect(() => {
         getCustomer();
+        getOrderedProducts();
     }, []);
+
     const addOrderedProduct = async () => {
         try {
             const orderInfo = {
@@ -58,6 +92,7 @@ export default function CheckOout() {
             return Promise.reject(err);
         }
     };
+
     return (
         <Grid
             container

@@ -11,7 +11,7 @@ import CheckoutTableFooter from "./CheckoutTableFooter";
 import CheckoutTableHeader from "./CheckoutTableHeader";
 const columns = [
     {
-        id: "product_id",
+        id: "productName",
         label: "Product Name",
         minWidth: 170,
         align: "center",
@@ -79,22 +79,22 @@ export default function CheckoutTable({
                                 scope="row"
                                 align="center"
                             >
-                                {row.product_id}
+                                {row?.productName}
                             </StyledTableCell>
                             <StyledTableCell align="center">
-                                {row.weight}
+                                {row?.weight}
                             </StyledTableCell>
                             <StyledTableCell align="center">
-                                {row.qty}
+                                {row?.qty}
                             </StyledTableCell>
                             <StyledTableCell align="center">
-                                {row.color}
+                                {row?.color}
                             </StyledTableCell>
                             <StyledTableCell align="center">
-                                {row.price}
+                                {row?.price}
                             </StyledTableCell>
                             <StyledTableCell align="center">
-                                {row.totalAmount}
+                                {row?.totalAmount}
                             </StyledTableCell>
                         </StyledTableRow>
                     ))}

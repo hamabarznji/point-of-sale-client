@@ -19,7 +19,6 @@ import InvoiceInputes from "./InvoiceInputes";
 import Footer from "./Footer";
 import TableHead from "./TableHead";
 import totalPriceCalculator from "../../helper/totalPriceCalculator";
-import { useRef } from "react";
 
 export default function SpanningTable() {
     const [customers, setCustomers] = React.useState([]);
@@ -27,7 +26,6 @@ export default function SpanningTable() {
     const [selectedCustomer, setSelectedCustomer] = React.useState();
     const [ordredProducts, setOrderedProducts] = React.useState([]);
     const [transfareedProducts, setTransfareedProducts] = React.useState([]);
-    const pnameRef = useRef();
 
     let tempProduct = [];
     // const [tempProduct, setTempProduct] = React.useState([]);
@@ -35,6 +33,7 @@ export default function SpanningTable() {
         qty: 0,
         weight: 0,
     });
+    let textContentValue;
     const invoice = [];
     const [totalAmount, setTotalAmount] = React.useState(0);
     React.useEffect(() => {
@@ -55,6 +54,7 @@ export default function SpanningTable() {
         qty: yup.number().required("Quantity id is required"),
         paidAmount: yup.number(),
     });
+
     const {
         register,
         handleSubmit,
@@ -64,7 +64,6 @@ export default function SpanningTable() {
     } = useForm({
         resolver: yupResolver(schema),
     });
-    console.log(pnameRef);
     const getCUstomers = async () => {
         try {
             const results = await CustomerService.getCustomersForSpecificStore(
@@ -240,7 +239,13 @@ export default function SpanningTable() {
                                 qty={schema.qty}
                                 transfareedProducts={transfareedProducts}
                                 items={transfareedProducts}
-                                ref={pnameRef}
+                                onClick={(e) => {
+                                    const x =
+                                        document.getElementById(
+                                            "mui-3"
+                                        ).textContent;
+                                    console.log(x, "here");
+                                }}
                             />
                         </TableBody>
                     </Table>
