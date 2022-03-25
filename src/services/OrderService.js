@@ -11,11 +11,16 @@ class OrderService {
     }
 
     async gerOrders() {
-        const res = await axios.get("http://localhost:3002/orders", {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("posToken"),
-            },
-        });
+        const res = await axios.get(
+            `http://localhost:3002/orders/stores/${localStorage.getItem(
+                "storeId"
+            )}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("posToken"),
+                },
+            }
+        );
         return res.data;
     }
 }

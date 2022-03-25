@@ -3,7 +3,9 @@ import axios from "axios";
 class TransfareedProductService {
     async getTransfareedProducts() {
         const res = await axios.get(
-            "http://localhost:3002/transfareedProducts",
+            `http://localhost:3002/transfareedproducts/stores/${localStorage.getItem(
+                "storeId"
+            )}`,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("posToken"),

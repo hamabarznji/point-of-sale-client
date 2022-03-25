@@ -74,9 +74,7 @@ export default function SpanningTable() {
     const getTransfareedProducts = async () => {
         try {
             const results =
-                await TransfareedProductService.getTransfareedProducts(
-                    localStorage.getItem("storeId")
-                );
+                await TransfareedProductService.getTransfareedProducts(1);
 
             results.map((item) => {
                 return setTransfareedProducts((prev) => [

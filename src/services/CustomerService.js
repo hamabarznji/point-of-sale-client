@@ -2,16 +2,23 @@ import axios from "axios";
 
 class CustomerService {
     async getCustomers() {
-        const res = await axios.get("http://localhost:3002/customers", {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("posToken"),
-            },
-        });
+        const res = await axios.get(
+            `http://localhost:3002/customers/stores/${localStorage.getItem(
+                "storeId"
+            )}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("posToken"),
+                },
+            }
+        );
         return res.data;
     }
-    async getCustomersForSpecificStore(storeid) {
+    async getCustomersForSpecificStore() {
         const res = await axios.get(
-            `http://localhost:3002/customers/store/${storeid}`,
+            `http://localhost:3002/customers/stores/${localStorage.getItem(
+                "storeId"
+            )}`,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("posToken"),
