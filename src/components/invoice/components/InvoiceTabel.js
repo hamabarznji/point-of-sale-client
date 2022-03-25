@@ -29,11 +29,7 @@ export default function SpanningTable() {
 
     let tempProduct = [];
     // const [tempProduct, setTempProduct] = React.useState([]);
-    const [tempQW, setTempQW] = React.useState({
-        qty: 0,
-        weight: 0,
-    });
-    let textContentValue;
+
     const invoice = [];
     const [totalAmount, setTotalAmount] = React.useState(0);
     React.useEffect(() => {
@@ -143,16 +139,21 @@ export default function SpanningTable() {
                 throw new Error("No enough qunatity available!");
             }
 
+            const productName = transfareedProducts.find((item) => {
+                return data.transfareedProductId == item.id;
+            })?.name;
+            data = {
+                ...data,
+                productName,
+            };
             setOrderedProducts((prev) => {
                 return [...prev, data];
             });
         } catch (err) {
             console.log(err);
-        } finally {
-            tempProduct = [];
+            return err.message;
         }
     };
-
     const checkOutHandler = (data) => {
         if (ordredProducts.length === 0) {
             enqueueSnackbar("Please add some products");
@@ -171,6 +172,7 @@ export default function SpanningTable() {
 
                 ordredProducts: ordredProducts.map((item) => {
                     return {
+                        productName: item.productName,
                         transfareedProductId: item.transfareedProductId,
                         customer: item.customer,
                         color: item.color,
@@ -239,13 +241,6 @@ export default function SpanningTable() {
                                 qty={schema.qty}
                                 transfareedProducts={transfareedProducts}
                                 items={transfareedProducts}
-                                onClick={(e) => {
-                                    const x =
-                                        document.getElementById(
-                                            "mui-3"
-                                        ).textContent;
-                                    console.log(x, "here");
-                                }}
                             />
                         </TableBody>
                     </Table>

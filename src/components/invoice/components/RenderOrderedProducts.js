@@ -19,7 +19,7 @@ export default function renderInvoices({ ordredProducts, setTotalAmount }) {
                 <TableRow key={index}>
                     <TableCell align="center">{index + 1}</TableCell>
                     <TableCell align="center">
-                        {ordredProduct.product}
+                        {ordredProduct.productName}
                     </TableCell>
                     <TableCell align="center">{ordredProduct.price}</TableCell>
                     <TableCell align="center">{ordredProduct.weight}</TableCell>
