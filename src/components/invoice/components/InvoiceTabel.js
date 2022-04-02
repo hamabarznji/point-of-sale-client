@@ -19,6 +19,7 @@ import InvoiceInputes from "./InvoiceInputes";
 import Footer from "./Footer";
 import TableHead from "./TableHead";
 import totalPriceCalculator from "../../helper/totalPriceCalculator";
+import { getValue } from "@testing-library/user-event/dist/utils";
 
 export default function SpanningTable() {
     const [customers, setCustomers] = React.useState([]);
@@ -56,8 +57,19 @@ export default function SpanningTable() {
         handleSubmit,
         control,
         reset,
+        resetField,
+        getValues,
         formState: { errors },
     } = useForm({
+        defaultValues: {
+            customer: "",
+            transfareedProductId: "",
+            color: "",
+            price: "",
+            weight: 0,
+            qty: 0,
+            paidAmount: 0,
+        },
         resolver: yupResolver(schema),
     });
     const getCUstomers = async () => {
@@ -74,7 +86,7 @@ export default function SpanningTable() {
     const getTransfareedProducts = async () => {
         try {
             const results =
-                await TransfareedProductService.getTransfareedProducts(1);
+                await TransfareedProductService.getTransfareedProducts();
 
             results.map((item) => {
                 return setTransfareedProducts((prev) => [
@@ -147,6 +159,26 @@ export default function SpanningTable() {
             setOrderedProducts((prev) => {
                 return [...prev, data];
             });
+
+            reset(
+                {
+                    ...getValues(),
+                    customer: selectedCustomer,
+                    transfareedProductId: "",
+                    color: "",
+                    price: 0,
+                    weight: 0,
+                    qty: 0,
+                },
+                {
+                    keepErrors: false,
+                    keepDirty: true,
+                    keepIsSubmitted: false,
+                    keepTouched: false,
+                    keepIsValid: false,
+                    keepSubmitCount: false,
+                }
+            );
         } catch (err) {
             console.log(err);
             return err.message;
