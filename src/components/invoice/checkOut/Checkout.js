@@ -8,7 +8,6 @@ import Print from "../print/Print";
 
 export default function CheckOout() {
     const [customerName, setCustomerName] = React.useState("");
-    const [print, setIsPrint] = React.useState(false);
     const [orderDetails, setOrderDetails] = React.useState();
     const location = useLocation();
     const orderedproducts = location.state.invoice[0].ordredProducts;
@@ -93,13 +92,10 @@ export default function CheckOout() {
                     paidAmount={orderInformation?.paidAmount}
                     customer={customerName ? customerName : "Unknown"}
                     orderNumber={orderDetails?.id}
+                    addOreder={addOrderedProduct}
                 />
             </Grid>
-            <Grid item>
-                <Button onClick={addOrderedProduct} variant="contained">
-                    Add Order
-                </Button>
-            </Grid>
+            <Grid item></Grid>
         </Grid>
     );
 }
