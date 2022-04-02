@@ -24,7 +24,7 @@ export default function ReactTable({ columns, rows, isPath }) {
     };
 
     return (
-        <Paper style={{ width: "90%", height: "100%", marginLeft: "5rem" }}>
+        <Paper style={{ width: "90%", height: "90%", marginLeft: "5rem" }}>
             <br />
             <TableContainer
                 sx={{
@@ -74,6 +74,7 @@ export default function ReactTable({ columns, rows, isPath }) {
                                                         ) {
                                                             return;
                                                         } else if (isPath) {
+                                                            console.log(row);
                                                             history(
                                                                 `/dashboard/${row.path}`
                                                             );

@@ -23,6 +23,17 @@ class OrderService {
         );
         return res.data;
     }
+    async gerOrdersByCustomerPhone(customerPhone) {
+        const res = await axios.get(
+            `http://localhost:3002/orders/customers/${customerPhone}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("posToken"),
+                },
+            }
+        );
+        return res.data;
+    }
 }
 
 export default new OrderService();

@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Product from "./pages/Product";
@@ -14,6 +14,7 @@ import Invoice from "./pages/Invoice";
 import CreateInvoice from "./pages/CreateInvoice";
 import TransfareedProduct from "./pages/TransfareedProduct";
 import CheckOut from "./components/invoice/checkOut/Checkout";
+import CustomerProfile from "./components/customer/CustomerProfile";
 function App() {
     const location = useLocation();
 
@@ -48,6 +49,10 @@ function App() {
                         <Route
                             path="/dashboard/customers"
                             element={<Customer />}
+                        />{" "}
+                        <Route
+                            path="/dashboard/customers/:id"
+                            element={<CustomerProfile />}
                         />
                         <Route
                             path="/dashboard/employees"

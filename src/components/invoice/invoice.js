@@ -27,7 +27,6 @@ const columns = [
 
 export default function Invoice() {
     const history = useNavigate();
-    const pnameRef = useRef();
     const [orders, setOrders] = React.useState([]);
 
     const getOrders = async () => {

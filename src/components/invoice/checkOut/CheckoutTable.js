@@ -9,6 +9,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CheckoutTableFooter from "./CheckoutTableFooter";
 import CheckoutTableHeader from "./CheckoutTableHeader";
+import Print from "../print/Print";
+
 const columns = [
     {
         id: "productName",
@@ -41,7 +43,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 0,
     },
 }));
-
 export default function CheckoutTable({
     rows,
     totalAmount,
@@ -51,12 +52,16 @@ export default function CheckoutTable({
     date,
     phone,
     address,
+    orderNumber,
 }) {
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
-                    <CheckoutTableHeader customer={customer} />
+                    <CheckoutTableHeader
+                        customer={customer}
+                        orderNumber={orderNumber ? orderNumber : null}
+                    />
                     <TableRow>
                         {columns.map((column) => {
                             return (

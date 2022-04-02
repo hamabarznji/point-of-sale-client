@@ -2,9 +2,10 @@ import * as React from "react";
 import Table from "../ReactTabel";
 import CustomerService from "../../services/CustomerService";
 import StoreService from "../../services/StoreService";
-
+import Tab from "../Tab";
 import AddCustomer from "./AddCustomer";
 import UpdateCustomer from "./UpdateCustomer";
+import CustomerProfile from "./CustomerProfile";
 
 const columns = [
     { id: "id", label: "Phone", minWidth: 170, align: "center" },
@@ -45,6 +46,7 @@ export default function Customers() {
             id: customer.id,
             name: customer.name,
             address: customer.address,
+            path: `customers/${customer.id}`,
             action: (
                 <UpdateCustomer
                     customer={customer}
@@ -55,10 +57,22 @@ export default function Customers() {
         };
     });
 
+    const tabs = [
+        {
+            label: "Customer List",
+            component: <Table columns={columns} rows={rows} isPath={true} />,
+        },
+        {
+            label: "Add Customer",
+            component: <AddCustomer getAll={getAll} />,
+        },
+    ];
     return (
         <>
-            <AddCustomer getAll={getAll} items={stores} />
-            <Table columns={columns} rows={rows} isPath={false} />
+            <AddCustomer getAll={getAll} />
+            <Table columns={columns} rows={rows} isPath={true} />
         </>
     );
 }
+
+// <AddCustomer getAll={getAll} items={stores} />

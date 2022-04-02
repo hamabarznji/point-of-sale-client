@@ -2,18 +2,21 @@ import { Button, Grid } from "@mui/material";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import OrderedProductService from "../../../services/OrderedProductService";
-import TransfareedProductService from "../../../services/TransfareedProductService";
 import CheckoutTable from "./CheckoutTable";
 import CustomerService from "../../../services/CustomerService";
+import Print from "../print/Print";
+import ReactToPrint from "react-to-print";
+
 export default function CheckOout() {
     const [customerName, setCustomerName] = React.useState("");
+    const [print, setIsPrint] = React.useState(false);
     const [orderNumber, setOrderNumber] = React.useState();
     const location = useLocation();
     const orderedproducts = location.state.invoice[0].ordredProducts;
     const orderInformation = location.state.invoice[0].orderInformation;
     // console.log(orderInformation, "orderInformation");
-    console.log(orderInformation, "orderInformation");
-    console.log(orderedproducts, "orderedproducts");
+    // console.log(orderInformation, "orderInformation");
+    // console.log(orderedproducts, "orderedproducts");
     const getCustomer = async () => {
         try {
             const customer = await CustomerService.getCustomer(
@@ -56,26 +59,28 @@ export default function CheckOout() {
                 paymentInfo,
                 ops,
             });
+            setOrderNumber(res[0].id);
+            console.log(res, "res");
 
             return Promise.resolve(res);
         } catch (err) {
             return Promise.reject(err);
         }
     };
-
     return (
         <Grid
             container
             style={{ width: "90%", height: "100%", marginLeft: "5rem" }}
         >
-            <Grid item lg={12}>
-                <CheckoutTable
+            <div>
+                <Print
                     rows={orderedproducts}
                     totalAmount={orderInformation?.totalAmount}
                     paidAmount={orderInformation?.paidAmount}
                     customer={customerName ? customerName : "Unknown"}
+                    orderNumber={orderNumber ? orderNumber : 0}
                 />
-            </Grid>
+            </div>
             <Button onClick={addOrderedProduct} variant="contained">
                 Add Order
             </Button>

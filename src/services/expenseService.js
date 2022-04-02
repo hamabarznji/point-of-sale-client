@@ -2,11 +2,16 @@ import axios from "axios";
 
 class ExpenseService {
     async getExpenses() {
-        const res = await axios.get("http://localhost:3002/expenses", {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("posToken"),
-            },
-        });
+        const res = await axios.get(
+            `http://localhost:3002/expenses/stores/${localStorage.getItem(
+                "storeId"
+            )}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("posToken"),
+                },
+            }
+        );
         return res.data;
     }
     async getExpense(id) {

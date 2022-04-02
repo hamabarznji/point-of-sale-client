@@ -3,7 +3,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import StoreService from "../../../services/StoreService";
 
-export default function CheckoutTableHeader({ customer }) {
+export default function CheckoutTableHeader({ customer, orderNumber }) {
     const [store, setStore] = useState();
 
     useEffect(() => {
@@ -45,7 +45,10 @@ export default function CheckoutTableHeader({ customer }) {
                 <TableCell align="left" colSpan={2} style={{ border: "none" }}>
                     <Typography variant="h5"> {store?.phone}</Typography>
                 </TableCell>
-            </TableRow>
+                <TableCell align="right" colSpan={4} style={{ border: "none" }}>
+                    <Typography variant="h5"> {orderNumber}</Typography>
+                </TableCell>
+            </TableRow>{" "}
         </>
     );
 }

@@ -2,11 +2,16 @@ import axios from "axios";
 
 class EmployeeService {
     async getEmployees() {
-        const res = await axios.get("http://localhost:3002/employees", {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("posToken"),
-            },
-        });
+        const res = await axios.get(
+            `http://localhost:3002/employees/stores/${localStorage.getItem(
+                "storeId"
+            )}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("posToken"),
+                },
+            }
+        );
         return res.data;
     }
     async getEmployee(id) {
