@@ -22,6 +22,14 @@ export default function App(props) {
 
     return (
         <div>
+            <ComponentToPrint
+                ref={ref}
+                rows={props.rows}
+                totalAmount={props.totalAmount}
+                paidAmount={props.paidAmount}
+                customer={props.customer}
+                orderNumber={props.orderNumber}
+            />
             <ReactToPrint content={() => ref.current}>
                 <PrintContextConsumer>
                     {({ handlePrint }) => (
@@ -31,14 +39,6 @@ export default function App(props) {
                     )}
                 </PrintContextConsumer>
             </ReactToPrint>
-            <ComponentToPrint
-                ref={ref}
-                rows={props.rows}
-                totalAmount={props.totalAmount}
-                paidAmount={props.paidAmount}
-                customer={props.customer}
-                orderNumber={props.orderNumber}
-            />
         </div>
     );
 }

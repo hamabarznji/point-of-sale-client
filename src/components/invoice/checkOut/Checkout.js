@@ -2,15 +2,14 @@ import { Button, Grid } from "@mui/material";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import OrderedProductService from "../../../services/OrderedProductService";
-import CheckoutTable from "./CheckoutTable";
 import CustomerService from "../../../services/CustomerService";
+import OrderService from "../../../services/OrderService";
 import Print from "../print/Print";
-import ReactToPrint from "react-to-print";
 
 export default function CheckOout() {
     const [customerName, setCustomerName] = React.useState("");
     const [print, setIsPrint] = React.useState(false);
-    const [orderNumber, setOrderNumber] = React.useState();
+    const [orderDetails, setOrderDetails] = React.useState();
     const location = useLocation();
     const orderedproducts = location.state.invoice[0].ordredProducts;
     const orderInformation = location.state.invoice[0].orderInformation;
@@ -28,19 +27,28 @@ export default function CheckOout() {
             return Promise.reject(err);
         }
     };
-
-    React.useEffect(() => {
-        getCustomer();
-    }, []);
-
-    const addOrderedProduct = async () => {
+    const addOrder = async () => {
         try {
-            const orderInfo = {
+            const order = await OrderService.addOrder({
                 store_id: orderInformation.store_id,
                 customer_phone: orderInformation.customer_id,
                 user_id: orderInformation.user_id,
                 date: orderInformation.date,
-            };
+            });
+            console.log(order);
+            setOrderDetails(order);
+            return Promise.resolve(order);
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
+    React.useEffect(() => {
+        getCustomer();
+        addOrder();
+    }, []);
+
+    const addOrderedProduct = async () => {
+        try {
             const paymentInfo = {
                 amount: orderInformation.paidAmount,
                 paid_date: orderInformation.date,
@@ -55,12 +63,10 @@ export default function CheckOout() {
             });
 
             const res = await OrderedProductService.addOrder({
-                orderInfo,
+                orderDetails,
                 paymentInfo,
                 ops,
             });
-            setOrderNumber(res[0].id);
-            console.log(res, "res");
 
             return Promise.resolve(res);
         } catch (err) {
@@ -70,20 +76,30 @@ export default function CheckOout() {
     return (
         <Grid
             container
-            style={{ width: "90%", height: "100%", marginLeft: "5rem" }}
+            style={{
+                width: "90%",
+                height: "100%",
+                marginLeft: "5rem",
+                top: "0%",
+            }}
+            spacing={1}
+            justifyContent="flex-start"
+            direction="column"
         >
-            <div>
+            <Grid item>
                 <Print
                     rows={orderedproducts}
                     totalAmount={orderInformation?.totalAmount}
                     paidAmount={orderInformation?.paidAmount}
                     customer={customerName ? customerName : "Unknown"}
-                    orderNumber={orderNumber ? orderNumber : 0}
+                    orderNumber={orderDetails?.id}
                 />
-            </div>
-            <Button onClick={addOrderedProduct} variant="contained">
-                Add Order
-            </Button>
+            </Grid>
+            <Grid item>
+                <Button onClick={addOrderedProduct} variant="contained">
+                    Add Order
+                </Button>
+            </Grid>
         </Grid>
     );
 }
