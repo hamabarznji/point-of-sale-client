@@ -11,7 +11,6 @@ const columns = [
     { id: "description", label: "Description", minWidth: 170, align: "center" },
     { id: "amount", label: "Amount", minWidth: 170, align: "center" },
     { id: "date", label: "Date", minWidth: 170, align: "center" },
-    { id: "action", label: "Action", maxWidth: 170, align: "center" },
 ];
 
 export default function Expense() {

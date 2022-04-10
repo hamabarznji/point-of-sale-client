@@ -20,6 +20,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import TransformIcon from "@mui/icons-material/Transform";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Appbar from "./AppBar";
 
@@ -30,56 +31,68 @@ const DrawerItems = [
         name: "Dashboard",
         path: "/dashboard",
         icon: <DashboardIcon color="primary" />,
+        permission: ["owner", "accountant", "owner"],
     },
     {
         name: "Warehouse",
         path: "/dashboard/products",
         icon: <WarehouseIcon color="primary" />,
+        permission: ["warehouse", "owner"],
     },
     {
         name: "Transfarred Product",
         path: "/dashboard/transfareedproducts",
         icon: <TransformIcon color="primary" />,
+        permission: ["warehouse", "owner"],
     },
     {
         name: "Store",
         path: "/dashboard/stores",
         icon: <StoreIcon color="primary" />,
+        permission: ["owner"],
     },
     {
         name: "Invoice",
         path: "/dashboard/invoices",
         icon: <ReceiptIcon color="primary" />,
+        permission: ["accountant", "owner"],
     },
     {
         name: "Customer",
         path: "/dashboard/customers",
         icon: <PeopleOutlineIcon color="primary" />,
+        permission: ["owner", "accountant"],
     },
     {
         name: "Employee",
         path: "/dashboard/employees",
         icon: <BadgeIcon color="primary" />,
+        permission: ["owner", "accountant"],
     },
     {
         name: "User",
         path: "/dashboard/users",
         icon: <AccountCircleIcon color="primary" />,
+        permission: ["owner"],
     },
     {
         name: "Expense",
         path: "/dashboard/expenses",
         icon: <MoneyOffIcon color="primary" />,
+        permission: ["owner", "accountant", "warehouse"],
     },
 
     {
         name: "Report",
-        path: "/dashboard/report",
+        path: "/dashboard/reports",
         icon: <AssessmentIcon color="primary" />,
+        permission: ["owner"],
     },
 ];
 
 export default function DrawerComponent() {
+    const userRole = useSelector((state) => state.posRedux.userRole);
+
     return (
         <Box>
             <CssBaseline />
@@ -111,14 +124,16 @@ export default function DrawerComponent() {
                                 fontWeight: "bold",
                             }}
                         >
-                            <ListItem
-                                button
-                                key={item.name}
-                                style={{ top: "9%" }}
-                            >
-                                <ListItemIcon>{item.icon}</ListItemIcon>
-                                <ListItemText primary={item.name} />
-                            </ListItem>
+                            {item.permission.includes(userRole) ? (
+                                <ListItem
+                                    button
+                                    key={item.name}
+                                    style={{ top: "9%" }}
+                                >
+                                    <ListItemIcon>{item.icon}</ListItemIcon>
+                                    <ListItemText primary={item.name} />
+                                </ListItem>
+                            ) : null}
                         </Link>
                     ))}
                 </List>

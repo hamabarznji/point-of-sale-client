@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Controller } from "react-hook-form";
 import { MenuItem, TextField } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
 
 export default function InputField({
     control,
@@ -55,10 +56,10 @@ export default function InputField({
                             {select &&
                                 items.map((option) => (
                                     <MenuItem
-                                        key={option.name}
-                                        value={option.id}
+                                        key={option?.name}
+                                        value={option?.id}
                                     >
-                                        {option.name}
+                                        {option?.name}
                                     </MenuItem>
                                 ))}
                         </TextField>

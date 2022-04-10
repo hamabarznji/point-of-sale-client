@@ -8,9 +8,9 @@ import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
 const roles = [
-    { id: 1, name: "Owner" },
-    { id: 2, name: "Accountant" },
-    { id: 3, name: "Warehouse" },
+    { id: "owner", name: "Owner" },
+    { id: "accountant", name: "Accountant" },
+    { id: "warehouse", name: "Warehouse" },
 ];
 
 export default function AddUser({ getAll, items }) {

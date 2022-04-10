@@ -75,26 +75,7 @@ export default function Inputs({
                         width={95}
                     />
                 </TableCell>
-                <TableCell align="center">
-                    <InputField
-                        control={control}
-                        errors={errors}
-                        name="color"
-                        defaultValue=""
-                        variant="outlined"
-                        label="Color"
-                        register={register}
-                        error={errors.hasOwnProperty("color")}
-                        helperText={errors.color?.message}
-                        select
-                        items={[
-                            { id: "Black", name: "Black" },
-                            { id: "White", name: "White" },
-                            { id: "Creamy", name: "Cremy" },
-                        ]}
-                        fullWidth
-                    />
-                </TableCell>
+
                 <TableCell align="center">
                     {<Button type="submit">Add</Button>}
                 </TableCell>

@@ -1,9 +1,9 @@
 import React, { forwardRef, useRef } from "react";
 import ReactToPrint, { PrintContextConsumer } from "react-to-print";
-import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
-
+import IconButton from "@mui/material/IconButton";
+import PrintIcon from "@mui/icons-material/LocalPrintshopRounded";
 import CheckOutTable from "../checkOut/CheckoutTable";
 const ComponentToPrint = forwardRef((props, ref) => {
     return (
@@ -19,7 +19,7 @@ const ComponentToPrint = forwardRef((props, ref) => {
     );
 });
 
-export default function App(props) {
+export default function Print(props) {
     const history = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -39,6 +39,11 @@ export default function App(props) {
             <ReactToPrint
                 content={() => ref.current}
                 documentTitle={`${props.customer}-${props.orderNumber}`}
+                onPrintError={(err) =>
+                    enqueueSnackbar(err.message, {
+                        variant: "error",
+                    })
+                }
                 onBeforePrint={() => {
                     enqueueSnackbar(
                         "Please note that after saveing the invoice, the order will be stored and you will be redirected to invoices page.",
@@ -58,15 +63,18 @@ export default function App(props) {
                     {({ handlePrint }) => (
                         <>
                             {" "}
-                            <Button
+                            <IconButton
                                 onClick={() => {
                                     handlePrint();
                                     props.addOreder();
                                 }}
                                 variant="contained"
                             >
-                                Print!
-                            </Button>
+                                <PrintIcon
+                                    color="primary"
+                                    sx={{ fontSize: 35 }}
+                                />
+                            </IconButton>
                         </>
                     )}
                 </PrintContextConsumer>

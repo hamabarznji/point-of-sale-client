@@ -1,4 +1,6 @@
-import { Route, Routes, useLocation, useParams } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import React from "react";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Product from "./pages/Product";
@@ -15,15 +17,30 @@ import CreateInvoice from "./pages/CreateInvoice";
 import TransfareedProduct from "./pages/TransfareedProduct";
 import CheckOut from "./components/invoice/checkOut/Checkout";
 import CustomerProfile from "./components/customer/CustomerProfile";
+import { posActions } from "../src/store/PosRedux";
+import Report from "./pages/Report";
+import ExpenseReport from "./components/report/Expense";
+import StoreReport from "./components/report/Store";
+import DebtReport from "./components/report/Debt";
+import WarehouseReport from "./components/report/Warehouse";
+import PurchaseReport from "./components/report/Purchase";
 function App() {
+    const dispatch = useDispatch();
     const location = useLocation();
+    const mainMargin = location.pathname === "/" ? "0" : "12.5%";
+    /*     const isAuthenticated = useSelector(
+        (state) => state.posRedux.isAuthenticated
+    ); */
+    const userRole = useSelector((state) => state.posRedux.userRole);
 
-    const mainMargin = location.pathname === "/" ? "0" : "240px";
-    /* 
+    /*
     location.pathname === "/"
         ? console.log(mainMargin, " in the login page")
         : console.log(mainMargin, " in the dashboard page"); */
 
+    React.useEffect(() => {
+        dispatch(posActions.setRole());
+    });
     return (
         <SnackbarProvider maxSnack={3} autoHideDuration={4500}>
             <div>
@@ -57,7 +74,7 @@ function App() {
                         <Route
                             path="/dashboard/employees"
                             element={<Employee />}
-                        />
+                        />{" "}
                         <Route path="/dashboard/users" element={<User />} />
                         <Route
                             path="/dashboard/expenses"
@@ -79,6 +96,27 @@ function App() {
                         <Route
                             path="/dashboard/invoices/checkout"
                             element={<CheckOut />}
+                        />
+                        <Route path="/dashboard/reports" element={<Report />} />
+                        <Route
+                            path="/dashboard/reports/expense"
+                            element={<ExpenseReport />}
+                        />{" "}
+                        <Route
+                            path="/dashboard/reports/store"
+                            element={<StoreReport />}
+                        />{" "}
+                        <Route
+                            path="/dashboard/reports/debt"
+                            element={<DebtReport />}
+                        />
+                        <Route
+                            path="/dashboard/reports/warehouse"
+                            element={<WarehouseReport />}
+                        />{" "}
+                        <Route
+                            path="/dashboard/reports/purchase"
+                            element={<PurchaseReport />}
                         />
                     </Routes>
                 </main>

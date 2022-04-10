@@ -20,7 +20,6 @@ const columns = [
     },
     { id: "weight", label: "Weight", minWidth: 170, align: "center" },
     { id: "qty", label: "Qty", minWidth: 170, align: "center" },
-    { id: "color", label: "Color", minWidth: 170, align: "center" },
     { id: "price", label: "Price", minWidth: 170, align: "center" },
     { id: "totalAmount", label: "Total", minWidth: 170, align: "center" },
 ];
@@ -59,7 +58,7 @@ export default function CheckoutTable({
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <CheckoutTableHeader
-                        customer={customer}
+                        customer={customer ? customer : null}
                         orderNumber={orderNumber ? orderNumber : null}
                     />
                     <TableRow>
@@ -77,8 +76,8 @@ export default function CheckoutTable({
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <StyledTableRow key={row.name}>
+                    {rows.map((row, index) => (
+                        <StyledTableRow key={index}>
                             <StyledTableCell
                                 component="th"
                                 scope="row"
@@ -92,9 +91,7 @@ export default function CheckoutTable({
                             <StyledTableCell align="center">
                                 {row?.qty}
                             </StyledTableCell>
-                            <StyledTableCell align="center">
-                                {row?.color}
-                            </StyledTableCell>
+
                             <StyledTableCell align="center">
                                 {row?.price}
                             </StyledTableCell>
@@ -105,8 +102,8 @@ export default function CheckoutTable({
                     ))}
                 </TableBody>
                 <CheckoutTableFooter
-                    paidAmount={paidAmount}
-                    totalAmount={totalAmount}
+                    paidAmount={paidAmount ? paidAmount : null}
+                    totalAmount={totalAmount ? totalAmount : null}
                 />
             </Table>
         </TableContainer>

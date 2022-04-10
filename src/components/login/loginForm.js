@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import UserService from "../../services/UserService";
 import { useSnackbar } from "notistack";
-
+import { posActions } from "../../store/PosRedux";
+import { useDispatch } from "react-redux";
 const useStyles = makeStyles({
     textField: {
         width: "30rem",
@@ -21,6 +22,7 @@ const useStyles = makeStyles({
 export default function LoginForm() {
     const history = useNavigate();
     const classes = useStyles();
+    const dispatch = useDispatch();
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
@@ -39,7 +41,6 @@ export default function LoginForm() {
     const onSubmit = async (data) => {
         try {
             const user = await UserService.login(data);
-            console.log(user);
             localStorage.setItem("userId", user.id);
             localStorage.setItem("posToken", user.token);
             localStorage.setItem("userRole", user.role);
@@ -48,6 +49,7 @@ export default function LoginForm() {
             enqueueSnackbar("Loged in successfully.", {
                 variant: "success",
             });
+            dispatch(posActions.setRole());
             return Promise.resolve("done");
         } catch (err) {
             history("/");

@@ -1,4 +1,4 @@
-import { Button, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import OrderedProductService from "../../../services/OrderedProductService";
@@ -12,9 +12,6 @@ export default function CheckOout() {
     const location = useLocation();
     const orderedproducts = location.state.invoice[0].ordredProducts;
     const orderInformation = location.state.invoice[0].orderInformation;
-    // console.log(orderInformation, "orderInformation");
-    // console.log(orderInformation, "orderInformation");
-    // console.log(orderedproducts, "orderedproducts");
     const getCustomer = async () => {
         try {
             const customer = await CustomerService.getCustomer(
@@ -34,7 +31,6 @@ export default function CheckOout() {
                 user_id: orderInformation.user_id,
                 date: orderInformation.date,
             });
-            console.log(order);
             setOrderDetails(order);
             return Promise.resolve(order);
         } catch (err) {

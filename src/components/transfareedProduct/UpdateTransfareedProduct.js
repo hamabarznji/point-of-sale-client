@@ -34,7 +34,7 @@ export default function UpdateTransfareedProduct({
 
     const updateTransfareedProductnHandler = async (data) => {
         try {
-            await TransfareedProductService.updateTransaction({
+            await TransfareedProductService.updateTransfareedProduct({
                 id: data.id,
                 store_id: localStorage.getItem("storeId"),
                 product_id: data.product_id,
@@ -43,13 +43,13 @@ export default function UpdateTransfareedProduct({
                 date: moment(data.date).format("YYYY-MM-DD"),
             });
             getAll();
-            enqueueSnackbar("Transaction updated successfully", {
+            enqueueSnackbar("Transfareed product updated successfully", {
                 variant: "success",
             });
             return Promise.resolve("Done");
         } catch (err) {
             enqueueSnackbar(
-                "Transaction is not updated! something went wrong.",
+                "Transfareed product is not updated! something went wrong.",
                 {
                     variant: "error",
                 }
@@ -62,7 +62,7 @@ export default function UpdateTransfareedProduct({
     return (
         <FormDialog
             buttonTitle="Update"
-            title="Update Transaction"
+            title="Update Transfareed Product"
             handleSubmit={handleSubmit(updateTransfareedProductnHandler)}
         >
             <InputField

@@ -45,7 +45,6 @@ export default function SpanningTable() {
     const schema = yup.object().shape({
         customer: yup.string().required("Customer name is required"),
         transfareedProductId: yup.string().required("Product name is required"),
-        color: yup.string().required("Color  is required"),
         price: yup.number().required("Price is required"),
         weight: yup.number().required("Weight is required"),
         qty: yup.number().required("Quantity id is required"),

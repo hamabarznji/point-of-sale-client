@@ -47,7 +47,7 @@ export default function Invoice() {
             dueAmount: order.totalAmount - order.totalPaidAmount,
             date: moment(order.date).format("DD-MM-YYYY"),
             action: <AddPayment orderId={order.orderId} getAll={getOrders} />,
-            path: `orders/${order.orderId}`,
+            path: `invoices/${order.orderId}`,
         };
     });
 

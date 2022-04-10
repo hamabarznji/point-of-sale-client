@@ -6,7 +6,6 @@ const columns = [
     { id: "price", label: "Price", minWidth: 170, align: "center" },
     { id: "weight", label: "Weight", minWidth: 170, align: "center" },
     { id: "qty", label: "Qty", minWidth: 170, align: "center" },
-    { id: "color", label: "Color", minWidth: 170, align: "center" },
     { id: "total", label: "Total", minWidth: 170, align: "center" },
     { id: "action", label: "", minWidth: 170, align: "center" },
 ];
