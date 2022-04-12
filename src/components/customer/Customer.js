@@ -5,7 +5,6 @@ import StoreService from "../../services/StoreService";
 import Tab from "../Tab";
 import AddCustomer from "./AddCustomer";
 import UpdateCustomer from "./UpdateCustomer";
-import CustomerProfile from "./CustomerProfile";
 
 const columns = [
     { id: "id", label: "Phone", minWidth: 170, align: "center" },
@@ -57,7 +56,7 @@ export default function Customers() {
         };
     });
 
-    const tabs = [
+    /*     const tabs = [
         {
             label: "Customer List",
             component: <Table columns={columns} rows={rows} isPath={true} />,
@@ -66,7 +65,7 @@ export default function Customers() {
             label: "Add Customer",
             component: <AddCustomer getAll={getAll} />,
         },
-    ];
+    ]; */
     return (
         <>
             <AddCustomer getAll={getAll} />

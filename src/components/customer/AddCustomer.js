@@ -6,7 +6,6 @@ import FormDialog from "../FormDialog";
 import * as yup from "yup";
 import InputField from "../InputField";
 import { useSnackbar } from "notistack";
-
 export default function AddCustomer({ getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
 
@@ -26,7 +25,7 @@ export default function AddCustomer({ getAll, items }) {
     const addCustomerHandler = async (data) => {
         try {
             await CustomerService.addCustomer({
-                id: data.id,
+                order_id: data.id,
                 name: data.name,
                 address: data.address,
                 store_id: localStorage.getItem("storeId"),

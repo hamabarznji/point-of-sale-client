@@ -1,7 +1,6 @@
 import ReportTable from "./components/ReportTable";
 import { Grid } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
-import Chip from "./components/Chip";
 import ReportService from "../.././services/ReportService";
 
 const dummyData = [

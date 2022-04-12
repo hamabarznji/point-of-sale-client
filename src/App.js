@@ -24,6 +24,7 @@ import StoreReport from "./components/report/Store";
 import DebtReport from "./components/report/Debt";
 import WarehouseReport from "./components/report/Warehouse";
 import PurchaseReport from "./components/report/Purchase";
+import SaleReport from "./components/report/Sale";
 function App() {
     const dispatch = useDispatch();
     const location = useLocation();
@@ -117,6 +118,10 @@ function App() {
                         <Route
                             path="/dashboard/reports/purchase"
                             element={<PurchaseReport />}
+                        />{" "}
+                        <Route
+                            path="/dashboard/reports/sale"
+                            element={<SaleReport />}
                         />
                     </Routes>
                 </main>
