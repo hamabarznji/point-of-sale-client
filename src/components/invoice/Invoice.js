@@ -5,6 +5,7 @@ import OrderService from "../../services/OrderService";
 import React, { useRef } from "react";
 import moment from "moment";
 import AddPayment from "./AddPayment";
+import Chip from "./components/Chip";
 const columns = [
     { id: "orderId", label: "Order Id", minWidth: 100, align: "center" },
     {
@@ -28,16 +29,23 @@ const columns = [
 export default function Invoice() {
     const history = useNavigate();
     const [orders, setOrders] = React.useState([]);
+    const [ordersReport, setOrdersReport] = React.useState([]);
 
     const getOrders = async () => {
         try {
             const res = await OrderService.gerOrders();
-            setOrders(res);
+            console.log(res);
+            setOrders(res.orders);
+            setOrdersReport({
+                numberOfOrders: res.numberOfOrders,
+                totalSales: res.totalSales,
+            });
             return Promise.resolve(res);
         } catch (err) {
             return Promise.reject("Error", err);
         }
     };
+
     const rows = orders.map((order) => {
         return {
             orderId: order.orderId,
@@ -50,12 +58,15 @@ export default function Invoice() {
             path: `invoices/${order.orderId}`,
         };
     });
-
     React.useEffect(() => {
         getOrders();
     }, []);
     return (
         <>
+            <Chip
+                ordersLength={ordersReport.numberOfOrders}
+                totalSales={ordersReport.totalSales}
+            />
             <Button
                 variant="outlined"
                 onClick={() => history("/dashboard/invoices/createinvoice")}

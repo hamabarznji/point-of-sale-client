@@ -31,6 +31,7 @@ export default function CheckOout() {
                 user_id: orderInformation.user_id,
                 date: orderInformation.date,
             });
+
             setOrderDetails(order);
             return Promise.resolve(order);
         } catch (err) {
@@ -41,10 +42,11 @@ export default function CheckOout() {
         getCustomer();
         addOrder();
     }, []);
-
+    console.log();
     const addOrderedProduct = async () => {
         try {
             const paymentInfo = {
+                order_id: orderDetails?.id,
                 amount: orderInformation.paidAmount,
                 paid_date: orderInformation.date,
             };
