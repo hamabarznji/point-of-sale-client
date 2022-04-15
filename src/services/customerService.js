@@ -35,6 +35,17 @@ class CustomerService {
         });
         return res.data;
     }
+    async getCustomerReport(id) {
+        const res = await axios.get(
+            `http://localhost:3002/customers/${id}/reports`,
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("posToken"),
+                },
+            }
+        );
+        return res.data;
+    }
 
     async addCustomer(data) {
         await axios.post("http://localhost:3002/customers", data, {

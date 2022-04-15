@@ -50,9 +50,9 @@ export default function Invoice() {
         return {
             orderId: order.orderId,
             customerName: order.customerName,
-            totalAmount: order.totalAmount,
-            paidAmount: order.totalPaidAmount,
-            dueAmount: order.totalAmount - order.totalPaidAmount,
+            totalAmount: `$${order.totalAmount}`,
+            paidAmount: `$${order.totalPaidAmount}`,
+            dueAmount: `$${order.totalAmount - order.totalPaidAmount}`,
             date: moment(order.date).format("DD-MM-YYYY"),
             action: <AddPayment orderId={order.orderId} getAll={getOrders} />,
             path: `invoices/${order.orderId}`,

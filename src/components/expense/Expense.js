@@ -11,6 +11,7 @@ const columns = [
     { id: "description", label: "Description", minWidth: 170, align: "center" },
     { id: "amount", label: "Amount", minWidth: 170, align: "center" },
     { id: "date", label: "Date", minWidth: 170, align: "center" },
+    { id: "action", label: "Action", maxWidth: 170, align: "center" },
 ];
 
 export default function Expense() {
@@ -56,9 +57,9 @@ export default function Expense() {
             store_id: expense.store_id,
             storeName: expense.storeName,
             description: expense.description,
-            amount: expense.amount,
+            amount: `$${expense.amount}`,
             date: moment(expense.date).format("YYYY-MM-DD"),
-            action: <UpdateExpense expense={expense} items={stores} />,
+            action: <UpdateExpense expense={expense} getAll={getAll} />,
         };
     });
 
