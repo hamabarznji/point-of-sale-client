@@ -55,9 +55,10 @@ export default function CustomerProfile() {
     const rows = orderInfo?.map((order) => {
         return {
             id: order?.orderId,
-            totalAmount: order?.total?.toFixed(2),
-            paidAmount: order?.paidAmount,
-            dueAmount: order?.dueAmount,
+
+            totalAmount: `$${order?.total}`,
+            paidAmount: `$${order?.paidAmount}`,
+            dueAmount: `$${order?.dueAmount}`,
             action: <AddPayment id={order?.orderId} getAll={getCustomer} />,
         };
     });
