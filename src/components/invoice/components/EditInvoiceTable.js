@@ -7,8 +7,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import CheckoutTableFooter from "./CheckoutTableFooter";
-import CheckoutTableHeader from "./CheckoutTableHeader";
+import CheckoutTableFooter from "../checkOut/CheckoutTableFooter";
+import CheckoutTableHeader from "../checkOut/CheckoutTableHeader";
 
 const columns = [
     {
@@ -21,6 +21,7 @@ const columns = [
     { id: "qty", label: "Qty", minWidth: 170, align: "center" },
     { id: "price", label: "Price", minWidth: 170, align: "center" },
     { id: "totalAmount", label: "Total", minWidth: 170, align: "center" },
+    { id: "action", label: "Action", maxWidth: 170, align: "center" },
 ];
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -77,7 +78,10 @@ export default function CheckoutTable({
                 </TableHead>
                 <TableBody>
                     {rows.map((row, index) => (
-                        <StyledTableRow key={index}>
+                        <StyledTableRow
+                            key={index}
+                            onClick={() => console.log(row, index)}
+                        >
                             <StyledTableCell
                                 component="th"
                                 scope="row"

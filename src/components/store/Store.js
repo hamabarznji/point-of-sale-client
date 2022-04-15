@@ -33,6 +33,7 @@ export default function Store() {
             name: store.name,
             location: store.location,
             phone: store.phone,
+            path: `stores/${store.id}`,
             action: (
                 <UpdateStore store={store} items={stores} getAll={getAll} />
             ),
@@ -41,7 +42,7 @@ export default function Store() {
     return (
         <>
             <AddStore getAll={getAll} />
-            <Table columns={columns} rows={rows} />
+            <Table columns={columns} rows={rows} isPath={true} />
         </>
     );
 }

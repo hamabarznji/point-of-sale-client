@@ -4,6 +4,8 @@ import ProdcutService from "../../services/ProductService";
 import AddNewProduct from "./AddNewProduct";
 import UpdateProduct from "./UpdateProduct";
 import AddProduct from "./AddProduct";
+import AddCategory from "./AddCategory";
+import AddSupplier from "./AddSupplier";
 import moment from "moment";
 import CategoryService from "../../services/CategoryService";
 import SuppliersService from "../../services/SupplierService";
@@ -97,7 +99,20 @@ export default function Products() {
     });
     return (
         <>
-            <AddNewProduct getAll={getAll} items={items} />
+            <Grid container spacing={0}>
+                <Grid item>
+                    {" "}
+                    <AddNewProduct getAll={getAll} items={items} />
+                </Grid>
+                <Grid item>
+                    {" "}
+                    <AddCategory getAll={getAll} />
+                </Grid>{" "}
+                <Grid item>
+                    {" "}
+                    <AddSupplier getAll={getAll} />
+                </Grid>
+            </Grid>
             <Table columns={columns} rows={rows} />
         </>
     );

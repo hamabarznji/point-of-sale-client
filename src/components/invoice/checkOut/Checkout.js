@@ -4,7 +4,8 @@ import { useLocation } from "react-router-dom";
 import OrderedProductService from "../../../services/OrderedProductService";
 import CustomerService from "../../../services/CustomerService";
 import OrderService from "../../../services/OrderService";
-import Print from "../print/Print";
+import Print from "../../print/Print";
+import CheckoutTable from "./CheckoutTable";
 
 export default function CheckOout() {
     const [customerName, setCustomerName] = React.useState("");
@@ -42,7 +43,6 @@ export default function CheckOout() {
         getCustomer();
         addOrder();
     }, []);
-    console.log();
     const addOrderedProduct = async () => {
         try {
             const paymentInfo = {
@@ -85,12 +85,17 @@ export default function CheckOout() {
         >
             <Grid item>
                 <Print
-                    rows={orderedproducts}
-                    totalAmount={orderInformation?.totalAmount}
-                    paidAmount={orderInformation?.paidAmount}
-                    customer={customerName ? customerName : "Unknown"}
-                    orderNumber={orderDetails?.id}
-                    addOreder={addOrderedProduct}
+                    Table={
+                        <CheckoutTable
+                            rows={orderedproducts}
+                            totalAmount={orderInformation?.totalAmount}
+                            paidAmount={orderInformation?.paidAmount}
+                            customer={customerName ? customerName : "Unknown"}
+                            orderNumber={orderDetails?.id}
+                        />
+                    }
+                    onSubmit={addOrderedProduct}
+                    documentTitle={`${customerName}-${orderDetails?.id}`}
                 />
             </Grid>
             <Grid item></Grid>

@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import CustomerService from "../../services/CustomerService";
 import Tab from "./Tab";
 import Card from "./Card";
-import { Button, Grid } from "@mui/material";
-import ReactTale from "../ReactTabel";
+import { Grid } from "@mui/material";
+import ReactTable from "../ReactTabel";
 import AddPayment from "./AddPayment";
 
 const columns = [
@@ -82,7 +82,7 @@ export default function CustomerProfile() {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <ReactTale columns={columns} rows={rows ? rows : []} />
+                    <ReactTable columns={columns} rows={rows ? rows : []} />
                 </Grid>
             </Grid>
         </>

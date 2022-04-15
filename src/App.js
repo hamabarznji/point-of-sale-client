@@ -13,6 +13,7 @@ import { SnackbarProvider } from "notistack";
 import User from "./pages/User";
 import Expense from "./pages/Expense";
 import Invoice from "./pages/Invoice";
+import InvoiceDetails from "./components/invoice/InvoiceDetails";
 import CreateInvoice from "./pages/CreateInvoice";
 import TransfareedProduct from "./pages/TransfareedProduct";
 import CheckOut from "./components/invoice/checkOut/Checkout";
@@ -20,11 +21,12 @@ import CustomerProfile from "./components/customer/CustomerProfile";
 import { posActions } from "../src/store/PosRedux";
 import Report from "./pages/Report";
 import ExpenseReport from "./components/report/Expense";
-import StoreReport from "./components/report/Store";
+//import StoreReport from "./components/report/Store";
 import DebtReport from "./components/report/Debt";
 import WarehouseReport from "./components/report/Warehouse";
 import PurchaseReport from "./components/report/Purchase";
 import SaleReport from "./components/report/Sale";
+import StoreReport from "./components/store/StoreReport";
 function App() {
     const dispatch = useDispatch();
     const location = useLocation();
@@ -89,6 +91,10 @@ function App() {
                         <Route
                             path="/dashboard/invoices/createinvoice"
                             element={<CreateInvoice />}
+                        />{" "}
+                        <Route
+                            path="/dashboard/invoices/:id"
+                            element={<InvoiceDetails />}
                         />
                         <Route
                             path="/dashboard/transfareedproducts"
@@ -104,7 +110,7 @@ function App() {
                             element={<ExpenseReport />}
                         />{" "}
                         <Route
-                            path="/dashboard/reports/store"
+                            path="/dashboard/stores/:id"
                             element={<StoreReport />}
                         />{" "}
                         <Route

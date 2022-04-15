@@ -17,7 +17,19 @@ class StoreService {
         });
         return res.data;
     }
-
+    async storeReportById(id) {
+        const res = await axios.get(
+            `http://localhost:3002/reports/stores/${localStorage.getItem(
+                "storeId"
+            )}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("posToken"),
+                },
+            }
+        );
+        return res.data;
+    }
     async addStore(data) {
         await axios.post("http://localhost:3002/stores", data, {
             headers: {
