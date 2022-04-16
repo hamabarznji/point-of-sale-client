@@ -17,6 +17,7 @@ const columns = [
     { id: "color", label: "Color", minWidth: 110, align: "center" },
     { id: "qty", label: "Quantity", minWidth: 100, align: "center" },
     { id: "weight", label: "Weight", minWidth: 100, align: "center" },
+    { id: "totalPrice", label: "Total Price", minWidth: 100, align: "center" },
     { id: "date", label: "Date", minWidth: 100, align: "center" },
     {
         id: "action",
@@ -78,7 +79,7 @@ export default function Products() {
             qty: product.qty,
             weight: product.weight,
             date: moment(product.date).format("DD-MM-YYYY"),
-
+            totalPrice: `$${product.totalPrice.toFixed(2)}`,
             action: (
                 <>
                     <Grid container spacing={0}>

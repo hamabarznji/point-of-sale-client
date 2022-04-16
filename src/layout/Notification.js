@@ -17,7 +17,6 @@ export default function Notification() {
 
     const [notifications, setNotifications] = React.useState([]);
     const [badgeContent, setBadgeContent] = React.useState(0);
-
     const getNotifications = async () => {
         if (userRole === "accountant") {
             try {
@@ -62,6 +61,7 @@ export default function Notification() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    console.log(notifications);
     return (
         <React.Fragment>
             <Badge badgeContent={badgeContent} color="error">
@@ -124,13 +124,21 @@ export default function Notification() {
                 >
                     {notifications.map((product) => {
                         return (
-                            <MenuItem style={{ fontWeight: "bold" }}>
+                            <MenuItem
+                                style={{
+                                    fontWeight: "bold",
+                                }}
+                            >
                                 <ListItemIcon style={{ color: "#C40B00" }}>
                                     {product.qty !== 0
                                         ? product.qty
                                         : product.weight}
                                 </ListItemIcon>
-                                {product.name}
+                                {product.name}-
+                                <span style={{ color: "green" }}>
+                                    {" "}
+                                    {product.place}
+                                </span>
                             </MenuItem>
                         );
                     })}
