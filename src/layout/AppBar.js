@@ -5,8 +5,8 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import Profile from "./profile";
+import Profile from "./Profile";
+import Notification from "./Notification";
 
 export default function AppBarComponent() {
     /*   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -45,8 +45,8 @@ export default function AppBarComponent() {
                             aria-label="show 17 new notifications"
                             color="inherit"
                         >
-                            <Badge badgeContent={1} color="error">
-                                <NotificationsIcon />
+                            <Badge badgeContent={0} color="error">
+                                <Notification />
                             </Badge>
                         </IconButton>
                         <IconButton
