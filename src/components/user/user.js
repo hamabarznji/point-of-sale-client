@@ -2,8 +2,10 @@ import Table from "../ReactTabel";
 import UserService from "../../services/UserService";
 import React from "react";
 import AddUser from "./AddUser";
+import DeleteUser from "./DeleteUser";
 import UpdateUser from "./UpdateUser";
 import StoreService from "../../services/StoreService";
+import { Grid } from "@mui/material";
 
 const columns = [
     { id: "name", label: "Name", minWidth: 170, align: "center" },
@@ -47,7 +49,21 @@ export default function User() {
             name: user.username,
             role: user.role,
             store: user.storeName,
-            action: <UpdateUser user={user} />,
+            action: (
+                <Grid
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <Grid item>
+                        <UpdateUser user={user} getAll={getAll} />
+                    </Grid>
+                    <Grid item>
+                        <DeleteUser user={user} getAll={getAll} />
+                    </Grid>
+                </Grid>
+            ),
         };
     });
 
