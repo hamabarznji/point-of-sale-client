@@ -9,6 +9,14 @@ class SupplierService {
         });
         return res.data;
     }
+    async addSupplier(data) {
+        const res = await axios.post("http://localhost:3002/suppliers", data, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
+            },
+        });
+        return res.data;
+    }
 }
 
 export default new SupplierService();

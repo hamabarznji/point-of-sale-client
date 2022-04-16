@@ -1,15 +1,11 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import Logout from "@mui/icons-material/Logout";
-import { useNavigate } from "react-router-dom";
-import { useSnackbar } from "notistack";
+
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ProductService from "../services/ProductService";
 import TransfareedProductService from "../services/TransfareedProductService";
@@ -66,7 +62,6 @@ export default function Notification() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    console.log(notifications);
     return (
         <React.Fragment>
             <Badge badgeContent={badgeContent} color="error">
@@ -129,9 +124,8 @@ export default function Notification() {
                 >
                     {notifications.map((product) => {
                         return (
-                            <MenuItem>
-                                <ListItemIcon>
-                                    {" "}
+                            <MenuItem style={{ fontWeight: "bold" }}>
+                                <ListItemIcon style={{ color: "#C40B00" }}>
                                     {product.qty !== 0
                                         ? product.qty
                                         : product.weight}

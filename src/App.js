@@ -27,6 +27,16 @@ import WarehouseReport from "./components/report/Warehouse";
 import PurchaseReport from "./components/report/Purchase";
 import SaleReport from "./components/report/Sale";
 import StoreReport from "./components/store/StoreReport";
+import axios from "axios";
+
+async function auth() {
+    const res = await axios.get(`http://localhost:3002/auth`, {
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("posToken"),
+        },
+    });
+    return res.data;
+}
 function App() {
     const dispatch = useDispatch();
     const location = useLocation();
@@ -44,6 +54,9 @@ function App() {
     React.useEffect(() => {
         dispatch(posActions.setRole());
     });
+
+    auth();
+
     return (
         <SnackbarProvider maxSnack={3} autoHideDuration={4500}>
             <div>

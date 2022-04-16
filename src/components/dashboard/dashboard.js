@@ -23,7 +23,6 @@ export default function Dashboard() {
     React.useEffect(() => {
         getDashboard();
     }, []);
-
     const CardRender = () => {
         return (
             <>

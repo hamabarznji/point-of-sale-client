@@ -74,7 +74,6 @@ export default function ReactTable({ columns, rows, isPath }) {
                                                         ) {
                                                             return;
                                                         } else if (isPath) {
-                                                            console.log(row);
                                                             history(
                                                                 `/dashboard/${row.path}`
                                                             );

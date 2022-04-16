@@ -1,8 +1,8 @@
-import { Button, Grid } from "@mui/material";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ReactTabel from "../ReactTabel";
 import OrderService from "../../services/OrderService";
-import React, { useRef } from "react";
+import React from "react";
 import moment from "moment";
 import AddPayment from "./AddPayment";
 import Chip from "./components/Chip";
@@ -34,7 +34,6 @@ export default function Invoice() {
     const getOrders = async () => {
         try {
             const res = await OrderService.gerOrders();
-            console.log(res);
             setOrders(res.orders);
             setOrdersReport({
                 numberOfOrders: res.numberOfOrders,
@@ -56,6 +55,7 @@ export default function Invoice() {
             date: moment(order.date).format("DD-MM-YYYY"),
             action: <AddPayment orderId={order.orderId} getAll={getOrders} />,
             path: `invoices/${order.orderId}`,
+            detail: order,
         };
     });
     React.useEffect(() => {

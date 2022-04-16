@@ -2,7 +2,6 @@ import * as React from "react";
 import Table from "../ReactTabel";
 import CustomerService from "../../services/CustomerService";
 import StoreService from "../../services/StoreService";
-import Tab from "../Tab";
 import AddCustomer from "./AddCustomer";
 import UpdateCustomer from "./UpdateCustomer";
 
@@ -56,16 +55,6 @@ export default function Customers() {
         };
     });
 
-    /*     const tabs = [
-        {
-            label: "Customer List",
-            component: <Table columns={columns} rows={rows} isPath={true} />,
-        },
-        {
-            label: "Add Customer",
-            component: <AddCustomer getAll={getAll} />,
-        },
-    ]; */
     return (
         <>
             <AddCustomer getAll={getAll} />
