@@ -20,13 +20,8 @@ import CheckOut from "./components/invoice/checkOut/Checkout";
 import CustomerProfile from "./components/customer/CustomerProfile";
 import { posActions } from "../src/store/PosRedux";
 import Report from "./pages/Report";
-import ExpenseReport from "./components/report/Expense";
-//import StoreReport from "./components/report/Store";
-import DebtReport from "./components/report/Debt";
-import WarehouseReport from "./components/report/Warehouse";
 import PurchaseReport from "./components/report/Purchase";
 import SaleReport from "./components/report/Sale";
-import StoreReport from "./components/store/StoreReport";
 import axios from "axios";
 
 async function auth() {
@@ -118,22 +113,6 @@ function App() {
                             element={<CheckOut />}
                         />
                         <Route path="/dashboard/reports" element={<Report />} />
-                        <Route
-                            path="/dashboard/reports/expense"
-                            element={<ExpenseReport />}
-                        />{" "}
-                        <Route
-                            path="/dashboard/stores/:id"
-                            element={<StoreReport />}
-                        />{" "}
-                        <Route
-                            path="/dashboard/reports/debt"
-                            element={<DebtReport />}
-                        />
-                        <Route
-                            path="/dashboard/reports/warehouse"
-                            element={<WarehouseReport />}
-                        />{" "}
                         <Route
                             path="/dashboard/reports/purchase"
                             element={<PurchaseReport />}

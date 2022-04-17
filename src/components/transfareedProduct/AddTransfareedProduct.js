@@ -1,6 +1,6 @@
 import * as React from "react";
 import TransfareedProductService from "../../services/TransfareedProductService";
-import ProductService from "../../services/ProductService";
+import StoreService from "../../services/StoreService";
 import FormDialog from "../FormDialog";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,11 +11,13 @@ import moment from "moment";
 
 export default function AddTransfareedProduct({ getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
+    const [stores, setStores] = React.useState([]);
 
     const schema = yup.object().shape({
         product_id: yup.number().required("Product name is required"),
         qty: yup.string().required("Quantity is required"),
         weight: yup.number().required("Weight is required"),
+        storeId: yup.number().required("Store is required"),
         date: yup.date().required("Date is required"),
     });
     const {
@@ -27,11 +29,25 @@ export default function AddTransfareedProduct({ getAll, items }) {
     } = useForm({
         resolver: yupResolver(schema),
     });
+    const getStores = async () => {
+        try {
+            const data = await StoreService.getStores();
+            setStores(data);
+            return Promise.resolve(data);
+        } catch (err) {
+            return Promise.reject(err);
+        }
+    };
+
+    React.useEffect(() => {
+        getStores();
+    }, []);
+    console.log(stores);
 
     const transfareedProductHandler = async (data) => {
         try {
             await TransfareedProductService.addTransfareedProduct({
-                store_id: localStorage.getItem("storeId"),
+                store_id: data.storeId,
                 product_id: data.product_id,
                 qty: data.qty,
                 weight: data.weight,
@@ -60,6 +76,17 @@ export default function AddTransfareedProduct({ getAll, items }) {
             handleSubmit={handleSubmit(transfareedProductHandler)}
         >
             <InputField
+                name="storeId"
+                label="Store Name"
+                control={control}
+                register={register}
+                errors={errors}
+                error={errors.hasOwnProperty("storeId")}
+                helperText={errors.storeId?.message}
+                select
+                items={stores}
+            />{" "}
+            <InputField
                 name="product_id"
                 label="Product Name"
                 control={control}
@@ -79,7 +106,6 @@ export default function AddTransfareedProduct({ getAll, items }) {
                 error={errors.hasOwnProperty("weight")}
                 helperText={errors.weight?.message}
             />
-
             <InputField
                 name="qty"
                 label="Quantity"

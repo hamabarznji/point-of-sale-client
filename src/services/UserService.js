@@ -32,7 +32,7 @@ class UserService {
     }
 
     async updateUser(data) {
-        const res = await axios.post(
+        const res = await axios.put(
             `http://localhost:3002/users/${data.id}`,
             data,
             {

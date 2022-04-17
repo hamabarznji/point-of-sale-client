@@ -61,7 +61,6 @@ export default function Notification() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    console.log(notifications);
     return (
         <React.Fragment>
             <Badge badgeContent={badgeContent} color="error">

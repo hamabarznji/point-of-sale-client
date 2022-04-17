@@ -13,6 +13,7 @@ const columns = [
     { id: "weight", label: "Weight", minWidth: 170, align: "center" },
     { id: "qty", label: "Quantity", minWidth: 170, align: "center" },
     { id: "color", label: "Color", minWidth: 170, align: "center" },
+    { id: "totalPriceAmount", label: "Total", minWidth: 170, align: "center" },
     { id: "date", label: "Date", minWidth: 170, align: "center" },
     { id: "action", label: "Action", minWidth: 100, align: "center" },
 ];
@@ -53,6 +54,7 @@ export default function TransfareedProduct() {
             qty: transfareedProduct.qty,
             weight: transfareedProduct.weight,
             color: transfareedProduct.color,
+            totalPriceAmount: `$${transfareedProduct.totalPriceAmount}`,
             date: moment(transfareedProduct.date).format("YYYY-MM-DD"),
 
             action: (

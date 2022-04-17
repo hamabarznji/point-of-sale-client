@@ -30,7 +30,7 @@ export default function Invoice() {
     const history = useNavigate();
     const [orders, setOrders] = React.useState([]);
     const [ordersReport, setOrdersReport] = React.useState([]);
-
+    console.log(orders);
     const getOrders = async () => {
         try {
             const res = await OrderService.gerOrders();
@@ -51,9 +51,11 @@ export default function Invoice() {
             customerName: order.customerName,
             totalAmount: `$${order.totalAmount}`,
             paidAmount: `$${order.totalPaidAmount}`,
-            dueAmount: `$${order.totalAmount - order.totalPaidAmount}`,
+            dueAmount: `$${order.dueAmount}`,
             date: moment(order.date).format("DD-MM-YYYY"),
-            action: <AddPayment orderId={order.orderId} getAll={getOrders} />,
+            action: !order.totalAmount == 0 && (
+                <AddPayment orderId={order.orderId} getAll={getOrders} />
+            ),
             path: `invoices/${order.orderId}`,
             detail: order,
         };

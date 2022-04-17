@@ -5,44 +5,23 @@ import React from "react";
 import MenuItem from "@material-ui/core/MenuItem";
 import ReportForm from "./components/ReportForm";
 import moment from "moment";
-import Warehouse from "./Warehouse";
-import Store from "./Store";
+
 import Sale from "./Sale";
 import Purchase from "./Purchase";
 import Transaction from "./Transaction";
-import Debt from "./Debt";
-import Expense from "./Expense";
+
 import { useNavigate } from "react-router-dom";
 
 export default function Report() {
     const history = useNavigate();
 
     const reports = [
+        { id: 1, name: "Sale Report", element: <Sale />, path: "debts" },
+        { id: 2, name: "Purchase Report ", element: <Purchase /> },
         {
-            id: 1,
-            name: "Warehouse Report",
-            element: <Warehouse />,
-            // path: `products/reports/${date.fromDate}/${date.toDate}`,
-        },
-        {
-            id: 2,
-            name: " Store Report",
-            path: "/dashboard/reports/store",
-            element: <Store />,
-        },
-        { id: 3, name: "Sale Report", element: <Sale />, path: "debts" },
-        { id: 4, name: "Purchase Report ", element: <Purchase /> },
-        { id: 5, name: "Debt Report ", element: <Debt />, path: "debts" },
-        {
-            id: 6,
+            id: 3,
             name: "Transaction Report ",
             element: <Transaction />,
-        },
-        {
-            id: 7,
-            name: "Expense Report ",
-            element: <Expense />,
-            path: "/dashboard/reports/expense",
         },
     ];
     const [report, setReport] = React.useState(reports[0].id);

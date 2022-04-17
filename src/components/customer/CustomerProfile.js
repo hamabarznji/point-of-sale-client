@@ -39,7 +39,6 @@ export default function CustomerProfile() {
     const getCustomer = async () => {
         try {
             const data = await CustomerService.getCustomerReport(id);
-            console.log(data);
             setOrderInfo(data.debtsInfo);
             setCustomer(data.customerInfo);
             return Promise.resolve(data);
@@ -59,7 +58,9 @@ export default function CustomerProfile() {
             totalAmount: `$${order?.total}`,
             paidAmount: `$${order?.paidAmount}`,
             dueAmount: `$${order?.dueAmount}`,
-            action: <AddPayment id={order?.orderId} getAll={getCustomer} />,
+            action: !order?.dueAmount == 0 && (
+                <AddPayment id={order?.orderId} getAll={getCustomer} />
+            ),
         };
     });
     return (
