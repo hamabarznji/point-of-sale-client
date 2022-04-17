@@ -14,7 +14,6 @@ import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import BadgeIcon from "@mui/icons-material/Badge";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
-// import InventoryIcon from "@mui/icons-material/Inventory";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TransformIcon from "@mui/icons-material/Transform";
@@ -43,13 +42,13 @@ const DrawerItems = [
         name: "Transfarred Product",
         path: "/dashboard/transfareedproducts",
         icon: <TransformIcon color="primary" />,
-        permission: ["warehouse", "owner"],
+        permission: ["warehouse", "owner", "accountant"],
     },
     {
         name: "Store",
         path: "/dashboard/stores",
         icon: <StoreIcon color="primary" />,
-        permission: ["owner"],
+        permission: ["owner", "accountant"],
     },
     {
         name: "Invoice",
@@ -79,7 +78,7 @@ const DrawerItems = [
         name: "Expense",
         path: "/dashboard/expenses",
         icon: <MoneyOffIcon color="primary" />,
-        permission: ["owner", "accountant", "warehouse"],
+        permission: ["owner", "accountant"],
     },
 
     {

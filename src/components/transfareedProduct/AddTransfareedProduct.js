@@ -42,7 +42,6 @@ export default function AddTransfareedProduct({ getAll, items }) {
     React.useEffect(() => {
         getStores();
     }, []);
-    console.log(stores);
 
     const transfareedProductHandler = async (data) => {
         try {

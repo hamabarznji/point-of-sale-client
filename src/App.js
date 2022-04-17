@@ -48,6 +48,7 @@ function App() {
 
     React.useEffect(() => {
         dispatch(posActions.setRole());
+        dispatch(posActions.setStore());
     });
 
     auth();

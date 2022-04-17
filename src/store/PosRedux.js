@@ -5,6 +5,7 @@ const posRedux = createSlice({
     initialState: {
         isAuthenticated: false,
         userRole: "",
+        storeId: "",
     },
     reducers: {
         setAuth: (state, action) => {
@@ -12,6 +13,9 @@ const posRedux = createSlice({
         },
         setRole: (state, action) => {
             state.userRole = localStorage.getItem("userRole");
+        },
+        setStore: (state, action) => {
+            state.storeId = localStorage.getItem("storeId");
         },
     },
 });

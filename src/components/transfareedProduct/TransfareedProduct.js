@@ -3,9 +3,10 @@ import Table from "../ReactTabel";
 import TransfareedProductService from "../../services/TransfareedProductService";
 import StoreService from "../../services/StoreService";
 import ProductService from "../../services/ProductService";
-import AddTransaction from "./AddTransfareedProduct";
-import UpdateTransaction from "./UpdateTransfareedProduct";
+import AddTransfareedProduct from "./AddTransfareedProduct";
+import UpdateTransfareedProduct from "./UpdateTransfareedProduct";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
 const columns = [
     { id: "store", label: "Store Name", minWidth: 170, align: "center" },
@@ -21,17 +22,29 @@ const columns = [
 export default function TransfareedProduct() {
     const [items, setItems] = React.useState([]);
     const [transfareedProducts, setTransfareedProducts] = React.useState([]);
+    const storeId = useSelector((state) => state.posRedux.storeId);
+    const userRole = useSelector((state) => state.posRedux.userRole);
 
     React.useEffect(() => {
         getAll();
         getProducts();
     }, []);
+
     const getAll = async () => {
         try {
-            const data =
-                await TransfareedProductService.getTransfareedProducts();
-            setTransfareedProducts(data);
-            return Promise.resolve("done");
+            if (userRole === "warehouse") {
+                const data =
+                    await TransfareedProductService.getTransfareedProducts();
+                setTransfareedProducts(data);
+                return Promise.resolve("done");
+            } else {
+                const data =
+                    await TransfareedProductService.getTransfareedProductsByStoreId(
+                        storeId
+                    );
+                setTransfareedProducts(data);
+                return Promise.resolve("done");
+            }
         } catch (err) {
             return Promise.reject(err);
         }
@@ -45,9 +58,9 @@ export default function TransfareedProduct() {
             return Promise.reject(err);
         }
     };
-
     const rows = transfareedProducts.map((transfareedProduct) => {
         return {
+            storeId: transfareedProduct.store_id,
             id: transfareedProduct.id,
             store: transfareedProduct.storeName,
             product: transfareedProduct.productName,
@@ -57,9 +70,9 @@ export default function TransfareedProduct() {
             totalPriceAmount: `$${transfareedProduct.totalPriceAmount}`,
             date: moment(transfareedProduct.date).format("YYYY-MM-DD"),
 
-            action: (
+            action: userRole == "warehouse" && (
                 <div>
-                    <UpdateTransaction
+                    <UpdateTransfareedProduct
                         transfareedProduct={transfareedProduct}
                         items={items}
                         getAll={getAll}
@@ -68,10 +81,12 @@ export default function TransfareedProduct() {
             ),
         };
     });
+
     return (
         <>
-            <AddTransaction items={items} getAll={getAll} />
-
+            {userRole == "warehouse" && (
+                <AddTransfareedProduct items={items} getAll={getAll} />
+            )}
             <Table columns={columns} rows={rows} />
         </>
     );

@@ -3,7 +3,7 @@ import axios from "axios";
 class TransfareedProductService {
     async getTransfareedProducts() {
         const res = await axios.get(
-            "http://localhost:3002/transfareedproducts",
+            `http://localhost:3002/transfareedproducts`,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("posToken"),
@@ -12,6 +12,18 @@ class TransfareedProductService {
         );
         return res.data;
     }
+    async getTransfareedProductsByStoreId(id) {
+        const res = await axios.get(
+            `http://localhost:3002/transfareedproducts/stores/${id}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("posToken"),
+                },
+            }
+        );
+        return res.data;
+    }
+
     async getTransfareedProductsNotifications() {
         const res = await axios.get(
             `http://localhost:3002/transfareedproducts/stores/${localStorage.getItem(
