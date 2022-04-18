@@ -63,7 +63,6 @@ export default function UpdateUser({ user }) {
         getStores();
     }, []);
 
-    console.log(stores);
     return (
         <>
             <FormDialog

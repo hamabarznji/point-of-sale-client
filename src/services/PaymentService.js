@@ -7,7 +7,6 @@ class PaymentService {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
         });
-        console.log("res", res.data);
         return res.data;
     }
 }

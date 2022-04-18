@@ -31,7 +31,6 @@ export default function Expense() {
                 numberOfExpenses: data.numberOfExpenses,
                 totalExpensesAmount: data.totalExpensesAmount,
             });
-            console.log(data, "data");
             return Promise.resolve("done");
         } catch (err) {
             return Promise.reject(err);

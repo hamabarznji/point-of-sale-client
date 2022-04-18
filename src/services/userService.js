@@ -14,6 +14,16 @@ class UserService {
         });
         return res.data;
     }
+
+    async auth() {
+        const res = axios.get(`http://localhost:3002/login/auth`, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("posToken"),
+            },
+        });
+        return res.data;
+    }
+
     async addUser(data) {
         const res = await axios.post("http://localhost:3002/users", data, {
             headers: {
@@ -32,7 +42,7 @@ class UserService {
     }
 
     async updateUser(data) {
-        const res = await axios.post(
+        const res = await axios.put(
             `http://localhost:3002/users/${data.id}`,
             data,
             {

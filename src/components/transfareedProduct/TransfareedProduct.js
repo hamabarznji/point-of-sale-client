@@ -32,7 +32,7 @@ export default function TransfareedProduct() {
 
     const getAll = async () => {
         try {
-            if (userRole === "warehouse") {
+            if (userRole === "warehouse" || userRole === "owner") {
                 const data =
                     await TransfareedProductService.getTransfareedProducts();
                 setTransfareedProducts(data);
@@ -58,19 +58,19 @@ export default function TransfareedProduct() {
             return Promise.reject(err);
         }
     };
-    const rows = transfareedProducts.map((transfareedProduct) => {
+    const rows = transfareedProducts?.map((transfareedProduct) => {
         return {
-            storeId: transfareedProduct.store_id,
+            storeId: transfareedProduct?.store_id,
             id: transfareedProduct.id,
-            store: transfareedProduct.storeName,
-            product: transfareedProduct.productName,
-            qty: transfareedProduct.qty,
-            weight: transfareedProduct.weight,
-            color: transfareedProduct.color,
-            totalPriceAmount: `$${transfareedProduct.totalPriceAmount}`,
-            date: moment(transfareedProduct.date).format("YYYY-MM-DD"),
+            store: transfareedProduct?.storeName,
+            product: transfareedProduct?.productName,
+            qty: transfareedProduct?.qty,
+            weight: transfareedProduct?.weight,
+            color: transfareedProduct?.color,
+            totalPriceAmount: `$${transfareedProduct?.totalPriceAmount}`,
+            date: moment(transfareedProduct?.date).format("YYYY-MM-DD"),
 
-            action: userRole == "warehouse" && (
+            action: userRole === "owner" && (
                 <div>
                     <UpdateTransfareedProduct
                         transfareedProduct={transfareedProduct}
@@ -84,7 +84,7 @@ export default function TransfareedProduct() {
 
     return (
         <>
-            {userRole == "warehouse" && (
+            {userRole === "warehouse" && (
                 <AddTransfareedProduct items={items} getAll={getAll} />
             )}
             <Table columns={columns} rows={rows} />

@@ -25,6 +25,7 @@
     "react-hook-form": "^7.27.0",
     "react-redux": "^7.2.8",
     "react-router-dom": "^6.2.1",
+    "react-router-guards": "^1.0.2",
     "react-scripts": "5.0.0",
     "react-table": "^7.7.0",
     "react-to-print": "^2.14.5",

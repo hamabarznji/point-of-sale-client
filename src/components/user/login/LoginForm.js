@@ -5,9 +5,9 @@ import * as yup from "yup";
 import { Button, Grid, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import UserService from "../../services/UserService";
+import UserService from "../../../services/UserService";
 import { useSnackbar } from "notistack";
-import { posActions } from "../../store/PosRedux";
+import { posActions } from "../../../store/PosRedux";
 import { useDispatch } from "react-redux";
 const useStyles = makeStyles({
     textField: {

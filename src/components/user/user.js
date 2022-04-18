@@ -26,7 +26,6 @@ export default function User() {
     const getAll = async () => {
         try {
             const data = await UserService.getUsers();
-            console.log(data, "here");
             setUsers(data);
             return Promise.resolve("done");
         } catch (err) {

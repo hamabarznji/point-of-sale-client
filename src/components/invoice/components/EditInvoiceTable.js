@@ -78,10 +78,7 @@ export default function CheckoutTable({
                 </TableHead>
                 <TableBody>
                     {rows.map((row, index) => (
-                        <StyledTableRow
-                            key={index}
-                            onClick={() => console.log(row, index)}
-                        >
+                        <StyledTableRow key={index}>
                             <StyledTableCell
                                 component="th"
                                 scope="row"

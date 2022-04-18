@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import axios from "axios";
 const posRedux = createSlice({
     name: "posRedux",
     initialState: {

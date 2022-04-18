@@ -35,8 +35,6 @@ export default function Expense() {
                 numberOfExpenses: expnseLength,
                 totalExpensesAmount: total,
             });
-            console.log(expenseReport);
-            console.log(data);
             return Promise.resolve("done");
         } catch (err) {
             return Promise.reject(err);

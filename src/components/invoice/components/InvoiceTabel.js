@@ -179,7 +179,6 @@ export default function SpanningTable() {
                 }
             );
         } catch (err) {
-            console.log(err);
             return err.message;
         }
     };

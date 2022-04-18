@@ -36,7 +36,6 @@ export default function UpdateStore({ getAll, store }) {
     const UpdateStoreHandler = async (data) => {
         try {
             await StoreService.updateStore(data);
-            console.log(data);
             enqueueSnackbar("Store updated successfully.", {
                 variant: "success",
             });

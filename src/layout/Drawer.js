@@ -48,7 +48,7 @@ const DrawerItems = [
         name: "Store",
         path: "/dashboard/stores",
         icon: <StoreIcon color="primary" />,
-        permission: ["owner", "accountant"],
+        permission: ["owner"],
     },
     {
         name: "Invoice",

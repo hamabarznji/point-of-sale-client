@@ -6,13 +6,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import InputField from "../InputField";
 import { useSnackbar } from "notistack";
+import StoreSevice from "../../services/StoreService";
+
+const roles = [
+    { id: "owner", name: "Owner" },
+    { id: "accountant", name: "Accountant" },
+    { id: "warehouse", name: "Warehouse" },
+];
 
 export default function UpdateUser({ user }) {
     const { enqueueSnackbar } = useSnackbar();
-
+    const [stores, setStores] = React.useState([]);
     const schema = yup.object().shape({
         id: yup.number().required("Phone number is required"),
         username: yup.string().required("Name is required"),
+        password: yup.string(),
         role: yup.string().required("Role id is required"),
         store_id: yup.number().required("Store  id is required"),
     });
@@ -41,6 +49,19 @@ export default function UpdateUser({ user }) {
             return Promise.reject("Error", err);
         }
     };
+    const getStores = async () => {
+        try {
+            const data = await StoreSevice.getStores();
+            setStores(data);
+            return Promise.resolve("Done");
+        } catch (err) {
+            return Promise.reject("Error", err);
+        }
+    };
+
+    React.useEffect(() => {
+        getStores();
+    }, []);
 
     return (
         <>
@@ -69,6 +90,16 @@ export default function UpdateUser({ user }) {
                     helperText={errors.username?.message}
                 />
                 <InputField
+                    name="password"
+                    label="Password"
+                    control={control}
+                    register={register}
+                    errors={errors}
+                    defaultValue={user.password}
+                    error={errors.hasOwnProperty("password")}
+                    helperText={errors.password?.message}
+                />
+                <InputField
                     name="role"
                     label="Role"
                     control={control}
@@ -77,6 +108,8 @@ export default function UpdateUser({ user }) {
                     defaultValue={user.role}
                     error={errors.hasOwnProperty("role")}
                     helperText={errors.role?.message}
+                    select
+                    items={roles}
                 />
                 <InputField
                     name="store_id"
@@ -87,6 +120,8 @@ export default function UpdateUser({ user }) {
                     defaultValue={user.store_id}
                     error={errors.hasOwnProperty("store_id")}
                     helperText={errors.store_id?.message}
+                    select
+                    items={stores}
                 />
             </FormDialog>
         </>

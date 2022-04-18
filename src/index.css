@@ -21,3 +21,6 @@ input {
 :-webkit-autofill {
     color: #fff !important;
 }
+form {
+    all: inherit;
+}

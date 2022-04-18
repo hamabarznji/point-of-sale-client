@@ -121,9 +121,10 @@ export default function Notification() {
                     transformOrigin={{ horizontal: "right", vertical: "top" }}
                     anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 >
-                    {notifications.map((product) => {
+                    {notifications.map((product, index) => {
                         return (
                             <MenuItem
+                                key={index}
                                 style={{
                                     fontWeight: "bold",
                                 }}

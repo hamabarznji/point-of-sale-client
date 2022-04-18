@@ -1,4 +1,4 @@
-import LoginComponenet from "../components/login/Login";
+import LoginComponenet from "../components/user/login/Login";
 
 export default function Login() {
     return <LoginComponenet />;

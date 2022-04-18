@@ -8,14 +8,18 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import { useDispatch } from "react-redux";
+import { posActions } from "../store/PosRedux";
 
 export default function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-    const history = useNavigate();
+    const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
+    const dispatch = useDispatch();
+    const location = useLocation();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -26,14 +30,21 @@ export default function AccountMenu() {
 
     const logoutHandler = () => {
         localStorage.removeItem("posToken");
+        dispatch(posActions.setAuth(false));
+
+        navigate("/");
         enqueueSnackbar("Loged out successfully.", {
             variant: "success",
         });
-        history("/");
     };
-    const tokenRemoveHandler = () => {
-        localStorage.removeItem("posToken");
-    };
+    /*     React.useEffect(() => {
+        if (
+            location.pathname.includes("/") &&
+            localStorage.getItem("posToken") === null
+        ) {
+            navigate("/");
+        }
+    }, [location.pathname, navigate]); */
     return (
         <React.Fragment>
             <Box
@@ -95,15 +106,7 @@ export default function AccountMenu() {
                     <Avatar /> Profile
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={tokenRemoveHandler}>
-                    <ListItemIcon>
-                        <Logout
-                            fontSize="small"
-                            onClick={() => console.log("loging out")}
-                        />
-                    </ListItemIcon>
-                    Remove Token
-                </MenuItem>
+
                 <MenuItem onClick={logoutHandler}>
                     <ListItemIcon>
                         <Logout

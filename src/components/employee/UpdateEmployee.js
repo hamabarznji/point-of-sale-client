@@ -27,7 +27,6 @@ export default function UpdateCustomer({ employee, items, getAll }) {
         resolver: yupResolver(schema),
     });
     const updateCustomerHandler = async (data) => {
-        console.log(data);
         try {
             await EmployeeService.updateEmployee({
                 id: data.id,

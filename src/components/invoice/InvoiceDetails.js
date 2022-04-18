@@ -49,7 +49,6 @@ export default function InvoiceDetails() {
             action: "edit",
         };
     });
-    console.log(rows);
     return (
         <>
             <Print

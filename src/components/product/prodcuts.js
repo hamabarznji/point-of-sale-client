@@ -10,6 +10,8 @@ import moment from "moment";
 import CategoryService from "../../services/CategoryService";
 import SuppliersService from "../../services/SupplierService";
 import { Button, Grid } from "@mui/material";
+import { useSelector } from "react-redux";
+
 const columns = [
     { id: "id", label: "Code", minWidth: 100, align: "center" },
     { id: "name", label: "Name", minWidth: 170, align: "center" },
@@ -17,6 +19,7 @@ const columns = [
     { id: "color", label: "Color", minWidth: 110, align: "center" },
     { id: "qty", label: "Quantity", minWidth: 100, align: "center" },
     { id: "weight", label: "Weight", minWidth: 100, align: "center" },
+    { id: "totalPrice", label: "Total Price", minWidth: 100, align: "center" },
     { id: "date", label: "Date", minWidth: 100, align: "center" },
     {
         id: "action",
@@ -30,6 +33,7 @@ const columns = [
 export default function Products() {
     const [items, setItems] = React.useState([]);
     const [products, setProducts] = React.useState([]);
+    const userRole = useSelector((state) => state.posRedux.userRole);
 
     React.useEffect(() => {
         getAll();
@@ -78,8 +82,8 @@ export default function Products() {
             qty: product.qty,
             weight: product.weight,
             date: moment(product.date).format("DD-MM-YYYY"),
-
-            action: (
+            totalPrice: `$${product.totalPrice.toFixed(2)}`,
+            action: userRole === "warehouse" && (
                 <>
                     <Grid container spacing={0}>
                         <AddProduct
@@ -99,20 +103,23 @@ export default function Products() {
     });
     return (
         <>
-            <Grid container spacing={0}>
-                <Grid item>
-                    {" "}
-                    <AddNewProduct getAll={getAll} items={items} />
-                </Grid>
-                <Grid item>
-                    {" "}
-                    <AddCategory getAll={getAll} />
-                </Grid>{" "}
-                <Grid item>
-                    {" "}
-                    <AddSupplier getAll={getAll} />
-                </Grid>
-            </Grid>
+            {userRole == "warehouse" ||
+                (userRole == "owner" && (
+                    <Grid container spacing={0}>
+                        <Grid item>
+                            {" "}
+                            <AddNewProduct getAll={getAll} items={items} />
+                        </Grid>
+                        <Grid item>
+                            {" "}
+                            <AddCategory getAll={getAll} />
+                        </Grid>{" "}
+                        <Grid item>
+                            {" "}
+                            <AddSupplier getAll={getAll} />
+                        </Grid>
+                    </Grid>
+                ))}
             <Table columns={columns} rows={rows} />
         </>
     );

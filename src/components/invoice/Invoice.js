@@ -8,6 +8,7 @@ import AddPayment from "./AddPayment";
 import Chip from "./components/Chip";
 const columns = [
     { id: "orderId", label: "Order Id", minWidth: 100, align: "center" },
+    { id: "storeName", label: "Store Name", minWidth: 100, align: "center" },
     {
         id: "customerName",
         label: "Customer Name",
@@ -48,6 +49,7 @@ export default function Invoice() {
     const rows = orders.map((order) => {
         return {
             orderId: order.orderId,
+            storeName: order.storeName,
             customerName: order.customerName,
             totalAmount: `$${order.totalAmount}`,
             paidAmount: `$${order.totalPaidAmount}`,

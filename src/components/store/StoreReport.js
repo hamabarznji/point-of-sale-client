@@ -48,7 +48,6 @@ export default function StoreReport() {
             return Promise.reject(err);
         }
     };
-    console.log(storeInfo);
     const rows = storeInfo?.map((row) => {
         return {
             productName: row.productName,

@@ -1,6 +1,8 @@
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { TextField } from "@material-ui/core";
-
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import MenuItem from "@material-ui/core/MenuItem";
 import ReportForm from "./components/ReportForm";
@@ -11,10 +13,23 @@ import Purchase from "./Purchase";
 import Transaction from "./Transaction";
 
 import { useNavigate } from "react-router-dom";
+import InputField from "../InputField";
 
 export default function Report() {
     const history = useNavigate();
+    const schema = yup.object().shape({
+        fromDate: yup.date().required("From date is required"),
+        toDate: yup.date().required("To date is required"),
+    });
 
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(schema),
+    });
     const reports = [
         { id: 1, name: "Sale Report", element: <Sale />, path: "debts" },
         { id: 2, name: "Purchase Report ", element: <Purchase /> },
@@ -41,23 +56,8 @@ export default function Report() {
         history(foundedReport.path, {
             state: { fromDate, toDate },
         });
-
-        /*     setElement(foundedReport.element);
-        setIsElement(true); */
     };
 
-    /*     const getReport = async () => {
-        try {
-            const res = await ReportService.getReport(
-                "expenses/stores/1/reports/2021-08-09 21/2022-04-01"
-            );
-            setReportDetails(res);
-            console.log(reportDetails, "reportDetails");
-            return Promise.resolve(res);
-        } catch (err) {
-            return Promise.reject("Error", err);
-        }
-    }; */
     return (
         <>
             <Grid container justifyContent="center" alignItems="center">
@@ -89,14 +89,64 @@ export default function Report() {
                     </Grid>
                 </Grid>
 
-                <Grid
-                    item
-                    container
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                >
-                    <ReportForm onSubmit={onSubmit} />
+                <Grid item>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="center"
+                        >
+                            <Grid
+                                item
+                                container
+                                direction="row"
+                                justifyContent="center"
+                                alignItems="center"
+                                spacing={4}
+                            >
+                                <Grid item>
+                                    Form Date
+                                    <InputField
+                                        control={control}
+                                        errors={errors}
+                                        name="fromDate"
+                                        defaultValue=""
+                                        register={register}
+                                        error={errors.hasOwnProperty(
+                                            "fromDate"
+                                        )}
+                                        helperText={errors.fromDate?.message}
+                                        type="date"
+                                        variant="outlined"
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    To Date
+                                    <InputField
+                                        control={control}
+                                        errors={errors}
+                                        name="toDate"
+                                        defaultValue=""
+                                        variant="outlined"
+                                        register={register}
+                                        error={errors.hasOwnProperty("toDate")}
+                                        helperText={errors.toDate?.message}
+                                        type="date"
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid item>
+                                <Button
+                                    variant="contained"
+                                    type="submit"
+                                    color="primary"
+                                >
+                                    Generate Report
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </form>
                 </Grid>
             </Grid>
         </>
