@@ -8,9 +8,9 @@ import StoreService from "../../services/StoreService";
 import { Grid } from "@mui/material";
 
 const columns = [
-    { id: "name", label: "Name", minWidth: 170, align: "center" },
+    { id: "username", label: "Name", minWidth: 170, align: "center" },
     { id: "role", label: "Role", minWidth: 170, align: "center" },
-    { id: "store", label: "Store", minWidth: 170, align: "center" },
+    { id: "storeName", label: "Store", minWidth: 170, align: "center" },
     { id: "action", label: "Action", maxWidth: 170, align: "center" },
 ];
 
@@ -45,9 +45,9 @@ export default function User() {
         return {
             key: { index },
             id: user.id,
-            name: user.username,
+            username: user.username,
             role: user.role,
-            store: user.storeName,
+            storeName: user.storeName,
             action: (
                 <Grid
                     container
@@ -57,9 +57,6 @@ export default function User() {
                 >
                     <Grid item>
                         <UpdateUser user={user} getAll={getAll} />
-                    </Grid>
-                    <Grid item>
-                        <DeleteUser user={user} getAll={getAll} />
                     </Grid>
                 </Grid>
             ),

@@ -109,10 +109,7 @@ export default function AccountMenu() {
 
                 <MenuItem onClick={logoutHandler}>
                     <ListItemIcon>
-                        <Logout
-                            fontSize="small"
-                            onClick={() => console.log("loging out")}
-                        />
+                        <Logout fontSize="small" />
                     </ListItemIcon>
                     Logout
                 </MenuItem>

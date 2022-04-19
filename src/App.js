@@ -23,8 +23,7 @@ import Report from "./pages/Report";
 import PurchaseReport from "./components/report/Purchase";
 import SaleReport from "./components/report/Sale";
 import axios from "axios";
-import UserService from "./services/UserService";
-
+import { getNotifications } from "./store/PosRedux";
 function App() {
     const dispatch = useDispatch();
     const location = useLocation();
@@ -39,7 +38,6 @@ function App() {
     location.pathname === "/"
         ? console.log(mainMargin, " in the login page")
         : console.log(mainMargin, " in the dashboard page"); */
-    const userRole = useSelector((state) => state.posRedux.userRole);
     const reduxAuth = useSelector((state) => state.posRedux.isAuthenticated);
 
     async function authFunc() {
@@ -54,6 +52,8 @@ function App() {
 
     React.useEffect(() => {
         authFunc();
+        dispatch(getNotifications());
+
         dispatch(posActions.setRole());
         dispatch(posActions.setStore());
         dispatch(posActions.setAuth(isAuthenticated));

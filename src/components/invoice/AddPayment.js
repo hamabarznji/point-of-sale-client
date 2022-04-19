@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { useSnackbar } from "notistack";
 import PaymentService from "../../services/PaymentService";
 import moment from "moment";
-export default function AddPayment({ orderId, getAll }) {
+export default function AddPayment({ orderId, getAll, dueAmount }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
@@ -14,6 +14,7 @@ export default function AddPayment({ orderId, getAll }) {
         amount: yup.number().required("Amount  is required"),
         date: yup.date().required("Date is required"),
     });
+    //
     const {
         register,
         handleSubmit,
@@ -25,6 +26,15 @@ export default function AddPayment({ orderId, getAll }) {
     });
 
     const addPaymentHandler = async (data) => {
+        if (data.amount > dueAmount) {
+            enqueueSnackbar(
+                "Payment amount cannot be greater than due amount",
+                {
+                    variant: "error",
+                }
+            );
+            return;
+        }
         try {
             await PaymentService.addPayment({
                 order_id: data.order_id,

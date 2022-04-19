@@ -12,9 +12,11 @@ class TransfareedProductService {
         );
         return res.data;
     }
-    async getTransfareedProductsByStoreId(id) {
+    async getTransfareedProductsByStoreId() {
         const res = await axios.get(
-            `http://localhost:3002/transfareedproducts/stores/${id}`,
+            `http://localhost:3002/transfareedproducts/stores/${localStorage.getItem(
+                "storeId"
+            )}`,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("posToken"),

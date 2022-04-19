@@ -7,7 +7,7 @@ import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 import PaymentService from "../../services/PaymentService";
 import moment from "moment";
-export default function AddCustomer({ getAll, id }) {
+export default function AddCustomer({ getAll, id, dueAmount }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
@@ -17,11 +17,21 @@ export default function AddCustomer({ getAll, id }) {
         register,
         handleSubmit,
         control,
+        reset,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema),
     });
     const addPaymentHandler = async (data) => {
+        if (data.amount > dueAmount) {
+            enqueueSnackbar(
+                "Payment amount cannot be greater than due amount",
+                {
+                    variant: "error",
+                }
+            );
+            return;
+        }
         const date = moment().format("YYYY-MM-DD");
         try {
             await PaymentService.addPayment({
@@ -33,6 +43,7 @@ export default function AddCustomer({ getAll, id }) {
                 variant: "success",
             });
             getAll();
+            reset();
             return Promise.resolve("Done");
         } catch (err) {
             enqueueSnackbar("Could not add Payment! Please try again.", {

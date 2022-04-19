@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import CustomerService from "../../services/CustomerService";
-import Tab from "./Tab";
 import Card from "./Card";
 import { Grid } from "@mui/material";
 import ReactTable from "../ReactTabel";
@@ -32,7 +31,6 @@ const columns = [
 
 export default function CustomerProfile() {
     const { id } = useParams();
-    console.log(id);
     const [customer, setCustomer] = React.useState();
     const [orderInfo, setOrderInfo] = React.useState();
 
@@ -59,7 +57,11 @@ export default function CustomerProfile() {
             paidAmount: `$${order?.paidAmount}`,
             dueAmount: `$${order?.dueAmount}`,
             action: !order?.dueAmount == 0 && (
-                <AddPayment id={order?.orderId} getAll={getCustomer} />
+                <AddPayment
+                    id={order?.orderId}
+                    getAll={getCustomer}
+                    dueAmount={order.dueAmount}
+                />
             ),
         };
     });

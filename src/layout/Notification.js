@@ -5,56 +5,18 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import { useSelector, useDispatch } from "react-redux";
 
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import ProductService from "../services/ProductService";
-import TransfareedProductService from "../services/TransfareedProductService";
+
 import { Badge } from "@mui/material";
 export default function Notification() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-    const userRole = localStorage.getItem("userRole");
 
-    const [notifications, setNotifications] = React.useState([]);
-    const [badgeContent, setBadgeContent] = React.useState(0);
-    const getNotifications = async () => {
-        if (userRole === "accountant") {
-            try {
-                const res =
-                    await TransfareedProductService.getTransfareedProductsNotifications();
-                setNotifications(res.data);
-                setBadgeContent(res.badgeContent);
-                return Promise.resolve(res);
-            } catch (err) {
-                return Promise.reject(err);
-            }
-        } else if (userRole === "warehouse") {
-            try {
-                const res = await ProductService.getProductsNotifications();
-                setNotifications(res.data);
-                setBadgeContent(res.badgeContent);
-                return Promise.resolve(res);
-            } catch (err) {
-                return Promise.reject(err);
-            }
-        } else {
-            try {
-                const product = await ProductService.getProductsNotifications();
-                const transfaree =
-                    await TransfareedProductService.getTransfareedProductsNotifications();
-                const notis = product.data.concat(transfaree.data);
-                setNotifications(notis);
-                setBadgeContent(product.badgeContent + transfaree.badgeContent);
-                return Promise.resolve(notifications);
-            } catch (err) {
-                return Promise.reject(err);
-            }
-        }
-    };
+    const badgeContent = useSelector((state) => state.posRedux.badgeContent);
+    const notifications = useSelector((state) => state.posRedux.notifications);
 
-    React.useEffect(() => {
-        getNotifications();
-    }, []);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };

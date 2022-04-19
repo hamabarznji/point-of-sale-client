@@ -1,13 +1,12 @@
 import * as React from "react";
 import Table from "../ReactTabel";
 import TransfareedProductService from "../../services/TransfareedProductService";
-import StoreService from "../../services/StoreService";
 import ProductService from "../../services/ProductService";
 import AddTransfareedProduct from "./AddTransfareedProduct";
 import UpdateTransfareedProduct from "./UpdateTransfareedProduct";
 import moment from "moment";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { getNotifications } from "../../store/PosRedux";
 const columns = [
     { id: "store", label: "Store Name", minWidth: 170, align: "center" },
     { id: "product", label: "Product Name", minWidth: 170, align: "center" },
@@ -24,17 +23,18 @@ export default function TransfareedProduct() {
     const [transfareedProducts, setTransfareedProducts] = React.useState([]);
     const storeId = useSelector((state) => state.posRedux.storeId);
     const userRole = useSelector((state) => state.posRedux.userRole);
-
+    const dispatch = useDispatch();
     React.useEffect(() => {
         getAll();
         getProducts();
+        dispatch(getNotifications());
     }, []);
 
     const getAll = async () => {
         try {
             if (userRole === "warehouse" || userRole === "owner") {
                 const data =
-                    await TransfareedProductService.getTransfareedProducts();
+                    await TransfareedProductService.getTransfareedProductsByStoreId();
                 setTransfareedProducts(data);
                 return Promise.resolve("done");
             } else {
@@ -84,7 +84,7 @@ export default function TransfareedProduct() {
 
     return (
         <>
-            {userRole === "warehouse" && (
+            {(userRole === "warehouse" || userRole === "owner") && (
                 <AddTransfareedProduct items={items} getAll={getAll} />
             )}
             <Table columns={columns} rows={rows} />
