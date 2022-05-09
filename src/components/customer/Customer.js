@@ -4,6 +4,7 @@ import CustomerService from "../../services/CustomerService";
 import StoreService from "../../services/StoreService";
 import AddCustomer from "./AddCustomer";
 import UpdateCustomer from "./UpdateCustomer";
+import { useQuery } from "react-query";
 
 const columns = [
     { id: "id", label: "Phone", minWidth: 170, align: "center" },
@@ -13,19 +14,12 @@ const columns = [
 ];
 
 export default function Customers() {
-    const [customers, setCustomers] = React.useState([]);
+    const userRole = localStorage.getItem("userRole");
     const [stores, setStores] = React.useState([]);
-
-    React.useEffect(() => {
-        getAll();
-        getStores();
-    }, []);
 
     const getAll = async () => {
         try {
-            const data = await CustomerService.getCustomers();
-            setCustomers(data);
-            return Promise.resolve("done");
+            return CustomerService.getCustomers();
         } catch (err) {
             return Promise.reject(err);
         }
@@ -39,7 +33,12 @@ export default function Customers() {
             return Promise.reject(err);
         }
     };
-    const rows = customers.map((customer) => {
+    const { data: customers } = useQuery("customers", getAll, {
+        initialData: [],
+        keepPreviousData: true,
+        enabled: true,
+    });
+    const rows = customers?.map((customer) => {
         return {
             id: customer.id,
             name: customer.name,
@@ -57,8 +56,8 @@ export default function Customers() {
 
     return (
         <>
-            <AddCustomer getAll={getAll} />
-            <Table columns={columns} rows={rows} isPath={true} />
+            {userRole === "account" && <AddCustomer getAll={getAll} />}
+            <Table columns={columns} rows={rows ? rows : []} isPath={true} />
         </>
     );
 }

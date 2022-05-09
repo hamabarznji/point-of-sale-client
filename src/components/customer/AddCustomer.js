@@ -6,7 +6,7 @@ import FormDialog from "../FormDialog";
 import * as yup from "yup";
 import InputField from "../InputField";
 import { useSnackbar } from "notistack";
-export default function AddCustomer({ getAll, items }) {
+export default function AddCustomer({ getAll }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
@@ -25,11 +25,10 @@ export default function AddCustomer({ getAll, items }) {
     const addCustomerHandler = async (data) => {
         try {
             await CustomerService.addCustomer({
-                order_id: data.id,
-                name: data.name,
-                address: data.address,
+                ...data,
                 store_id: localStorage.getItem("storeId"),
             });
+            console.log(localStorage.getItem("storeId"), data);
             enqueueSnackbar("Customer added successfully.", {
                 variant: "success",
             });

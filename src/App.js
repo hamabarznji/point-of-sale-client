@@ -24,12 +24,15 @@ import PurchaseReport from "./components/report/Purchase";
 import SaleReport from "./components/report/Sale";
 import axios from "axios";
 import { getNotifications } from "./store/PosRedux";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+
 function App() {
     const dispatch = useDispatch();
     const location = useLocation();
     const mainMargin = location.pathname === "/" ? "0" : "12.5%";
     const [isAuthenticated, setIsAuthenticated] = React.useState(false);
     const navigate = useNavigate();
+    const queryClient = new QueryClient();
 
     /*     const isAuthenticated = useSelector(
         (state) => state.posRedux.isAuthenticated
@@ -39,6 +42,7 @@ function App() {
         ? console.log(mainMargin, " in the login page")
         : console.log(mainMargin, " in the dashboard page"); */
     const reduxAuth = useSelector((state) => state.posRedux.isAuthenticated);
+    const isLoggedOut = useSelector((state) => state.posRedux.isLoggedOut);
 
     async function authFunc() {
         const res = await axios.get(`http://localhost:3002/login/auth`, {
@@ -53,36 +57,22 @@ function App() {
     React.useEffect(() => {
         authFunc();
         dispatch(getNotifications());
-
         dispatch(posActions.setRole());
         dispatch(posActions.setStore());
         dispatch(posActions.setAuth(isAuthenticated));
-        if (reduxAuth && location.pathname === "/") {
-            navigate("/dashboard");
-        }
-        if (!reduxAuth && location.pathname.includes("/dashboard")) {
-            navigate("/");
-        }
-        if (localStorage.getItem("posToken") === null) {
-            navigate("/");
-        }
-    }, [isAuthenticated, dispatch, location, reduxAuth, navigate]);
-    console.log(localStorage.getItem("storeId"));
+    }, [isAuthenticated, dispatch, location, reduxAuth, navigate, isLoggedOut]);
+
     return (
-        <SnackbarProvider maxSnack={3} autoHideDuration={4500}>
-            <div>
-                <header>
-                    {location.pathname === "/" ? null : (
-                        <>
-                            <Drawer />
-                        </>
-                    )}
-                </header>
-                <main style={{ marginLeft: mainMargin }}>
-                    <Routes>
-                        {!reduxAuth && <Route path="/" element={<Login />} />}
-                        {reduxAuth && (
+        <QueryClientProvider client={queryClient}>
+            <SnackbarProvider maxSnack={3} autoHideDuration={4500}>
+                <div>
+                    <header>
+                        {location.pathname === "/" ? null : <Drawer />}
+                    </header>
+                    <main style={{ marginLeft: mainMargin }}>
+                        <Routes>
                             <>
+                                <Route path="/" element={<Login />} />
                                 <Route
                                     path="/dashboard"
                                     element={<Dashboard />}
@@ -149,11 +139,11 @@ function App() {
                                     element={<SaleReport />}
                                 />
                             </>
-                        )}
-                    </Routes>
-                </main>
-            </div>
-        </SnackbarProvider>
+                        </Routes>
+                    </main>
+                </div>
+            </SnackbarProvider>
+        </QueryClientProvider>
     );
 }
 

@@ -7,6 +7,7 @@ import UpdateTransfareedProduct from "./UpdateTransfareedProduct";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { getNotifications } from "../../store/PosRedux";
+import { useQuery } from "react-query";
 const columns = [
     { id: "store", label: "Store Name", minWidth: 170, align: "center" },
     { id: "product", label: "Product Name", minWidth: 170, align: "center" },
@@ -20,30 +21,22 @@ const columns = [
 
 export default function TransfareedProduct() {
     const [items, setItems] = React.useState([]);
-    const [transfareedProducts, setTransfareedProducts] = React.useState([]);
     const storeId = useSelector((state) => state.posRedux.storeId);
     const userRole = useSelector((state) => state.posRedux.userRole);
     const dispatch = useDispatch();
     React.useEffect(() => {
-        getAll();
         getProducts();
         dispatch(getNotifications());
-    }, []);
+    }, [dispatch]);
 
     const getAll = async () => {
         try {
             if (userRole === "warehouse" || userRole === "owner") {
-                const data =
-                    await TransfareedProductService.getTransfareedProductsByStoreId();
-                setTransfareedProducts(data);
-                return Promise.resolve("done");
+                return TransfareedProductService.getTransfareedProductsByStoreId();
             } else {
-                const data =
-                    await TransfareedProductService.getTransfareedProductsByStoreId(
-                        storeId
-                    );
-                setTransfareedProducts(data);
-                return Promise.resolve("done");
+                return TransfareedProductService.getTransfareedProductsByStoreId(
+                    storeId
+                );
             }
         } catch (err) {
             return Promise.reject(err);
@@ -58,6 +51,17 @@ export default function TransfareedProduct() {
             return Promise.reject(err);
         }
     };
+
+    const { data: transfareedProducts, refetch: getAllRefetch } = useQuery(
+        "products",
+        getAll,
+        {
+            enabled: true,
+            keepPreviousData: true,
+            initialData: [],
+        }
+    );
+
     const rows = transfareedProducts?.map((transfareedProduct) => {
         return {
             storeId: transfareedProduct?.store_id,
@@ -85,7 +89,7 @@ export default function TransfareedProduct() {
     return (
         <>
             {(userRole === "warehouse" || userRole === "owner") && (
-                <AddTransfareedProduct items={items} getAll={getAll} />
+                <AddTransfareedProduct items={items} getAll={getAllRefetch} />
             )}
             <Table columns={columns} rows={rows} />
         </>

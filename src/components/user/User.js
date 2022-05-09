@@ -6,6 +6,7 @@ import DeleteUser from "./DeleteUser";
 import UpdateUser from "./UpdateUser";
 import StoreService from "../../services/StoreService";
 import { Grid } from "@mui/material";
+import { useQuery } from "react-query";
 
 const columns = [
     { id: "username", label: "Name", minWidth: 170, align: "center" },
@@ -15,19 +16,15 @@ const columns = [
 ];
 
 export default function User() {
-    const [users, setUsers] = React.useState([]);
     const [stores, setStores] = React.useState([]);
 
     React.useEffect(() => {
-        getAll();
         getStores();
     }, []);
 
     const getAll = async () => {
         try {
-            const data = await UserService.getUsers();
-            setUsers(data);
-            return Promise.resolve("done");
+            return UserService.getUsers();
         } catch (err) {
             return Promise.reject(err);
         }
@@ -41,6 +38,13 @@ export default function User() {
             return Promise.reject(err);
         }
     };
+
+    const { data: users } = useQuery("stores", getAll, {
+        initialData: [],
+        keepPreviousData: true,
+        enabled: true,
+    });
+
     const rows = users.map((user, index) => {
         return {
             key: { index },

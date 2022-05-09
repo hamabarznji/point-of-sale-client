@@ -19,8 +19,6 @@ export default function AccountMenu() {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const dispatch = useDispatch();
-    const location = useLocation();
-
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -29,22 +27,13 @@ export default function AccountMenu() {
     };
 
     const logoutHandler = () => {
-        localStorage.removeItem("posToken");
-        dispatch(posActions.setAuth(false));
-
-        navigate("/");
+        dispatch(posActions.logout());
         enqueueSnackbar("Loged out successfully.", {
             variant: "success",
         });
+        navigate("/");
     };
-    /*     React.useEffect(() => {
-        if (
-            location.pathname.includes("/") &&
-            localStorage.getItem("posToken") === null
-        ) {
-            navigate("/");
-        }
-    }, [location.pathname, navigate]); */
+
     return (
         <React.Fragment>
             <Box
@@ -107,7 +96,16 @@ export default function AccountMenu() {
                 </MenuItem>
                 <Divider />
 
-                <MenuItem onClick={logoutHandler}>
+                <MenuItem
+                    onClick={() => {
+                        dispatch(posActions.setAuth(false));
+                        localStorage.removeItem("posToken");
+                        navigate("/");
+                        enqueueSnackbar("Loged out successfully.", {
+                            variant: "success",
+                        });
+                    }}
+                >
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>

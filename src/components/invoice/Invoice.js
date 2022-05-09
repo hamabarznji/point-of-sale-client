@@ -31,7 +31,6 @@ export default function Invoice() {
     const history = useNavigate();
     const [orders, setOrders] = React.useState([]);
     const [ordersReport, setOrdersReport] = React.useState([]);
-    console.log(orders);
     const getOrders = async () => {
         try {
             const res = await OrderService.gerOrders();

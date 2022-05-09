@@ -45,11 +45,14 @@ export default function LoginForm() {
             localStorage.setItem("posToken", user.token);
             localStorage.setItem("userRole", user.role);
             localStorage.setItem("storeId", user.store_id);
+            dispatch(posActions.setRole());
+            dispatch(posActions.setAuth(user.auth));
+            dispatch(posActions.setLogout(false));
             history("/dashboard");
             enqueueSnackbar("Loged in successfully.", {
                 variant: "success",
             });
-            dispatch(posActions.setRole());
+
             return Promise.resolve("done");
         } catch (err) {
             history("/");

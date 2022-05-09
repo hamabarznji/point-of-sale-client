@@ -30,6 +30,8 @@ export default function AddCustomer({ getAll, id, dueAmount }) {
                     variant: "error",
                 }
             );
+
+            reset();
             return;
         }
         const date = moment().format("YYYY-MM-DD");

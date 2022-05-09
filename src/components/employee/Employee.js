@@ -4,7 +4,7 @@ import React from "react";
 import AddEmployee from "./AddEmployee";
 import UpdateEmployee from "./UpdateEmployee";
 import StoreService from "../../services/StoreService";
-
+import { useSelector } from "react-redux";
 const columns = [
     { id: "name", label: "Name", minWidth: 170, align: "center" },
     { id: "salary", label: "Salary", minWidth: 170, align: "center" },
@@ -16,7 +16,8 @@ const columns = [
 export default function Employee() {
     const [employees, setEmployees] = React.useState([]);
     const [stores, setStores] = React.useState([]);
-
+    const userRole = useSelector((state) => state.posRedux.userRole);
+    console.log(userRole);
     React.useEffect(() => {
         getAll();
         getStores();
@@ -59,7 +60,9 @@ export default function Employee() {
     });
     return (
         <>
-            <AddEmployee getAll={getAll} items={stores} />
+            {userRole === "accountant" && (
+                <AddEmployee getAll={getAll} items={stores} />
+            )}
             <Table columns={columns} rows={rows} />
         </>
     );

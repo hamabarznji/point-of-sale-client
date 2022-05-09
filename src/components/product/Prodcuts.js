@@ -12,6 +12,7 @@ import SuppliersService from "../../services/SupplierService";
 import { Button, Grid } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { getNotifications } from "../../store/PosRedux";
+import { useQuery } from "react-query";
 const columns = [
     { id: "id", label: "Code", minWidth: 100, align: "center" },
     { id: "name", label: "Name", minWidth: 170, align: "center" },
@@ -32,11 +33,10 @@ const columns = [
 
 export default function Products() {
     const [items, setItems] = React.useState([]);
-    const [products, setProducts] = React.useState([]);
+    // const [products, setProducts] = React.useState([]);
     const userRole = useSelector((state) => state.posRedux.userRole);
     const dispatch = useDispatch();
     React.useEffect(() => {
-        getAll();
         getCategories();
         getSuppliers();
     }, []);
@@ -66,14 +66,23 @@ export default function Products() {
     const getAll = async () => {
         try {
             const data = await ProdcutService.getProducts();
-            setProducts(data);
             dispatch(getNotifications());
-            return Promise.resolve("done");
+            return data;
         } catch (err) {
             return Promise.reject(err);
         }
     };
 
+    const { data: products, refetch: getAllRefetch } = useQuery(
+        "products",
+        getAll,
+        {
+            initialData: [],
+            keepPreviousData: true,
+            enabled: true,
+        }
+    );
+    console.log(products);
     const rows = products.map((product) => {
         return {
             id: product.id,
@@ -89,12 +98,12 @@ export default function Products() {
                     <Grid container spacing={0}>
                         <AddProduct
                             product={product}
-                            getAll={getAll}
+                            getAll={getAllRefetch}
                             items={items}
                         />
                         <UpdateProduct
                             product={product}
-                            getAll={getAll}
+                            getAll={getAllRefetch}
                             items={items}
                         />
                     </Grid>
@@ -107,16 +116,13 @@ export default function Products() {
             {(userRole === "warehouse" || userRole === "owner") && (
                 <Grid container spacing={0}>
                     <Grid item>
-                        {" "}
-                        <AddNewProduct getAll={getAll} items={items} />
+                        <AddNewProduct getAll={getAllRefetch} items={items} />
                     </Grid>
                     <Grid item>
-                        {" "}
-                        <AddCategory getAll={getAll} />
+                        <AddCategory getAll={getAllRefetch} />
                     </Grid>{" "}
                     <Grid item>
-                        {" "}
-                        <AddSupplier getAll={getAll} />
+                        <AddSupplier getAll={getAllRefetch} />
                     </Grid>
                 </Grid>
             )}

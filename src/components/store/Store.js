@@ -3,6 +3,7 @@ import React from "react";
 import StoreService from "../../services/StoreService";
 import AddStore from "./AddStore";
 import UpdateStore from "./UpdateStore";
+import { useQuery } from "react-query";
 const columns = [
     { id: "name", label: "Name", minWidth: 170, align: "center" },
     { id: "location", label: "Locaton", minWidth: 170, align: "center" },
@@ -11,21 +12,20 @@ const columns = [
 ];
 
 export default function Store() {
-    const [stores, setStores] = React.useState([]);
-
-    React.useEffect(() => {
-        getAll();
-    }, []);
-
     const getAll = async () => {
         try {
-            const data = await StoreService.getStores();
-            setStores(data);
-            return Promise.resolve("done");
+            return StoreService.getStores();
         } catch (err) {
             return Promise.reject(err);
         }
     };
+
+    const { data: stores } = useQuery("stores", getAll, {
+        initialData: [],
+        keepPreviousData: true,
+        enabled: true,
+    });
+
     const rows = stores.map((store, index) => {
         return {
             key: { index },

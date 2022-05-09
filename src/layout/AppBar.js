@@ -9,13 +9,6 @@ import Profile from "./Profile";
 import Notification from "./Notification";
 
 export default function AppBarComponent() {
-    /*   const [anchorEl, setAnchorEl] = React.useState(null);
-    const [showMenu, setShowMenu] = React.useState(false);
-
-    const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    }; */
-
     const menuId = "primary-search-account-menu";
 
     return (

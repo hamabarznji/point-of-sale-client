@@ -11,6 +11,7 @@ let posRedux = createSlice({
         storeId: "",
         badgeContent: 0,
         notifications: [],
+        isLoggedOut: false,
     },
     reducers: {
         setAuth: (state, action) => {
@@ -28,6 +29,26 @@ let posRedux = createSlice({
         setBadgeContent: (state, action) => {
             state.badgeContent = action.payload;
         },
+        setLogout: (state, action) => {
+            state.isLoggedOut = action.payload;
+        },
+        logout: (state, action) => {
+            localStorage.removeItem("posToken");
+            state.isAuthenticated = false;
+            state.isLoggedOut = true;
+        },
+        /* login: (state, action) => {
+            const { id, token, role, store_id } = action.payload;
+
+            localStorage.setItem("userId", id);
+
+            localStorage.setItem("posToken", token);
+            localStorage.setItem("userRole", role);
+             localStorage.setItem("storeId", store_id);
+            state.isAuthenticated = true;
+            state.isLoggedOut = false;
+        },
+ */
         tokenSet: (state, action) => {
             if (!action.payload) {
                 localStorage.removeItem("posToken", action.payload);
@@ -85,8 +106,7 @@ export const getNotifications = () => async (dispatch, useSelector) => {
             dispatch(
                 setBadgeContent(product.badgeContent + transfaree.badgeContent)
             );
-            console.log(product.badgeContent + transfaree.badgeContent, "here");
-            console.log(notis);
+
             return Promise.resolve(notifications);
         } catch (err) {
             return Promise.reject(err);

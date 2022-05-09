@@ -5,7 +5,10 @@ import StoreService from "../../services/StoreService";
 import Chip from "./Chip";
 import AddExpense from "./AddExpense";
 import UpdateExpense from "./UpdateExpense";
+import { useQuery } from "react-query";
 import moment from "moment";
+import { useSelector } from "react-redux";
+
 const columns = [
     { id: "storeName", label: "Store", minWidth: 170, align: "center" },
     { id: "description", label: "Description", minWidth: 170, align: "center" },
@@ -15,13 +18,8 @@ const columns = [
 ];
 
 export default function Expense() {
-    const [expenses, setExpenses] = React.useState([]);
-    const [stores, setStores] = React.useState([]);
     const [expenseReport, setExpenseReport] = React.useState({});
-    React.useEffect(() => {
-        getAll();
-        getStores();
-    }, []);
+    const userRole = useSelector((state) => state.posRedux.userRole);
 
     const getAll = async () => {
         try {
@@ -30,25 +28,34 @@ export default function Expense() {
             const total = data.reduce((acc, expense) => {
                 return acc + expense.amount;
             }, 0);
-            setExpenses(data);
             setExpenseReport({
                 numberOfExpenses: expnseLength,
                 totalExpensesAmount: total,
             });
-            return Promise.resolve("done");
+            return data;
         } catch (err) {
             return Promise.reject(err);
         }
     };
     const getStores = async () => {
         try {
-            const data = await StoreService.getStores();
-            setStores(data);
-            return Promise.resolve(data);
+            return StoreService.getStores();
         } catch (err) {
             return Promise.reject(err);
         }
     };
+
+    const { data: expenses } = useQuery("expenses", getAll, {
+        initialData: [],
+        keepPreviousData: true,
+        enabled: true,
+    });
+    const { data: stores } = useQuery("expenses", getStores, {
+        initialData: [],
+        keepPreviousData: true,
+        enabled: true,
+    });
+
     const rows = expenses.map((expense, index) => {
         return {
             key: { index },
@@ -60,14 +67,15 @@ export default function Expense() {
             action: <UpdateExpense expense={expense} getAll={getAll} />,
         };
     });
-
     return (
         <>
             <Chip
                 totalExpensesAmount={expenseReport?.totalExpensesAmount}
                 expensesLength={expenseReport?.numberOfExpenses}
             />
-            <AddExpense getAll={getAll} items={stores} />
+            {userRole === "accountant" && (
+                <AddExpense getAll={getAll} items={stores} />
+            )}
             <Table columns={columns} rows={rows} />
         </>
     );

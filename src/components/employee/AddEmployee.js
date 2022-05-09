@@ -7,7 +7,7 @@ import * as yup from "yup";
 import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
-export default function AddEmployee({ getAll, items }) {
+export default function AddEmployee({ getAll }) {
     const { enqueueSnackbar } = useSnackbar();
 
     const schema = yup.object().shape({
@@ -26,12 +26,10 @@ export default function AddEmployee({ getAll, items }) {
     });
 
     const addEmployeeHandler = async (data) => {
+        console.log(data);
         try {
             await EmployeeService.addEmployee({
-                name: data.name,
-                address: data.address,
-                salary: data.salary,
-                phone: data.phone,
+                ...data,
                 store_id: localStorage.getItem("storeId"),
             });
             enqueueSnackbar("Employee added successfully.", {
