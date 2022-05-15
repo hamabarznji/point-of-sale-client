@@ -30,7 +30,7 @@ export default function renderInvoices({ ordredProducts, setTotalAmount }) {
                             ordredProduct.price,
                             ordredProduct.weight,
                             ordredProduct.qty
-                        )}
+                        ).toFixed(2)}
                     </TableCell>
                     <TableCell align="center">
                         <Button

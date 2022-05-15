@@ -276,7 +276,7 @@ export default function SpanningTable() {
             </form>
             <Footer
                 setOrderedProducts={setOrderedProducts}
-                totalAmount={totalAmount}
+                totalAmount={totalAmount.toFixed(2)}
                 checkOutHandler={checkOutHandler}
                 isInvoice={isInvoice}
                 register={register}

@@ -82,7 +82,6 @@ export default function Products() {
             enabled: true,
         }
     );
-    console.log(products);
     const rows = products.map((product) => {
         return {
             id: product.id,

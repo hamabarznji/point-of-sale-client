@@ -14,7 +14,6 @@ import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import BadgeIcon from "@mui/icons-material/Badge";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
-import AssessmentIcon from "@mui/icons-material/Assessment";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TransformIcon from "@mui/icons-material/Transform";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
@@ -79,13 +78,6 @@ const DrawerItems = [
         path: "/dashboard/expenses",
         icon: <MoneyOffIcon color="primary" />,
         permission: ["owner", "accountant"],
-    },
-
-    {
-        name: "Report",
-        path: "/dashboard/reports",
-        icon: <AssessmentIcon color="primary" />,
-        permission: ["owner"],
     },
 ];
 

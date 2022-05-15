@@ -19,12 +19,10 @@ import TransfareedProduct from "./pages/TransfareedProduct";
 import CheckOut from "./components/invoice/checkOut/Checkout";
 import CustomerProfile from "./components/customer/CustomerProfile";
 import { posActions } from "../src/store/PosRedux";
-import Report from "./pages/Report";
-import PurchaseReport from "./components/report/Purchase";
-import SaleReport from "./components/report/Sale";
+
 import axios from "axios";
 import { getNotifications } from "./store/PosRedux";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {
     const dispatch = useDispatch();
@@ -125,18 +123,6 @@ function App() {
                                 <Route
                                     path="/dashboard/invoices/checkout"
                                     element={<CheckOut />}
-                                />
-                                <Route
-                                    path="/dashboard/reports"
-                                    element={<Report />}
-                                />
-                                <Route
-                                    path="/dashboard/reports/purchase"
-                                    element={<PurchaseReport />}
-                                />{" "}
-                                <Route
-                                    path="/dashboard/reports/sale"
-                                    element={<SaleReport />}
                                 />
                             </>
                         </Routes>

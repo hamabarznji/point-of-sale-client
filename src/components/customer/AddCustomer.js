@@ -28,7 +28,6 @@ export default function AddCustomer({ getAll }) {
                 ...data,
                 store_id: localStorage.getItem("storeId"),
             });
-            console.log(localStorage.getItem("storeId"), data);
             enqueueSnackbar("Customer added successfully.", {
                 variant: "success",
             });

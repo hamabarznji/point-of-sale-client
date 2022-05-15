@@ -45,7 +45,7 @@ export default function InvoiceDetails() {
             weight: product.weight,
             qty: product.qty,
             price: `$${product.price}`,
-            totalAmount: `$${product.totalAmount}`,
+            totalAmount: `$${product.totalAmount.toFixed(2)}`,
             action: "edit",
         };
     });
@@ -55,8 +55,8 @@ export default function InvoiceDetails() {
                 Table={
                     <EditInvoiceTable
                         rows={rows}
-                        totalAmount={orderInfo?.totalAmount}
-                        paidAmount={orderInfo?.paidAmount}
+                        totalAmount={orderInfo?.totalAmount.toFixed(2)}
+                        paidAmount={orderInfo?.paidAmount.toFixed(2)}
                         customer={
                             orderInfo.customerName
                                 ? orderInfo.customerName

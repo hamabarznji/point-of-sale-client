@@ -15,7 +15,6 @@ const columns = [
 
 export default function Customers() {
     const userRole = localStorage.getItem("userRole");
-    const [stores, setStores] = React.useState([]);
 
     const getAll = async () => {
         try {
@@ -24,20 +23,16 @@ export default function Customers() {
             return Promise.reject(err);
         }
     };
-    const getStores = async () => {
-        try {
-            const data = await StoreService.getStores();
-            setStores(data);
-            return Promise.resolve(data);
-        } catch (err) {
-            return Promise.reject(err);
+
+    const { data: customers, refetch: refetchCustomer } = useQuery(
+        "customers",
+        getAll,
+        {
+            initialData: [],
+            keepPreviousData: true,
+            enabled: true,
         }
-    };
-    const { data: customers } = useQuery("customers", getAll, {
-        initialData: [],
-        keepPreviousData: true,
-        enabled: true,
-    });
+    );
     const rows = customers?.map((customer) => {
         return {
             id: customer.id,
@@ -45,18 +40,16 @@ export default function Customers() {
             address: customer.address,
             path: `customers/${customer.id}`,
             action: (
-                <UpdateCustomer
-                    customer={customer}
-                    items={stores}
-                    getAll={getAll}
-                />
+                <UpdateCustomer customer={customer} getAll={refetchCustomer} />
             ),
         };
     });
 
     return (
         <>
-            {userRole === "account" && <AddCustomer getAll={getAll} />}
+            {userRole === "accountant" && (
+                <AddCustomer getAll={refetchCustomer} />
+            )}
             <Table columns={columns} rows={rows ? rows : []} isPath={true} />
         </>
     );
