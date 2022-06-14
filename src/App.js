@@ -74,11 +74,11 @@ function App() {
     }, [isAuthenticated, dispatch, location, reduxAuth, navigate]);
 
     React.useEffect(() => {
-        // check if user is authenticated and redirect to dashboard
-        if (isAuthenticated && location.pathname === "/") {
+        // check if user is authenticated
+        if (reduxAuth && location.pathname === "/") {
             navigate("/dashboard");
         }
-        if (!isAuthenticated && location.pathname !== "/") {
+        if (!reduxAuth && location.pathname !== "/") {
             navigate("/");
         }
         if (isLoggedOut) {
