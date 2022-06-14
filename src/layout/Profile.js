@@ -26,13 +26,13 @@ export default function AccountMenu() {
         setAnchorEl(null);
     };
 
-    const logoutHandler = () => {
+    /*     const logoutHandler = () => {
         dispatch(posActions.logout());
         enqueueSnackbar("Loged out successfully.", {
             variant: "success",
         });
         navigate("/");
-    };
+    }; */
 
     return (
         <React.Fragment>

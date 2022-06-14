@@ -1,7 +1,6 @@
 import * as React from "react";
 import Table from "../ReactTabel";
 import CustomerService from "../../services/CustomerService";
-import StoreService from "../../services/StoreService";
 import AddCustomer from "./AddCustomer";
 import UpdateCustomer from "./UpdateCustomer";
 import { useQuery } from "react-query";

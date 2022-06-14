@@ -1,4 +1,11 @@
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import "./App.css";
+import {
+    Route,
+    Routes,
+    useLocation,
+    useNavigate,
+    Navigate,
+} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import Login from "./pages/Login";
@@ -7,7 +14,6 @@ import Product from "./pages/Product";
 import Customer from "./pages/Customer";
 import Employee from "./pages/Employee";
 import Store from "./pages/Store";
-import "./App.css";
 import Drawer from "./layout/Drawer";
 import { SnackbarProvider } from "notistack";
 import User from "./pages/User";
@@ -43,13 +49,18 @@ function App() {
     const isLoggedOut = useSelector((state) => state.posRedux.isLoggedOut);
 
     async function authFunc() {
-        const res = await axios.get(`http://localhost:3002/login/auth`, {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("posToken"),
-            },
-        });
-        setIsAuthenticated(res.data);
-        return res.data;
+        try {
+            const res = await axios.get(`http://localhost:3002/login/auth`, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("posToken"),
+                },
+            });
+            setIsAuthenticated(res.data);
+
+            return res.data;
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     React.useEffect(() => {
@@ -58,7 +69,20 @@ function App() {
         dispatch(posActions.setRole());
         dispatch(posActions.setStore());
         dispatch(posActions.setAuth(isAuthenticated));
-    }, [isAuthenticated, dispatch, location, reduxAuth, navigate, isLoggedOut]);
+    }, [isAuthenticated, dispatch, location, reduxAuth, navigate]);
+
+    console.log({ isAuthenticated });
+
+    // check if user is authenticated and redirect to dashboard
+    if (isAuthenticated && location.pathname === "/") {
+        navigate("/dashboard");
+    }
+    if (!isAuthenticated && location.pathname !== "/") {
+        navigate("/");
+    }
+    if (isLoggedOut) {
+        navigate("/");
+    }
 
     return (
         <QueryClientProvider client={queryClient}>

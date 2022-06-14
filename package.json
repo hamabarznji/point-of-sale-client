@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
     "@hookform/resolvers": "^2.8.8",
     "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.4.2",
@@ -17,6 +19,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.0",
     "formik": "^2.2.9",
+    "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "mui-rhf-library": "^0.0.9",
     "notistack": "^2.0.3",

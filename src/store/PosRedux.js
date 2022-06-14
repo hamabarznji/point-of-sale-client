@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import TransfareedProductService from "../services/TransfareedProductService";
 import ProductService from "../services/ProductService";
 
@@ -17,10 +16,10 @@ let posRedux = createSlice({
         setAuth: (state, action) => {
             state.isAuthenticated = action.payload;
         },
-        setRole: (state, action) => {
+        setRole: (state) => {
             state.userRole = localStorage.getItem("userRole");
         },
-        setStore: (state, action) => {
+        setStore: (state) => {
             state.storeId = localStorage.getItem("storeId");
         },
         setNotifications: (state, action) => {
@@ -32,7 +31,7 @@ let posRedux = createSlice({
         setLogout: (state, action) => {
             state.isLoggedOut = action.payload;
         },
-        logout: (state, action) => {
+        logout: (state) => {
             localStorage.removeItem("posToken");
             state.isAuthenticated = false;
             state.isLoggedOut = true;
