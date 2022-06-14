@@ -65,25 +65,26 @@ function App() {
 
     React.useEffect(() => {
         authFunc();
-        dispatch(getNotifications());
-        dispatch(posActions.setRole());
-        dispatch(posActions.setStore());
+        if (isAuthenticated) {
+            dispatch(getNotifications());
+            dispatch(posActions.setRole());
+            dispatch(posActions.setStore());
+        }
         dispatch(posActions.setAuth(isAuthenticated));
     }, [isAuthenticated, dispatch, location, reduxAuth, navigate]);
 
-    console.log({ isAuthenticated });
-
-    // check if user is authenticated and redirect to dashboard
-    if (isAuthenticated && location.pathname === "/") {
-        navigate("/dashboard");
-    }
-    if (!isAuthenticated && location.pathname !== "/") {
-        navigate("/");
-    }
-    if (isLoggedOut) {
-        navigate("/");
-    }
-
+    React.useEffect(() => {
+        // check if user is authenticated and redirect to dashboard
+        if (isAuthenticated && location.pathname === "/") {
+            navigate("/dashboard");
+        }
+        if (!isAuthenticated && location.pathname !== "/") {
+            navigate("/");
+        }
+        if (isLoggedOut) {
+            navigate("/");
+        }
+    });
     return (
         <QueryClientProvider client={queryClient}>
             <SnackbarProvider maxSnack={3} autoHideDuration={4500}>
