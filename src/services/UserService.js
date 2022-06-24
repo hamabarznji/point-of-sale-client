@@ -32,14 +32,14 @@ class UserService {
         });
         return res.data;
     }
-    async deleteUser(id) {
+    /*     async deleteUser(id) {
         const res = await axios.delete(`http://localhost:3002/users/${id}`, {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("posToken"),
             },
         });
         return res.data;
-    }
+    } */
 
     async updateUser(data) {
         const res = await axios.put(

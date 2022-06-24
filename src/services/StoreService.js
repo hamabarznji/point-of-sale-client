@@ -19,7 +19,7 @@ class StoreService {
     }
     async storeReportById(id) {
         const res = await axios.get(
-            `http://localhost:3002/reports/stores/${id}`,
+            `http://localhost:3002/stores/${id}/reports`,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("posToken"),

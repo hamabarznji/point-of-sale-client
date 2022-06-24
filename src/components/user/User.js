@@ -2,7 +2,6 @@ import Table from "../ReactTabel";
 import UserService from "../../services/UserService";
 import React from "react";
 import AddUser from "./AddUser";
-import DeleteUser from "./DeleteUser";
 import UpdateUser from "./UpdateUser";
 import StoreService from "../../services/StoreService";
 import { Grid } from "@mui/material";

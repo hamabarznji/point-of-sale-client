@@ -1,11 +1,5 @@
 import "./App.css";
-import {
-    Route,
-    Routes,
-    useLocation,
-    useNavigate,
-    Navigate,
-} from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import Login from "./pages/Login";
@@ -19,11 +13,10 @@ import { SnackbarProvider } from "notistack";
 import User from "./pages/User";
 import Expense from "./pages/Expense";
 import Invoice from "./pages/Invoice";
-import InvoiceDetails from "./components/invoice/InvoiceDetails";
 import CreateInvoice from "./pages/CreateInvoice";
 import TransfareedProduct from "./pages/TransfareedProduct";
-import CheckOut from "./components/invoice/checkOut/Checkout";
-import CustomerProfile from "./components/customer/CustomerProfile";
+import CheckOut from "./pages/Checkout";
+import CustomerProfile from "./pages/CustomerProfile";
 import { posActions } from "../src/store/PosRedux";
 
 import axios from "axios";
@@ -46,6 +39,7 @@ function App() {
         ? console.log(mainMargin, " in the login page")
         : console.log(mainMargin, " in the dashboard page"); */
     const reduxAuth = useSelector((state) => state.posRedux.isAuthenticated);
+    const userRole = useSelector((state) => state.posRedux.userRole);
     const isLoggedOut = useSelector((state) => state.posRedux.isLoggedOut);
 
     async function authFunc() {
@@ -55,7 +49,7 @@ function App() {
                     Authorization: "Bearer " + localStorage.getItem("posToken"),
                 },
             });
-            setIsAuthenticated(res.data);
+            setIsAuthenticated(res.data.isAuth);
 
             return res.data;
         } catch (err) {
@@ -137,10 +131,6 @@ function App() {
                                     path="/dashboard/invoices/createinvoice"
                                     element={<CreateInvoice />}
                                 />{" "}
-                                <Route
-                                    path="/dashboard/invoices/:id"
-                                    element={<InvoiceDetails />}
-                                />
                                 <Route
                                     path="/dashboard/transfareedproducts"
                                     element={<TransfareedProduct />}

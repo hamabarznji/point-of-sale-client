@@ -14,7 +14,7 @@ class ExpenseService {
         );
         return res.data;
     }
-    async getExpense(id) {
+    /*     async getExpense(id) {
         const res = await axios.get(
             `http://localhost:3002/expenses/expense/${id}`,
             {
@@ -24,7 +24,7 @@ class ExpenseService {
             }
         );
         return res.data;
-    }
+    } */
 
     async addExpense(data) {
         await axios.post("http://localhost:3002/expenses", data, {

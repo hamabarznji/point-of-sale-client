@@ -81,7 +81,7 @@ export default function Invoice() {
             >
                 Add Invoice
             </Button>
-            <ReactTabel columns={columns} rows={rows} isPath={true} />
+            <ReactTabel columns={columns} rows={rows} isPath={false} />
         </>
     );
 }
