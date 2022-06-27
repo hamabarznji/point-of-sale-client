@@ -22,60 +22,60 @@ import { useSelector } from "react-redux";
 
 import Appbar from "./AppBar";
 
-const drawerWidth = 240;
+const drawerWidth = "13%";
 
 const DrawerItems = [
     {
         name: "Dashboard",
         path: "/dashboard",
         icon: <DashboardIcon color="primary" />,
-        permission: ["owner", "accountant", "owner"],
+        permission: ["owner", "accountant"],
     },
     {
         name: "Warehouse",
-        path: "/dashboard/products",
+        path: "/products",
         icon: <WarehouseIcon color="primary" />,
-        permission: ["warehouse", "owner"],
+        permission: ["warehouse"],
     },
     {
         name: "Transfarred Product",
-        path: "/dashboard/transfareedproducts",
+        path: "/transfareedproducts",
         icon: <TransformIcon color="primary" />,
-        permission: ["warehouse", "owner", "accountant"],
+        permission: ["warehouse", "accountant"],
     },
     {
         name: "Store",
-        path: "/dashboard/stores",
+        path: "/stores",
         icon: <StoreIcon color="primary" />,
         permission: ["owner"],
     },
     {
         name: "Invoice",
-        path: "/dashboard/invoices",
+        path: "/invoices",
         icon: <ReceiptIcon color="primary" />,
-        permission: ["accountant", "owner"],
+        permission: ["accountant"],
     },
     {
         name: "Customer",
-        path: "/dashboard/customers",
+        path: "/customers",
         icon: <PeopleOutlineIcon color="primary" />,
         permission: ["owner", "accountant"],
     },
     {
         name: "Employee",
-        path: "/dashboard/employees",
+        path: "/employees",
         icon: <BadgeIcon color="primary" />,
         permission: ["owner", "accountant"],
     },
     {
         name: "User",
-        path: "/dashboard/users",
+        path: "/users",
         icon: <AccountCircleIcon color="primary" />,
         permission: ["owner"],
     },
     {
         name: "Expense",
-        path: "/dashboard/expenses",
+        path: "/expenses",
         icon: <MoneyOffIcon color="primary" />,
         permission: ["owner", "accountant"],
     },

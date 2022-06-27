@@ -76,7 +76,7 @@ export default function Invoice() {
             />
             <Button
                 variant="outlined"
-                onClick={() => history("/dashboard/invoices/createinvoice")}
+                onClick={() => history("/invoices/createinvoice")}
                 style={{ marginLeft: "5rem" }}
             >
                 Add Invoice

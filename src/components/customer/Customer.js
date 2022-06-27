@@ -5,15 +5,19 @@ import AddCustomer from "./AddCustomer";
 import UpdateCustomer from "./UpdateCustomer";
 import { useQuery } from "react-query";
 
-const columns = [
-    { id: "id", label: "Phone", minWidth: 170, align: "center" },
-    { id: "name", label: "Name", minWidth: 170, align: "center" },
-    { id: "address", label: "Address", minWidth: 170, align: "center" },
-    { id: "action", label: "Action", maxWidth: 170, align: "center" },
-];
-
 export default function Customers() {
     const userRole = localStorage.getItem("userRole");
+    const columns = [
+        { id: "id", label: "Phone", minWidth: 170, align: "center" },
+        { id: "name", label: "Name", minWidth: 170, align: "center" },
+        { id: "address", label: "Address", minWidth: 170, align: "center" },
+        userRole === "accountant" && {
+            id: "action",
+            label: "Action",
+            maxWidth: 170,
+            align: "center",
+        },
+    ];
 
     const getAll = async () => {
         try {
@@ -38,7 +42,7 @@ export default function Customers() {
             name: customer.name,
             address: customer.address,
             path: `customers/${customer.id}`,
-            action: (
+            action: userRole === "accountant" && (
                 <UpdateCustomer customer={customer} getAll={refetchCustomer} />
             ),
         };

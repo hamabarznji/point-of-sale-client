@@ -75,7 +75,7 @@ export default function ReactTable({ columns, rows, isPath }) {
                                                             return;
                                                         } else if (isPath) {
                                                             history(
-                                                                `/dashboard/${row.path}`
+                                                                `/${row.path}`
                                                             );
                                                         }
                                                     }}

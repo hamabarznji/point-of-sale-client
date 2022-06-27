@@ -67,7 +67,7 @@ export default function LoginForm() {
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container item direction="column" spacing={4}>
-                    <Grid item textAlign="center">
+                    <Grid item>
                         <h2>Welcome to Chalishkan Company</h2>
                     </Grid>
                     <Grid item>
@@ -87,6 +87,7 @@ export default function LoginForm() {
                                         error={errors.hasOwnProperty(
                                             "username"
                                         )}
+                                        placeholder="username"
                                         helperText={errors.username?.message}
                                     />
                                 );
@@ -110,6 +111,7 @@ export default function LoginForm() {
                                         error={errors.hasOwnProperty(
                                             "password"
                                         )}
+                                        placeholder="pass"
                                         helperText={errors.password?.message}
                                     />
                                 );

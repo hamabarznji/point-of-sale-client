@@ -11,7 +11,7 @@ export default function Loin() {
                     <img src={loginImage} alt="login page" />
                 </Grid>
 
-                <Grid item lg={4} marginTop={15}>
+                <Grid item lg={4} marginTop={35}>
                     <LoginForm />
                 </Grid>
             </Grid>

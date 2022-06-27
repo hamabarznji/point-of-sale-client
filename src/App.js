@@ -41,6 +41,7 @@ function App() {
     const reduxAuth = useSelector((state) => state.posRedux.isAuthenticated);
     const userRole = useSelector((state) => state.posRedux.userRole);
     const isLoggedOut = useSelector((state) => state.posRedux.isLoggedOut);
+    const showDashboard = userRole === "warehouse" ? false : true;
 
     async function authFunc() {
         try {
@@ -75,10 +76,14 @@ function App() {
         if (!reduxAuth && location.pathname !== "/") {
             navigate("/");
         }
+        if (!showDashboard && location.pathname === "/dashboard") {
+            navigate("/products");
+        }
         if (isLoggedOut) {
             navigate("/");
         }
     });
+
     return (
         <QueryClientProvider client={queryClient}>
             <SnackbarProvider maxSnack={3} autoHideDuration={4500}>
@@ -90,53 +95,44 @@ function App() {
                         <Routes>
                             <>
                                 <Route path="/" element={<Login />} />
+                                {showDashboard && (
+                                    <Route
+                                        path="/dashboard"
+                                        element={<Dashboard />}
+                                        exact
+                                    />
+                                )}
                                 <Route
-                                    path="/dashboard"
-                                    element={<Dashboard />}
+                                    path="/products"
+                                    element={<Product />}
                                     exact
                                 />
                                 <Route
-                                    path="/dashboard/products"
-                                    element={<Product />}
-                                />
-                                <Route
-                                    path="/dashboard/customers"
+                                    path="/customers"
                                     element={<Customer />}
                                 />{" "}
                                 <Route
-                                    path="/dashboard/customers/:id"
+                                    path="/customers/:id"
                                     element={<CustomerProfile />}
                                 />
                                 <Route
-                                    path="/dashboard/employees"
+                                    path="/employees"
                                     element={<Employee />}
                                 />{" "}
+                                <Route path="/users" element={<User />} />
+                                <Route path="/expenses" element={<Expense />} />
+                                <Route path="/stores" element={<Store />} />
+                                <Route path="/invoices" element={<Invoice />} />
                                 <Route
-                                    path="/dashboard/users"
-                                    element={<User />}
-                                />
-                                <Route
-                                    path="/dashboard/expenses"
-                                    element={<Expense />}
-                                />
-                                <Route
-                                    path="/dashboard/stores"
-                                    element={<Store />}
-                                />
-                                <Route
-                                    path="/dashboard/invoices"
-                                    element={<Invoice />}
-                                />
-                                <Route
-                                    path="/dashboard/invoices/createinvoice"
+                                    path="/invoices/createinvoice"
                                     element={<CreateInvoice />}
                                 />{" "}
                                 <Route
-                                    path="/dashboard/transfareedproducts"
+                                    path="/transfareedproducts"
                                     element={<TransfareedProduct />}
                                 />
                                 <Route
-                                    path="/dashboard/invoices/checkout"
+                                    path="/invoices/checkout"
                                     element={<CheckOut />}
                                 />
                             </>

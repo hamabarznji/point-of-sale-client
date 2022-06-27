@@ -95,7 +95,7 @@ export const getNotifications = () => async (dispatch, useSelector) => {
         } catch (err) {
             return Promise.reject(err);
         }
-    } else {
+    } /*  else {
         try {
             const product = await ProductService.getProductsNotifications();
             const transfaree =
@@ -110,5 +110,5 @@ export const getNotifications = () => async (dispatch, useSelector) => {
         } catch (err) {
             return Promise.reject(err);
         }
-    }
+    } */
 };

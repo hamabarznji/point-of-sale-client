@@ -54,7 +54,7 @@ export default function Print({ documentTitle, onSubmit, Table }) {
                         }
                     );
                 }}
-                onAfterPrint={() => history("/dashboard/invoices")}
+                onAfterPrint={() => history("/invoices")}
             >
                 <br />
                 <PrintContextConsumer>

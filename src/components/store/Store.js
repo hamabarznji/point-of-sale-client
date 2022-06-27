@@ -20,7 +20,7 @@ export default function Store() {
         }
     };
 
-    const { data: stores } = useQuery("stores", getAll, {
+    const { data: stores, refetch } = useQuery("stores", getAll, {
         initialData: [],
         keepPreviousData: true,
         enabled: true,
@@ -35,13 +35,13 @@ export default function Store() {
             phone: store.phone,
             path: `stores/${store.id}`,
             action: (
-                <UpdateStore store={store} items={stores} getAll={getAll} />
+                <UpdateStore store={store} items={stores} getAll={refetch} />
             ),
         };
     });
     return (
         <>
-            <AddStore getAll={getAll} />
+            <AddStore getAll={refetch} />
             <Table columns={columns} rows={rows} isPath={true} />
         </>
     );

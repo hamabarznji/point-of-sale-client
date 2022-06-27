@@ -8,9 +8,10 @@ import Badge from "@mui/material/Badge";
 import Profile from "./Profile";
 import Notification from "./Notification";
 
+import { useSelector } from "react-redux";
 export default function AppBarComponent() {
     const menuId = "primary-search-account-menu";
-
+    const userRole = useSelector((state) => state.posRedux.userRole);
     return (
         <Box sx={{ flexGrow: 1 }} position="fixed">
             <AppBar>
@@ -33,26 +34,30 @@ export default function AppBarComponent() {
 
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={0} color="error">
-                                <Notification />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            //onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <Profile />
-                        </IconButton>
+                        {userRole !== "owner" && (
+                            <IconButton
+                                size="large"
+                                aria-label="show 17 new notifications"
+                                color="inherit"
+                            >
+                                <Badge badgeContent={0} color="error">
+                                    <Notification />
+                                </Badge>
+                            </IconButton>
+                        )}
+                        {
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                //onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <Profile />
+                            </IconButton>
+                        }
                     </Box>
                 </Toolbar>
             </AppBar>

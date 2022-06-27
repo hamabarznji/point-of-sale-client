@@ -111,18 +111,6 @@ export default function UpdateUser({ user }) {
                     select
                     items={roles}
                 />
-                <InputField
-                    name="store_id"
-                    label="Store id"
-                    control={control}
-                    register={register}
-                    errors={errors}
-                    defaultValue={user.store_id}
-                    error={errors.hasOwnProperty("store_id")}
-                    helperText={errors.store_id?.message}
-                    select
-                    items={stores}
-                />
             </FormDialog>
         </>
     );

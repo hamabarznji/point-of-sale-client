@@ -7,6 +7,7 @@ import * as yup from "yup";
 import InputField from "../InputField";
 import { useSnackbar } from "notistack";
 
+import { useSelector } from "react-redux";
 const roles = [
     { id: "owner", name: "Owner" },
     { id: "accountant", name: "Accountant" },
@@ -15,12 +16,13 @@ const roles = [
 
 export default function AddUser({ getAll, items }) {
     const { enqueueSnackbar } = useSnackbar();
+    //  const userRole = useSelector((state) => state.posRedux.userRole);
 
     const schema = yup.object().shape({
         username: yup.string().required("Name is required"),
         password: yup.string().required("Password is required"),
         role: yup.string().required("Role is required"),
-        store_id: yup.number().required("Store id is required"),
+        store_id: yup.string(),
     });
     const {
         register,
@@ -32,6 +34,7 @@ export default function AddUser({ getAll, items }) {
     });
 
     const addUserHandler = async (data) => {
+        console.log(data);
         try {
             await UserService.addUser(data);
             enqueueSnackbar("User added successfully.", {
@@ -47,6 +50,7 @@ export default function AddUser({ getAll, items }) {
             return Promise.reject("Error", err);
         }
     };
+
     return (
         <FormDialog
             buttonTitle="Add User"

@@ -21,6 +21,7 @@ export default function User() {
         getStores();
     }, []);
 
+    console.log(stores);
     const getAll = async () => {
         try {
             return UserService.getUsers();
@@ -32,6 +33,10 @@ export default function User() {
         try {
             const data = await StoreService.getStores();
             setStores(data);
+            stores.add({
+                id: "null",
+                name: "default",
+            });
             return Promise.resolve(data);
         } catch (err) {
             return Promise.reject(err);

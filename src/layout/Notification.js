@@ -99,7 +99,7 @@ export default function Notification() {
                                 {product.name}-
                                 <span style={{ color: "green" }}>
                                     {" "}
-                                    {product.place}
+                                    {product.storeName}
                                 </span>
                             </MenuItem>
                         );

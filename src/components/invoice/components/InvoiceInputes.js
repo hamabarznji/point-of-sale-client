@@ -44,7 +44,7 @@ export default function Inputs({
                         register={register}
                         error={errors.hasOwnProperty("price")}
                         helperText={errors.price?.message}
-                        width={90}
+                        width={95}
                     />
                 </TableCell>
                 <TableCell align="center">

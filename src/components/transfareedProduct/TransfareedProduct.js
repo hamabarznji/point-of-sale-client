@@ -8,16 +8,6 @@ import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { getNotifications } from "../../store/PosRedux";
 import { useQuery } from "react-query";
-const columns = [
-    { id: "store", label: "Store Name", minWidth: 170, align: "center" },
-    { id: "product", label: "Product Name", minWidth: 170, align: "center" },
-    { id: "weight", label: "Weight", minWidth: 170, align: "center" },
-    { id: "qty", label: "Quantity", minWidth: 170, align: "center" },
-    { id: "color", label: "Color", minWidth: 170, align: "center" },
-    { id: "totalPriceAmount", label: "Total", minWidth: 170, align: "center" },
-    { id: "date", label: "Date", minWidth: 170, align: "center" },
-    { id: "action", label: "Action", minWidth: 100, align: "center" },
-];
 
 export default function TransfareedProduct() {
     const [items, setItems] = React.useState([]);
@@ -28,18 +18,49 @@ export default function TransfareedProduct() {
         getProducts();
         dispatch(getNotifications());
     }, [dispatch]);
+    const columns = [
+        { id: "store", label: "Store Name", minWidth: 170, align: "center" },
+        {
+            id: "product",
+            label: "Product Name",
+            minWidth: 170,
+            align: "center",
+        },
+        { id: "weight", label: "Weight", minWidth: 170, align: "center" },
+        { id: "qty", label: "Quantity", minWidth: 170, align: "center" },
+        { id: "color", label: "Color", minWidth: 170, align: "center" },
+        {
+            id: "totalPriceAmount",
+            label: "Total",
+            minWidth: 170,
+            align: "center",
+        },
+        { id: "date", label: "Date", minWidth: 170, align: "center" },
+        userRole === "warehouse" && {
+            id: "action",
+            label: "Action",
+            minWidth: 100,
+            align: "center",
+        },
+    ];
 
     const getAll = async () => {
-        try {
-            if (userRole === "warehouse" || userRole === "owner") {
-                return TransfareedProductService.getTransfareedProductsByStoreId();
-            } else {
+        if (userRole == "warehouse") {
+            try {
+                return TransfareedProductService.getTransfareedProductsByStoreId(
+                    "null"
+                );
+            } catch (err) {
+                return Promise.reject(err);
+            }
+        } else {
+            try {
                 return TransfareedProductService.getTransfareedProductsByStoreId(
                     storeId
                 );
+            } catch (err) {
+                return Promise.reject(err);
             }
-        } catch (err) {
-            return Promise.reject(err);
         }
     };
     const getProducts = async () => {
@@ -74,7 +95,7 @@ export default function TransfareedProduct() {
             totalPriceAmount: `$${transfareedProduct?.totalPriceAmount}`,
             date: moment(transfareedProduct?.date).format("YYYY-MM-DD"),
 
-            action: userRole === "owner" && (
+            action: userRole === "warehouse" && (
                 <div>
                     <UpdateTransfareedProduct
                         transfareedProduct={transfareedProduct}
@@ -88,7 +109,7 @@ export default function TransfareedProduct() {
 
     return (
         <>
-            {(userRole === "warehouse" || userRole === "owner") && (
+            {userRole === "warehouse" && (
                 <AddTransfareedProduct items={items} getAll={getAllRefetch} />
             )}
             <Table columns={columns} rows={rows} />

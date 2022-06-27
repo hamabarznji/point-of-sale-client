@@ -9,18 +9,26 @@ import { useQuery } from "react-query";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
-const columns = [
-    { id: "storeName", label: "Store", minWidth: 170, align: "center" },
-    { id: "description", label: "Description", minWidth: 170, align: "center" },
-    { id: "amount", label: "Amount", minWidth: 170, align: "center" },
-    { id: "date", label: "Date", minWidth: 170, align: "center" },
-    { id: "action", label: "Action", maxWidth: 170, align: "center" },
-];
-
 export default function Expense() {
     const [expenseReport, setExpenseReport] = React.useState({});
     const userRole = useSelector((state) => state.posRedux.userRole);
-
+    const columns = [
+        { id: "storeName", label: "Store", minWidth: 170, align: "center" },
+        {
+            id: "description",
+            label: "Description",
+            minWidth: 170,
+            align: "center",
+        },
+        { id: "amount", label: "Amount", minWidth: 170, align: "center" },
+        { id: "date", label: "Date", minWidth: 170, align: "center" },
+        userRole === "accountant" && {
+            id: "action",
+            label: "Action",
+            maxWidth: 170,
+            align: "center",
+        },
+    ];
     const getAll = async () => {
         try {
             const data = await ExpenseService.getExpenses();
@@ -45,11 +53,15 @@ export default function Expense() {
         }
     };
 
-    const { data: expenses } = useQuery("expenses", getAll, {
-        initialData: [],
-        keepPreviousData: true,
-        enabled: true,
-    });
+    const { data: expenses, refetch: getAllRefetch } = useQuery(
+        "expenses",
+        getAll,
+        {
+            initialData: [],
+            keepPreviousData: true,
+            enabled: true,
+        }
+    );
     const { data: stores } = useQuery("expenses", getStores, {
         initialData: [],
         keepPreviousData: true,
@@ -64,7 +76,9 @@ export default function Expense() {
             description: expense.description,
             amount: `$${expense.amount}`,
             date: moment(expense.date).format("YYYY-MM-DD"),
-            action: <UpdateExpense expense={expense} getAll={getAll} />,
+            action: userRole === "accountant" && (
+                <UpdateExpense expense={expense} getAll={getAllRefetch} />
+            ),
         };
     });
     return (
@@ -74,7 +88,7 @@ export default function Expense() {
                 expensesLength={expenseReport?.numberOfExpenses}
             />
             {userRole === "accountant" && (
-                <AddExpense getAll={getAll} items={stores} />
+                <AddExpense getAll={getAllRefetch} items={stores} />
             )}
             <Table columns={columns} rows={rows} />
         </>

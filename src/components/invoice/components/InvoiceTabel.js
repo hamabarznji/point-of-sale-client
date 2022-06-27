@@ -38,6 +38,8 @@ export default function SpanningTable() {
         getStore();
         getTransfareedProducts();
     }, []);
+
+    console.log({ transfareedProducts });
     const date = moment().format("YYYY-MM-DD");
     const history = useNavigate();
 
@@ -85,7 +87,7 @@ export default function SpanningTable() {
     const getTransfareedProducts = async () => {
         try {
             const results =
-                await TransfareedProductService.getTransfareedProducts();
+                await TransfareedProductService.getTransfareedProductsByStoreId();
 
             results.map((item) => {
                 return setTransfareedProducts((prev) => [
@@ -219,7 +221,7 @@ export default function SpanningTable() {
             setOrderedProducts([]);
             setTotalAmount(0);
 
-            history("/dashboard/invoices/checkout", {
+            history("/invoices/checkout", {
                 state: { invoice },
             });
         }

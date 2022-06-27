@@ -5,24 +5,27 @@ import AddEmployee from "./AddEmployee";
 import UpdateEmployee from "./UpdateEmployee";
 import StoreService from "../../services/StoreService";
 import { useSelector } from "react-redux";
-const columns = [
-    { id: "name", label: "Name", minWidth: 170, align: "center" },
-    { id: "salary", label: "Salary", minWidth: 170, align: "center" },
-    { id: "address", label: "Address", minWidth: 170, align: "center" },
-    { id: "phone", label: "Phone", minWidth: 170, align: "center" },
-    { id: "action", label: "Action", maxWidth: 170, align: "center" },
-];
 
 export default function Employee() {
     const [employees, setEmployees] = React.useState([]);
     const [stores, setStores] = React.useState([]);
     const userRole = useSelector((state) => state.posRedux.userRole);
-    console.log(userRole);
     React.useEffect(() => {
         getAll();
         getStores();
     }, []);
-
+    const columns = [
+        { id: "name", label: "Name", minWidth: 170, align: "center" },
+        { id: "salary", label: "Salary", minWidth: 170, align: "center" },
+        { id: "address", label: "Address", minWidth: 170, align: "center" },
+        { id: "phone", label: "Phone", minWidth: 170, align: "center" },
+        userRole === "accountant" && {
+            id: "action",
+            label: "Action",
+            maxWidth: 170,
+            align: "center",
+        },
+    ];
     const getAll = async () => {
         try {
             const data = await EmployeeService.getEmployees();
@@ -49,7 +52,7 @@ export default function Employee() {
             salary: employee.salary,
             address: employee.address,
             phone: employee.phone,
-            action: (
+            action: userRole === "accountant" && (
                 <UpdateEmployee
                     employee={employee}
                     items={stores}

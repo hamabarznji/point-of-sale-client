@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Controller } from "react-hook-form";
 import { MenuItem, TextField } from "@mui/material";
-import Autocomplete from "@mui/material/Autocomplete";
 
 export default function InputField({
     control,

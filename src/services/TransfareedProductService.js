@@ -12,11 +12,9 @@ class TransfareedProductService {
         );
         return res.data;
     }
-    async getTransfareedProductsByStoreId() {
+    async getTransfareedProductsByStoreId(id) {
         const res = await axios.get(
-            `http://localhost:3002/transfareedproducts/stores/${localStorage.getItem(
-                "storeId"
-            )}`,
+            `http://localhost:3002/transfareedproducts/stores/${id}`,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("posToken"),
@@ -26,7 +24,7 @@ class TransfareedProductService {
         return res.data;
     }
 
-    async getTransfareedProductsNotifications() {
+    async getTransfareedProductsNotifications(id) {
         const res = await axios.get(
             `http://localhost:3002/transfareedproducts/stores/${localStorage.getItem(
                 "storeId"
