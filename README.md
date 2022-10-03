@@ -1,5 +1,7 @@
 # Getting Started with Create React App
 
+The server repo :https://github.com/hamabarznji/point-of-sale-server
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
