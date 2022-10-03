@@ -19,7 +19,6 @@ import InvoiceInputes from "./InvoiceInputes";
 import Footer from "./Footer";
 import TableHead from "./TableHead";
 import totalPriceCalculator from "../../helper/totalPriceCalculator";
-import { getValue } from "@testing-library/user-event/dist/utils";
 
 export default function SpanningTable() {
     const [customers, setCustomers] = React.useState([]);
@@ -27,7 +26,7 @@ export default function SpanningTable() {
     const [selectedCustomer, setSelectedCustomer] = React.useState();
     const [ordredProducts, setOrderedProducts] = React.useState([]);
     const [transfareedProducts, setTransfareedProducts] = React.useState([]);
-
+    console.log({ transfareedProducts });
     let tempProduct = [];
     // const [tempProduct, setTempProduct] = React.useState([]);
 
@@ -87,7 +86,9 @@ export default function SpanningTable() {
     const getTransfareedProducts = async () => {
         try {
             const results =
-                await TransfareedProductService.getTransfareedProductsByStoreId();
+                await TransfareedProductService.getTransfareedProductsByStoreId(
+                    localStorage.getItem("storeId")
+                );
 
             results.map((item) => {
                 return setTransfareedProducts((prev) => [

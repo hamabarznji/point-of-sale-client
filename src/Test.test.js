@@ -1,7 +1,6 @@
 import { render, fireEvent, screen } from "@testing-library/react";
 import Dahsboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import Store from "./pages/Store";
 import Customer from "./pages/Customer";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";

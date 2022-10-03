@@ -36,18 +36,7 @@ let posRedux = createSlice({
             state.isAuthenticated = false;
             state.isLoggedOut = true;
         },
-        /* login: (state, action) => {
-            const { id, token, role, store_id } = action.payload;
 
-            localStorage.setItem("userId", id);
-
-            localStorage.setItem("posToken", token);
-            localStorage.setItem("userRole", role);
-             localStorage.setItem("storeId", store_id);
-            state.isAuthenticated = true;
-            state.isLoggedOut = false;
-        },
- */
         tokenSet: (state, action) => {
             if (!action.payload) {
                 localStorage.removeItem("posToken", action.payload);
@@ -95,20 +84,5 @@ export const getNotifications = () => async (dispatch, useSelector) => {
         } catch (err) {
             return Promise.reject(err);
         }
-    } /*  else {
-        try {
-            const product = await ProductService.getProductsNotifications();
-            const transfaree =
-                await TransfareedProductService.getTransfareedProductsNotifications();
-            const notis = product.data.concat(transfaree.data);
-            dispatch(setNotifications(notis));
-            dispatch(
-                setBadgeContent(product.badgeContent + transfaree.badgeContent)
-            );
-
-            return Promise.resolve(notifications);
-        } catch (err) {
-            return Promise.reject(err);
-        }
-    } */
+    }
 };

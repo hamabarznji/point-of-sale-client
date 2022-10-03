@@ -111,7 +111,6 @@ export default function LoginForm() {
                                         error={errors.hasOwnProperty(
                                             "password"
                                         )}
-                                        placeholder="pass"
                                         helperText={errors.password?.message}
                                     />
                                 );
